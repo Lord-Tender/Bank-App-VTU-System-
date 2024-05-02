@@ -17,7 +17,7 @@ const App = () => {
       <Toaster position='top-center' reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/user">
+        {/* <Route path="/user"> */}
           <Route path="/user/register" element={<SignUp />} />
           <Route path="/user/login" element={<Sign />} />
           <Route path="/user/reset_password" element={<Forgotten />} />
@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/user/dashboard/profile" element={token ? <Profile /> : <Sign />} />
           <Route path="/user/dashboard/fund_wallet" element={token ? <AddMoney /> : <Sign />} />
           <Route path="/user/verify" element={token ? <EmailVerification /> : <SignUp />} />
-        </Route>
+        {/* </Route> */}
       </Routes>
     </>
   )

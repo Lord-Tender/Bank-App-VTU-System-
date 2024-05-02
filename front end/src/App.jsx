@@ -18,13 +18,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         {/* <Route path="/user"> */}
-          <Route path="/user/register" element={<SignUp />} />
-          <Route path="/user/login" element={<Sign />} />
-          <Route path="/user/reset_password" element={<Forgotten />} />
-          <Route path="/user/dashboard" element={token ? <Dashboard /> : <Sign />} />
-          <Route path="/user/dashboard/profile" element={token ? <Profile /> : <Sign />} />
-          <Route path="/user/dashboard/fund_wallet" element={token ? <AddMoney /> : <Sign />} />
-          <Route path="/user/verify" element={token ? <EmailVerification /> : <SignUp />} />
+          <Route path="/register" element={<SignUp />} />
+          <Route path="/login" element={<Sign />} />
+          <Route path="/reset_password" element={<Forgotten />} />
+          <Route path="/dashboard" element={token ? <Dashboard /> : <Sign />} />
+          <Route path="/dashboard/profile" element={token ? <Profile /> : <Sign />} />
+          <Route path="/dashboard/fund_wallet" element={token ? <AddMoney /> : <Sign />} />
+          <Route path="/verify" element={token ? <EmailVerification /> : <SignUp />} />
         {/* </Route> */}
       </Routes>
     </>

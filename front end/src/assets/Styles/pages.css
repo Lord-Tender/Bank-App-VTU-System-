@@ -1,0 +1,18 @@
+#profileDropDown{
+    display: none;
+}
+
+#resetEmail:focus {
+    border: 2px red solid;
+    outline: none;
+}
+
+@media screen and (max-width: 480px) {
+    #sidebar{
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        /* display: none; */
+    }
+}

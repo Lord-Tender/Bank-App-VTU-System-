@@ -549,13 +549,13 @@ const debitUser = async (userEmail, theAmount) => {
                     console.log(saved);
                     const html = `<h1>${theAmount} has been debited from your account.</h1>`
                     sendEmails(userEmail, "New Transaction", html)
-                    reject(res.status(200).json({ mgs: "Debited" }))
+                    reject({ mgs: "Debited" })
                 })
                 .catch((err) => {
                     console.log("Error saving  " + err);
                 })
         } else {
-            resolve(res.status(400).json({ mgs: "No user found" }))
+            resolve(new Error({ mgs: "No user found" }))
         }
     })
 }

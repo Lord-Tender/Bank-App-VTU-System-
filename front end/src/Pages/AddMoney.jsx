@@ -38,6 +38,7 @@ const AddMoney = () => {
                 if (err.response.data.error.name == "TokenExpiredError") {
                     toast.error("Session expired!!!")
                     setTimeout(() => {
+                        localStorage.removeItem('token')
                         navigate('/user/login')
                     }, 3000);
                 } else if (err) {
@@ -106,7 +107,7 @@ const AddMoney = () => {
                 document.getElementById('buttonText').style.display = 'block';
                 if (err.response.data.err) {
                     toast.error(err.response.data.err)
-                }else if (err) {
+                } else if (err) {
                     toast.error("Unkonown Error")
                 }
             })

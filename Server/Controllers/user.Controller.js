@@ -514,48 +514,80 @@ const creditHtml = (amount) => {
 
 const creditUser = async (userEmail, theAmount) => {
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
-    if (user) {
-        const oldBalance = Number(user.accountBal)
-        const toCredit = Number(theAmount)
-        const newBalance = oldBalance + toCredit
-        user.accountBal = newBalance
-        user.save()
-            .then((saved) => {
-                console.log(saved);
-                const html = `<h1>Your account as been credited with ${theAmount}.</h1>`
-                sendEmails(userEmail, "New Transaction", creditHtml(theAmount))
-            })
-            .catch((err) => {
-                console.log("Error saving  " + err);
-            })
-    } else {
-        res.status(400).json({ mgs: "No user found" })
-    }
+    return new Promise((resolve, reject) => {
+        if (user) {
+            const oldBalance = Number(user.accountBal)
+            const toCredit = Number(theAmount)
+            const newBalance = oldBalance + toCredit
+            user.accountBal = newBalance
+            user.save()
+                .then((saved) => {
+                    console.log(saved);
+                    const html = `<h1>Your account as been credited with ${theAmount}.</h1>`
+                    sendEmails(userEmail, "New Transaction", creditHtml(theAmount))
+                    resolve(res.status(200).json({ mgs: "Credited" }))
+                })
+                .catch((err) => {
+                    console.log("Error saving  " + err);
+                })
+        } else {
+            reject(res.status(400).json({ mgs: "No user found" }))
+        }
+    })
 }
 
 const debitUser = async (userEmail, theAmount) => {
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
+    return new Promise((resolve, reject) => {
+        if (user) {
+            const oldBalance = Number(user.accountBal)
+            const toDebit = Number(theAmount)
+            const newBalance = oldBalance - toDebit
+            user.accountBal = newBalance
+            user.save()
+                .then((saved) => {
+                    console.log(saved);
+                    const html = `<h1>${theAmount} has been debited from your account.</h1>`
+                    sendEmails(userEmail, "New Transaction", html)
+                    reject(res.status(200).json({ mgs: "Debited" }))
+                })
+                .catch((err) => {
+                    console.log("Error saving  " + err);
+                })
+        } else {
+            resolve(res.status(400).json({ mgs: "No user found" }))
+        }
+    })
+}
+
+const intraTransfer = async (req, res) => {
+    const { sender, sendee, amount } = req.body
+    let user = await userModel.findOne({ 'emailInfo.email': sender })
     if (user) {
-        const oldBalance = Number(user.accountBal)
-        const toDebit = Number(theAmount)
-        const newBalance = oldBalance - toDebit
-        user.accountBal = newBalance
-        user.save()
-            .then((saved) => {
-                console.log(saved);
-                const html = `<h1>${theAmount} has been debited from your account.</h1>`
-                sendEmails(userEmail, "New Transaction", html)
-            })
-            .catch((err) => {
-                console.log("Error saving  " + err);
-            })
+        let userBalance = Number(user.accountBal)
+        let sendAmount = Number(amount)
+        let transacFee = (sendAmount * 0.015)
+        let amountToDebit = transacFee + sendAmount
+
+        if (amountToDebit > userBalance) {
+            res.status(400).json({ mgs: "Insuficent fund", userBalance, transacFee })
+        } else {
+            debitUser(user.emailInfo.email, amountToDebit)
+                .then((response) => {
+                    res.status(400).json({ mgs: "Transaction Successful", response })
+                    console.log(response);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+
     } else {
-        res.status(400).json({ mgs: "No user found" })
+        res.status(500).json({ mgs: "No user found" })
     }
 }
 
 
 
 
-
-module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved };
+module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer };

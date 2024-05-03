@@ -49,6 +49,7 @@ const Dashboard = () => {
         if (err.response.data.error.name == "TokenExpiredError") {
           toast.error("Session expired!!!")
           setTimeout(() => {
+            localStorage.removeItem('token')
             navigate('/user/login')
           }, 3000);
         } else if (err) {

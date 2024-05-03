@@ -1,7 +1,7 @@
 import img from '../assets/Image/App monetization.gif'
 import { useFormik } from 'formik'
 import axios from 'axios';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import * as yup from 'yup';
@@ -10,6 +10,15 @@ import { BiHide, BiShow } from 'react-icons/bi';
 
 const SignIn = () => {
     let navigate = useNavigate();
+
+    useEffect(() => {
+        const queryString = window.location.search
+        console.log(queryString);
+        if (queryString.startsWith('?redirected')) {
+            navigate('/user/login')
+            window.location.reload()
+        }
+    }, [])
 
     let url = "http://localhost:5000/user/login";
 

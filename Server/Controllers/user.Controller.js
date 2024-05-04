@@ -130,10 +130,8 @@ const sendEmails = (email, subject, html) => {
 
         transporter.sendMail(emailBody, (err, info) => {
             if (err) {
-                console.error('Error sending email:', err);
                 reject({ msg: 'An error', status: false, err });
             } else {
-                console.log('Email sent:', info);
                 resolve({ msg: 'Email sent successful', status: true, info });
             }
         });
@@ -522,16 +520,15 @@ const creditUser = async (userEmail, theAmount) => {
             user.accountBal = newBalance
             user.save()
                 .then((saved) => {
-                    console.log(saved);
                     const html = `<h1>Your account as been credited with ${theAmount}.</h1>`
                     sendEmails(userEmail, "New Transaction", creditHtml(theAmount))
-                    resolve(res.status(200).json({ mgs: "Credited" }))
+                    resolve({ mgs: "Credited" })
                 })
                 .catch((err) => {
                     console.log("Error saving  " + err);
                 })
         } else {
-            reject(res.status(400).json({ mgs: "No user found" }))
+            reject({ mgs: "No user found" })
         }
     })
 }
@@ -546,22 +543,21 @@ const debitUser = async (userEmail, theAmount) => {
             user.accountBal = newBalance
             user.save()
                 .then((saved) => {
-                    console.log(saved);
                     const html = `<h1>${theAmount} has been debited from your account.</h1>`
                     sendEmails(userEmail, "New Transaction", html)
-                    reject({ mgs: "Debited" })
+                    resolve({ mgs: "Debited" })
                 })
                 .catch((err) => {
                     console.log("Error saving  " + err);
                 })
         } else {
-            resolve(new Error({ mgs: "No user found" }))
+            reject(new Error({ mgs: "No user found" }))
         }
     })
 }
 
 const intraTransfer = async (req, res) => {
-    const { sender, sendee, amount } = req.body
+    const { sender, receiver, amount } = req.body
     let user = await userModel.findOne({ 'emailInfo.email': sender })
     if (user) {
         let userBalance = Number(user.accountBal)
@@ -574,11 +570,21 @@ const intraTransfer = async (req, res) => {
         } else {
             debitUser(user.emailInfo.email, amountToDebit)
                 .then((response) => {
-                    res.status(400).json({ mgs: "Transaction Successful", response })
                     console.log(response);
+                    if (response) {
+                        creditUser(receiver, amount)
+                            .then((credit) => {
+                                res.status(400).json({ mgs: "Transaction Successful", response, credit })
+
+                            })
+                            .catch((error) => {
+                                res.status(400).json({ mgs: "Transaction unSuccessful", error })
+                            })
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
+                    res.status(400).json({ mgs: "Transaction unSuccessful", err })
                 })
         }
 
@@ -587,7 +593,17 @@ const intraTransfer = async (req, res) => {
     }
 }
 
+const test = (req, res) => {
+    const { email, amount } = req.body
+    console.log(email, amount);
+    debitUser((email, amount), (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+        }
+    })
+}
 
 
-
-module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer };
+module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, test };

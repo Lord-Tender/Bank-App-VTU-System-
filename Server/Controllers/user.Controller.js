@@ -593,6 +593,25 @@ const intraTransfer = async (req, res) => {
     }
 }
 
+const transactionValidator = async (req, res) => {
+    const { sender, amount } = req.body
+    let user = await userModel.findOne({ 'emailInfo.email': sender })
+    if (user) {
+        let userBalance = Number(user.accountBal)
+        let sendAmount = Number(amount)
+        let transacFee = (sendAmount * 0.015)
+        let amountToDebit = transacFee + sendAmount
+
+        if (amountToDebit > userBalance) {
+            res.status(400).json({ mgs: "Insuficent fund", userBalance, transacFee })
+        }else{
+            res.status(400).json({ mgs: "Valid Transaction" })
+        }
+    } else {
+        res.status(500).json({ mgs: "No user found" })
+    }
+}
+
 const test = (req, res) => {
     const { email, amount } = req.body
     console.log(email, amount);
@@ -606,4 +625,4 @@ const test = (req, res) => {
 }
 
 
-module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, test };
+module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, test };

@@ -603,14 +603,39 @@ const transactionValidator = async (req, res) => {
         let amountToDebit = transacFee + sendAmount
 
         if (amountToDebit > userBalance) {
-            res.status(400).json({ mgs: "Insuficent fund", userBalance, transacFee })
+            res.status(400).json({ mgs: "Insuficent fund", valid: false })
         }else{
-            res.status(400).json({ mgs: "Valid Transaction" })
+            res.status(400).json({ mgs: "Valid Transaction", valid: true })
         }
     } else {
         res.status(500).json({ mgs: "No user found" })
     }
 }
+
+const receiverValidator = async (req, res) => {
+    const { accountNo } = req.body
+    console.log(accountNo);
+    let user = await userModel.findOne({ accountNo : accountNo })
+    if (user) {
+        console.log(user);
+        res.status(200).json({ mgs: "User found", name: `${user.firstName} ${user.lastName}`, userEmail: user.emailInfo.email })
+    }else{
+        res.status(400).json({ mgs: "No user found!" })
+    }
+}
+
+// Buy Data 
+
+const buyData = async (req, res) => {
+    const { email, dataPlan, network, phoneNo } = req.body
+    let user = await userModel.findOne({ 'emailInfo.email': email })
+    if (user) {
+        
+    }else{
+        res.status(500).json({ mgs: "No user found!" })
+    }
+}
+
 
 const test = (req, res) => {
     const { email, amount } = req.body
@@ -625,4 +650,4 @@ const test = (req, res) => {
 }
 
 
-module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, test };
+module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, test };

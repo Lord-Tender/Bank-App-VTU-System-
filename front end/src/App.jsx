@@ -9,6 +9,7 @@ import Profile from './Pages/Profile'
 import Forgotten from './Pages/Forgotten'
 import AddMoney from './Pages/AddMoney'
 import Home from './Pages/Home'
+import Transfer from './Pages/Transfer'
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/user/dashboard" element={token ? <Dashboard /> : <Navigate to="/user/login?redirected=true" />} />
         <Route path="/user/dashboard/profile" element={token ? <Profile /> : <Navigate to="/user/login?redirected=true" />} />
         <Route path="/user/dashboard/fund_wallet" element={token ? <AddMoney /> : <Navigate to="/user/login?redirected=true" />} />
+        <Route path="/user/dashboard/transfer" element={token ? <Transfer /> : <Navigate to="/user/login?redirected=true" />} />
         <Route path="/user/verify" element={token ? <EmailVerification /> : <Navigate to="/user/login?redirected=true" />} />
       </Routes>
     </>

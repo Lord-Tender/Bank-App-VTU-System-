@@ -7,6 +7,10 @@
     outline: none;
 }
 
+.transaccountNo, .transAmount, transaccountNo::placeholder, .transAmount::placeholder {
+    color: blue !important;
+}
+
 @media screen and (max-width: 480px) {
     #sidebar{
         position: absolute;

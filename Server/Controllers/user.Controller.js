@@ -562,7 +562,7 @@ const intraTransfer = async (req, res) => {
     if (user) {
         let userBalance = Number(user.accountBal)
         let sendAmount = Number(amount)
-        let transacFee = (sendAmount * 0.015)
+        let transacFee = (sendAmount * 0.005)
         let amountToDebit = transacFee + sendAmount
 
         if (amountToDebit > userBalance) {
@@ -599,13 +599,13 @@ const transactionValidator = async (req, res) => {
     if (user) {
         let userBalance = Number(user.accountBal)
         let sendAmount = Number(amount)
-        let transacFee = (sendAmount * 0.015)
+        let transacFee = (sendAmount * 0.005)
         let amountToDebit = transacFee + sendAmount
 
         if (amountToDebit > userBalance) {
-            res.status(400).json({ mgs: "Insuficent fund", valid: false })
+            res.status(400).json({ mgs: "Insuficent fund"})
         }else{
-            res.status(400).json({ mgs: "Valid Transaction", valid: true })
+            res.status(200).json({ mgs: "Valid Transaction", totalCharge: amountToDebit})
         }
     } else {
         res.status(500).json({ mgs: "No user found" })
@@ -630,7 +630,7 @@ const buyData = async (req, res) => {
     const { email, dataPlan, network, phoneNo } = req.body
     let user = await userModel.findOne({ 'emailInfo.email': email })
     if (user) {
-        
+
     }else{
         res.status(500).json({ mgs: "No user found!" })
     }

@@ -562,10 +562,12 @@ const intraTransfer = async (req, res) => {
     if (user) {
         let userBalance = Number(user.accountBal)
         let sendAmount = Number(amount)
-        let transacFee = (sendAmount * 0.005)
+        let transacFee = 20
         let amountToDebit = transacFee + sendAmount
 
-        if (amountToDebit > userBalance) {
+        if (sender === receiver) {
+            res.status(400).json({ mgs: "You can't send money to your own account." })
+        } else if (amountToDebit > userBalance) {
             res.status(400).json({ mgs: "Insuficent fund", userBalance, transacFee })
         } else {
             debitUser(user.emailInfo.email, amountToDebit)
@@ -574,7 +576,7 @@ const intraTransfer = async (req, res) => {
                     if (response) {
                         creditUser(receiver, amount)
                             .then((credit) => {
-                                res.status(400).json({ mgs: "Transaction Successful", response, credit })
+                                res.status(200).json({ mgs: "Transaction Successful", response, credit })
 
                             })
                             .catch((error) => {
@@ -599,7 +601,7 @@ const transactionValidator = async (req, res) => {
     if (user) {
         let userBalance = Number(user.accountBal)
         let sendAmount = Number(amount)
-        let transacFee = (sendAmount * 0.005)
+        let transacFee = 20
         let amountToDebit = transacFee + sendAmount
 
         if (amountToDebit > userBalance) {

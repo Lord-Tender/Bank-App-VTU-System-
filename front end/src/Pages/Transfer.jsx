@@ -4,6 +4,7 @@ import Rightbar from '../Components/Rightbar'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../assets/Styles/pages.css'
+import toast from 'react-hot-toast'
 
 const Transfer = () => {
     let navigate = useNavigate()
@@ -49,17 +50,17 @@ const Transfer = () => {
             axios.post(url, { accountNo: e.target.value })
                 .then((res) => {
                     setmgs(res.data.name)
-                console.log(validate());
-                setreceiver(res.data.userEmail)
+                    setreceiver(res.data.userEmail)
+                    if (res.data.userEmail === user.emailInfo.email) {
+                        setmgs("Why trying to send money to your own wallet?")
+                    }
                 })
                 .catch((err) => {
-                console.log(validate());
-                setmgs(err.response.data.mgs)
+                    setmgs(err.response.data.mgs)
                     setreceiver(false)
                 })
         } else {
-                console.log(validate());
-                setmgs("Must be 10 digits")
+            setmgs("Must be 10 digits")
             setreceiver(false)
         }
     }
@@ -68,12 +69,10 @@ const Transfer = () => {
         const url = 'http://localhost:5000/user/intra_transfer/validate'
         axios.post(url, { sender: user.emailInfo.email, amount: e.target.value })
             .then((res) => {
-                setamount(res.data.totalCharge)
+                setamount(e.target.value)
                 setmgs2(res.data.totalCharge)
-                console.log(validate());
             })
             .catch((err) => {
-                console.log(validate());
                 setmgs2(err.response.data.mgs)
                 setamount(false)
             })
@@ -82,13 +81,29 @@ const Transfer = () => {
     const validate = () => {
         if (receiver != false && amount != false) {
             return true
-        }else{
+        } else {
             return false
         }
     }
 
     const sendMoney = () => {
-        console.log(receiver, amount);
+        let validator = validate()
+        console.log(validator);
+        if (validator == false) {
+            toast.error("Invalid account or insufficent fund")
+        }else if (validator == true && validator != false) {
+            const url = 'http://localhost:5000/user/intra_transfer'
+            console.log(receiver, amount)
+            axios.post(url, { sender: user.emailInfo.email, receiver, amount })
+            .then((res)=>{
+                console.log(res);
+            })
+            .catch((err)=>{
+                console.log(err);
+                toast.error(err.response.data.mgs)
+            })
+
+        }
     }
 
     return (

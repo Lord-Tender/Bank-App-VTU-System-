@@ -1,4 +1,4 @@
-const { userModel, reservedAccount } = require("../Models/user.Model");
+const { userModel, reservedAccount, debitTransaction, creditTransaction } = require("../Models/user.Model");
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
@@ -419,7 +419,7 @@ const checkMonnifyTransaction = (req, res) => {
         console.log(customerEmail, eventType, amountPaid, paymentStatus);
         const amountToCredit = Number(amountPaid) - 50
         console.log(amountToCredit);
-        creditUser(customerEmail, amountToCredit)
+        creditUser(customerEmail, amountToCredit, "Reserved Account", "Fund wallet")
     }
 }
 
@@ -510,7 +510,91 @@ const creditHtml = (amount) => {
     return html
 }
 
-const creditUser = async (userEmail, theAmount) => {
+// Save debit transaction!!!
+
+const saveDebitTransac = (email, receiver, tansType, amountDebited) => {
+
+    let generatedNumber = ""
+    const random = '1234567890'
+    for (let index = 0; index < 17; index++) {
+        generatedNumber += random.charAt(Math.floor(Math.random() * random.length))
+    }
+    const date = new Date()
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    let period = ""
+    if (hours >= 12) {
+        period = "PM"
+    } else {
+        period = "AM"
+    }
+    const time = `${hours}:${minutes} ${period}`
+    const transactionId = `TPay_${hours}:${minutes}_${generatedNumber}`
+    let amount = `₦${amountDebited}`
+    console.log(time, transactionId);
+
+    let transac = new debitTransaction({
+        transactor: email,
+        Recipient: receiver,
+        transactionType: tansType,
+        transactionId,
+        amount,
+        date,
+        time,
+    })
+    transac.save()
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+}
+
+const saveCreditTransac = (email, from, tansType, amountCredited) => {
+    let generatedNumber = ""
+    const random = '1234567890'
+    for (let index = 0; index < 17; index++) {
+        generatedNumber += random.charAt(Math.floor(Math.random() * random.length))
+    }
+    const date = new Date()
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    let period = ""
+    if (hours >= 12) {
+        period = "PM"
+    } else {
+        period = "AM"
+    }
+    const time = `${hours}:${minutes} ${period}`
+    const transactionId = `TPay_${hours}:${minutes}_${generatedNumber}`
+    let amount = `₦${amountCredited}`
+
+    let transac = new creditTransaction({
+        transactor: email,
+        from: from,
+        transactionType: tansType,
+        transactionId,
+        amount,
+        date,
+        time,
+    })
+    transac.save()
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+}
+
+const test = (req, res) => {
+    console.log(req.body);
+
+    saveCreditTransac(req.body.sender, "OLa Tender", "Intra_transfer", 2000)
+}
+
+const creditUser = async (userEmail, theAmount, from, reason) => {
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
     return new Promise((resolve, reject) => {
         if (user) {
@@ -522,6 +606,7 @@ const creditUser = async (userEmail, theAmount) => {
                 .then((saved) => {
                     const html = `<h1>Your account as been credited with ${theAmount}.</h1>`
                     sendEmails(userEmail, "New Transaction", creditHtml(theAmount))
+                    saveCreditTransac(userEmail, from, reason, theAmount)
                     resolve({ mgs: "Credited" })
                 })
                 .catch((err) => {
@@ -533,7 +618,7 @@ const creditUser = async (userEmail, theAmount) => {
     })
 }
 
-const debitUser = async (userEmail, theAmount) => {
+const debitUser = async (userEmail, theAmount, reason) => {
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
     return new Promise((resolve, reject) => {
         if (user) {
@@ -545,6 +630,7 @@ const debitUser = async (userEmail, theAmount) => {
                 .then((saved) => {
                     const html = `<h1>${theAmount} has been debited from your account.</h1>`
                     sendEmails(userEmail, "New Transaction", html)
+                    saveDebitTransac(userEmail, `${user.firstName} ${user.lastName}`, reason, theAmount)
                     resolve({ mgs: "Debited" })
                 })
                 .catch((err) => {
@@ -570,11 +656,11 @@ const intraTransfer = async (req, res) => {
         } else if (amountToDebit > userBalance) {
             res.status(400).json({ mgs: "Insuficent fund", userBalance, transacFee })
         } else {
-            debitUser(user.emailInfo.email, amountToDebit)
+            debitUser(user.emailInfo.email, amountToDebit, "Intra_Trasfer")
                 .then((response) => {
                     console.log(response);
                     if (response) {
-                        creditUser(receiver, amount)
+                        creditUser(receiver, amount, `${user.firstName} ${user.firstName}`, "Intra_Transaction")
                             .then((credit) => {
                                 res.status(200).json({ mgs: "Transaction Successful", response, credit })
 
@@ -605,9 +691,9 @@ const transactionValidator = async (req, res) => {
         let amountToDebit = transacFee + sendAmount
 
         if (amountToDebit > userBalance) {
-            res.status(400).json({ mgs: "Insuficent fund"})
-        }else{
-            res.status(200).json({ mgs: "Valid Transaction", totalCharge: amountToDebit})
+            res.status(400).json({ mgs: "Insuficent fund" })
+        } else {
+            res.status(200).json({ mgs: "Valid Transaction", totalCharge: amountToDebit })
         }
     } else {
         res.status(500).json({ mgs: "No user found" })
@@ -617,11 +703,11 @@ const transactionValidator = async (req, res) => {
 const receiverValidator = async (req, res) => {
     const { accountNo } = req.body
     console.log(accountNo);
-    let user = await userModel.findOne({ accountNo : accountNo })
+    let user = await userModel.findOne({ accountNo: accountNo })
     if (user) {
         console.log(user);
         res.status(200).json({ mgs: "User found", name: `${user.firstName} ${user.lastName}`, userEmail: user.emailInfo.email })
-    }else{
+    } else {
         res.status(400).json({ mgs: "No user found!" })
     }
 }
@@ -633,23 +719,11 @@ const buyData = async (req, res) => {
     let user = await userModel.findOne({ 'emailInfo.email': email })
     if (user) {
 
-    }else{
+    } else {
         res.status(500).json({ mgs: "No user found!" })
     }
 }
 
-
-const test = (req, res) => {
-    const { email, amount } = req.body
-    console.log(email, amount);
-    debitUser((email, amount), (err, result) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(result);
-        }
-    })
-}
 
 
 module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, test };

@@ -49,13 +49,30 @@ reservedAccount = new mongoose.Schema(
 debitTransaction = new mongoose.Schema(
     {
         transactor: String,
-        
-        Date: String,
-        Time: String,
+        Recipient: String,
+        transactionType: String,
+        transactionId: String,
+        amount: String,
+        date: String,
+        time: String
+    }
+)
+
+creditTransaction = new mongoose.Schema(
+    {
+        transactor: String,
+        From: String,
+        transactionType: String,
+        transactionId: String,
+        amount: String,
+        date: String,
+        time: String
     }
 )
 
 module.exports = {
     userModel: mongoose.model('user', userSchema),
-    reservedAccount: mongoose.model('reservedAccount', reservedAccount)
+    reservedAccount: mongoose.model('reservedAccount', reservedAccount),
+    debitTransaction: mongoose.model('debitTransaction', debitTransaction),
+    creditTransaction: mongoose.model('creditTransaction', creditTransaction)
 };

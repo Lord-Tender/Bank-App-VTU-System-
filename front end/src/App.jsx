@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
 import SignUp from './Pages/SignUp'
 import Sign from './Pages/SignIn'
@@ -12,9 +12,14 @@ import Home from './Pages/Home'
 import Transfer from './Pages/Transfer'
 
 const App = () => {
-
-  let token = localStorage.getItem('token')
-
+  const [token, setToken] = useState(null)
+  
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    setToken(storedToken);
+  }, [])
+  console.log(token);
+  
   return (
     <>
       <Toaster position='top-center' reverseOrder={false} />
@@ -23,11 +28,11 @@ const App = () => {
         <Route path="/user/register" element={<SignUp />} />
         <Route path="/user/login" element={<Sign />} />
         <Route path="/user/reset_password" element={<Forgotten />} />
-        <Route path="/user/dashboard" element={token ? <Dashboard /> : <Navigate to="/user/login?redirected=true" />} />
-        <Route path="/user/dashboard/profile" element={token ? <Profile /> : <Navigate to="/user/login?redirected=true" />} />
-        <Route path="/user/dashboard/fund_wallet" element={token ? <AddMoney /> : <Navigate to="/user/login?redirected=true" />} />
-        <Route path="/user/dashboard/transfer" element={token ? <Transfer /> : <Navigate to="/user/login?redirected=true" />} />
-        <Route path="/user/verify" element={token ? <EmailVerification /> : <Navigate to="/user/login?redirected=true" />} />
+        <Route path="/user/dashboard" element={token ? <Dashboard /> : <Navigate to="/user/login" /> } replace  />
+        <Route path="/user/dashboard/profile" element={token ? <Profile /> : <Navigate to="/user/login" /> } replace  />
+        <Route path="/user/dashboard/fund_wallet" element={token ? <AddMoney /> : <Navigate to="/user/login" /> } replace  />
+        <Route path="/user/dashboard/transfer" element={token ? <Transfer /> : <Navigate to="/user/login" /> } replace  />
+        <Route path="/user/verify" element={token ? <EmailVerification /> : <Navigate to="/user/login" /> } replace  />
       </Routes>
     </>
   )

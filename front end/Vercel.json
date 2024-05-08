@@ -1,13 +1,10 @@
 {
+    "cleanUrls": true,
     "rewrites": [
-      { "source": "/user/register", "destination": "/index.html" },
-      { "source": "/user/login", "destination": "/index.html" },
-      { "source": "/user/reset_password", "destination": "/index.html" },
-      { "source": "/user/dashboard", "destination": "/index.html" },
-      { "source": "/user/dashboard/profile", "destination": "/index.html" },
-      { "source": "/user/dashboard/fund_wallet", "destination": "/index.html" },
-      { "source": "/user/dashboard/transfer", "destination": "/index.html" },
-      { "source": "/user/verify", "destination": "/index.html" }
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
+      }
     ]
   }
   

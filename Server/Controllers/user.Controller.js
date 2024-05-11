@@ -1,4 +1,4 @@
-const { userModel, reservedAccount, debitTransaction, creditTransaction } = require("../Models/user.Model");
+const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
@@ -712,6 +712,68 @@ const receiverValidator = async (req, res) => {
     }
 }
 
+// Flutterwave payment integration
+
+const initFlutterPayment = (req, res) => {
+    const { tx_ref, amount, email, phonenumber, name } = req.body
+    const url = 'https://api.flutterwave.com/v3/payments'
+    let data = {
+        tx_ref,
+        amount,
+        currency: "NGN",
+        redirect_url: "http://localhost:5173/user/dashboard/fund_wallet/flutter_confirm",
+        customer: {
+            email,
+            phonenumber,
+            name
+        },
+        customizations: {
+            title: "Pied Piper Payments",
+            logo: "http://www.piedpiper.com/app/themes/joystick-v27/images/logo.png"
+        },
+        configurations: {
+            session_duration: 10,
+            max_retry_attempt: 5,
+        }
+    }
+    axios.post(url, data, {
+        headers: {
+            Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`
+        }
+    })
+        .then((response) => {
+            const date = new Date()
+            let transaction = new flutterTransaction({
+                tx_ref,
+                amount,
+                userEmail: email,
+                date
+            })
+            transaction.save()
+                .then((data) => {
+                    console.log(data);
+                    res.status(200).json({ status: true, mgs: "Payment initialitiation successfully", paymentLink: response.data.data.link })
+                })
+                .catch((error) => {
+                    res.status(500).json({ status: false, mgs: "Sever error", error })
+                })
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ status: false, mgs: "unsuccessfully", error: err })
+        })
+}
+
+// Verify flutterwave's transaction
+
+const verifyFlutterTransaction = async (req, res) => {
+    const { tx_ref, transactionId } = req.body
+    const transactionDetails = await flutterTransaction.findOne({ tx_ref: tx_ref });
+    const response = await axios.get(`https://api.flutterwave.com/v3/transactions/123456/verify`)
+    console.log(transactionDetails);
+    console.log(response);
+}
+
 // Buy Data 
 
 const buyData = async (req, res) => {
@@ -726,4 +788,4 @@ const buyData = async (req, res) => {
 
 
 
-module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, test };
+module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, test };

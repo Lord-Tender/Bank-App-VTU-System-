@@ -70,9 +70,26 @@ creditTransaction = new mongoose.Schema(
     }
 )
 
+flutterTransaction = new mongoose.Schema(
+    {
+        tx_ref: String,
+        amount: Number,
+        userEmail: String,
+        Status: { type: String, default: "pending" },
+        credited: { type: Boolean, default: false },
+        webhook: {
+            received: { type: Boolean, default: false },
+            verified: { type: Boolean, default: false },
+            timeReceived: { type: Number, default: 0 },
+        },
+        date: String 
+    }
+)
+
 module.exports = {
     userModel: mongoose.model('user', userSchema),
     reservedAccount: mongoose.model('reservedAccount', reservedAccount),
     debitTransaction: mongoose.model('debitTransaction', debitTransaction),
-    creditTransaction: mongoose.model('creditTransaction', creditTransaction)
+    creditTransaction: mongoose.model('creditTransaction', creditTransaction),
+    flutterTransaction: mongoose.model('flutterTransaction', flutterTransaction)
 };

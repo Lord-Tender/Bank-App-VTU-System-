@@ -769,9 +769,13 @@ const initFlutterPayment = (req, res) => {
 const verifyFlutterTransaction = async (req, res) => {
     const { tx_ref, transactionId } = req.body
     const transactionDetails = await flutterTransaction.findOne({ tx_ref: tx_ref });
-    const response = await axios.get(`https://api.flutterwave.com/v3/transactions/123456/verify`)
+    const response = await axios.get(`https://api.flutterwave.com/v3/transactions/${transactionId}/verify`,{
+        headers: {
+            Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`
+        }
+    })
     console.log(transactionDetails);
-    console.log(response);
+    console.log(response.data);
 }
 
 // Buy Data 

@@ -742,6 +742,7 @@ const initFlutterPayment = (req, res) => {
         }
     })
         .then((response) => {
+            console.log(response)
             const date = new Date()
             let transaction = new flutterTransaction({
                 tx_ref,

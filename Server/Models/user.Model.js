@@ -72,7 +72,7 @@ creditTransaction = new mongoose.Schema(
 
 flutterTransaction = new mongoose.Schema(
     {
-        tx_ref: String,
+        tx_ref: { type: String, unique: true },
         amount: Number,
         userEmail: String,
         Status: { type: String, default: "pending" },

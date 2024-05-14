@@ -21,7 +21,14 @@ cloudinary.config({
 const registerUser = (req, res) => {
     const { firstName, lastName, email, password, dateOfBirth, phoneNumber } = req.body
 
-    const generatedAccountNo = Math.floor(Math.random(1000000000) * 99999999999);
+    function generateAccountNumber() {
+        const random10Digits = Math.floor(Math.random() * (9999999999 - 1000000000 + 1)) + 1000000000;
+      
+        return random10Digits.toString().slice(0, 10); // Extract the first 10 digits as a string
+      }
+      
+    
+    const generatedAccountNo = Number(generateAccountNumber())
     const phoneVerificationCode = Math.floor(Math.random(10000) * 99999);
     const hashPassword = bcrypt.hashSync(password, 10);
 
@@ -770,11 +777,11 @@ const initFlutterPayment = (req, res) => {
 const verifyFlutterTransaction = async (req, res) => {
     const { tx_ref, transactionId } = req.body
     const transactionDetails = await flutterTransaction.findOne({ tx_ref: tx_ref });
-    const response = await axios.get(`https://api.flutterwave.com/v3/transactions/${transactionId}/verify`,{
-        headers: {
-            Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`
-        }
-    })
+    // const response = await axios.get(`https://api.flutterwave.com/v3/transactions/${transactionId}/verify`,{
+    //     headers: {
+    //         Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`
+    //     }
+    // })
     console.log(transactionDetails);
     console.log(response.data);
 }

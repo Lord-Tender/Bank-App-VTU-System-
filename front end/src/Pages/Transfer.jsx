@@ -110,7 +110,7 @@ const Transfer = () => {
     }
 
     const cancelConfirmination = () => {
-        document.getElementById('confirmination').style.display = 'block'
+        document.getElementById('confirmination').style.display = 'none'
     }
 
     return (
@@ -140,19 +140,24 @@ const Transfer = () => {
                 </div>
 
                 <Rightbar />
-                <div className="absolute top-0 h-[100vh] w-full flex justify-center items-center hidden" style={{ backgroundColor: "rgba(0, 0, 0, 0.200)" }} id='confirmination'>
-                    <div className='bg-white w-[80%] md:w-[40%] lg:w-[40%] h-[50%] rounded-lg p-7 mt-[-8%] shadow-lg relative '>
-                        <p className=' text-xl md:text-3xl lg:text-3xl'>Are you sure you want to send <span>{amount}</span> to {mgs}?</p>
-                        <div className='text-[1em] md:text-lg lg:text-lg mt-4'>
-                            <p><b>Receiver name: </b>{mgs}</p>
-                            <p><b>Receiver email: </b>{receiver}</p>
-                            <p><b>Total charge: </b>{mgs2}</p>
-                        </div>
-                        <div className='flex gap-4 justify-end w-full absolute bottom-6 right-4'>
-                            <button className='bg-slate-200 w-[35%] h-9 rounded' onClick={cancelConfirmination}>Cancel</button>
-                            <button className='bg-blue-700 w-[35%] h-9 rounded text-white hover:bg-blue-800 ' onClick={sendMoney}>Continue</button>
+                <div id='confirmination' className='absolute top-0 w-full hidden'>
+                    <div className=" h-[100vh] w-full flex justify-center items-center" style={{ backgroundColor: "rgba(0, 0, 0, 0.200)" }}>
+                        <div className='bg-white w-[80%] md:w-[40%] lg:w-[40%] h-[50%] rounded-lg p-7 mt-[-8%] shadow-lg relative '>
+                            <p className=' text-xl md:text-3xl lg:text-3xl'>Are you sure you want to send <span>{amount}</span> to {mgs}?</p>
+                            <div className='text-[1em] md:text-lg lg:text-lg mt-4'>
+                                <p><b>Receiver name: </b>{mgs}</p>
+                                <p><b>Receiver email: </b>{receiver}</p>
+                                <p><b>Total charge: </b>{mgs2}</p>
+                            </div>
+                            <div className='flex gap-4 justify-end w-full absolute bottom-6 right-4'>
+                                <button className='bg-slate-200 w-[35%] h-9 rounded' onClick={cancelConfirmination}>Cancel</button>
+                                <button className='bg-blue-700 w-[35%] h-9 rounded text-white hover:bg-blue-800 ' onClick={sendMoney}>Continue</button>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div id='loader' style={{ backgroundColor: "rgba(0, 0, 0, 0.100)" }} className='absolute top-0 w-full h-[100vh] flex justify-center items-center'>
+                    <div className="spinner2"></div>
                 </div>
             </section>
         </>

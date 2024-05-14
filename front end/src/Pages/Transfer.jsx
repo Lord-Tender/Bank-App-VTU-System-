@@ -97,15 +97,18 @@ const Transfer = () => {
     }
 
     const sendMoney = () => {
+        document.getElementById('loader').style.display = 'flex'
         const url = 'http://localhost:5000/user/intra_transfer'
         console.log(receiver, amount)
         axios.post(url, { sender: user.emailInfo.email, receiver, amount })
             .then((res) => {
                 console.log(res);
+                document.getElementById('loader').style.display = 'none'
             })
             .catch((err) => {
                 console.log(err);
                 toast.error(err.response.data.mgs)
+                document.getElementById('loader').style.display = 'none'
             })
     }
 
@@ -156,7 +159,7 @@ const Transfer = () => {
                         </div>
                     </div>
                 </div>
-                <div id='loader' style={{ backgroundColor: "rgba(0, 0, 0, 0.100)" }} className='absolute top-0 w-full h-[100vh] flex justify-center items-center'>
+                <div id='loader' style={{ backgroundColor: "rgba(0, 0, 0, 0.100)", display: "none"}} className='absolute top-0 w-full h-[100vh] flex justify-center items-center'>
                     <div className="spinner2"></div>
                 </div>
             </section>

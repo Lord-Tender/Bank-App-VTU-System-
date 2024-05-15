@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction, addNetwork, addDataPlan } = require("../Controllers/admin.Controller")
+const { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction, addNetwork, addDataPlan, loginUser } = require("../Controllers/admin.Controller")
 
 router.post("/add_user", addAdminUser)
+router.post("/login", loginUser)
 router.get("/get_user", fetchAllUser)
 router.post("/credit_user", creditUser)
 router.post("/debit_user", debitUser)

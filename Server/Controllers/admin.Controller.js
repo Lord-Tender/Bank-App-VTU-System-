@@ -71,4 +71,16 @@ const debitUser = async (req, res) => {
     }
 }
 
-module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser }
+const getAllTransaction = (req, res) => {
+    let debitTransaction = debitTransaction.find({})
+    let creditTransaction = debitTransaction.find({})
+    let flutterTransaction = debitTransaction.find({})
+    if (debitTransaction && creditTransaction && flutterTransaction) {
+        res.status(200).json({ status: true, debitTransaction, creditTransaction, flutterTransaction })
+    }else{
+        res.status(500).json({ status: false, msg: "Am error occurred"  })
+    }
+    
+}
+
+module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction }

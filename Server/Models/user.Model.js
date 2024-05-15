@@ -48,7 +48,6 @@ reservedAccount = new mongoose.Schema(
 
 debitTransaction = new mongoose.Schema(
     {
-        decription: String,
         transactor: String,
         Recipient: String,
         transactionType: String,
@@ -61,7 +60,6 @@ debitTransaction = new mongoose.Schema(
 
 creditTransaction = new mongoose.Schema(
     {
-        decription: String,
         transactor: String,
         From: String,
         transactionType: String,

@@ -17,7 +17,7 @@ userSchema = new mongoose.Schema(
             emailVerified: { type: Boolean, default: false },
             emailVerificationCode: { type: String, unique: true },
         },
-        password: { type: String, unique: true },
+        password: { type: String },
         profileUpdated: { type: Boolean, default: false }
     },
     {

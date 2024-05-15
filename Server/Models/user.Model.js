@@ -82,7 +82,7 @@ flutterTransaction = new mongoose.Schema(
             verified: { type: Boolean, default: false },
             timeReceived: { type: Number, default: 0 },
         },
-        date: String 
+        date: String
     }
 )
 

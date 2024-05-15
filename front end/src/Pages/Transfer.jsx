@@ -9,7 +9,8 @@ import toast from 'react-hot-toast'
 const Transfer = () => {
     let navigate = useNavigate()
     const [userId, setuserId] = useState("")
-    const [user, setuser] = useState("")
+  const [userBal, setuserBal] = useState("")
+  const [user, setuser] = useState("")
     useEffect(() => {
         let token = localStorage.getItem('token')
         let url = 'http://localhost:5000/user/page_auth'
@@ -22,6 +23,7 @@ const Transfer = () => {
             },
         }).then((res) => {
             setuser(res.data.userResult)
+            setuserBal(res.data.userResult.accountBal.toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
             if (res.data.emailVerified == false) {
                 navigate('/user/verify')
             }
@@ -104,6 +106,7 @@ const Transfer = () => {
             .then((res) => {
                 console.log(res);
                 document.getElementById('loader').style.display = 'none'
+                window.location.reload()
             })
             .catch((err) => {
                 console.log(err);
@@ -125,7 +128,7 @@ const Transfer = () => {
                 <div className='w-full lg:w-[60%] md:w-[60%] static lg:absolute  md:fixed left-[20%] '>
                     <div className='bg-blue-100 rounded-lg mx-[3%] h-20 mt-6 px-[5%] flex justify-between text-[2em] items-center text-blue-800 mb-8'>
                         <p>Balance:</p>
-                        <p>{user.accountBal}</p>
+                        <p>{userBal}</p>
                     </div>
 
                     <div className=''>
@@ -159,7 +162,7 @@ const Transfer = () => {
                         </div>
                     </div>
                 </div>
-                <div id='loader' style={{ backgroundColor: "rgba(0, 0, 0, 0.100)", display: "none"}} className='absolute top-0 w-full h-[100vh] flex justify-center items-center'>
+                <div id='loader' style={{ backgroundColor: "rgba(0, 0, 0, 0.100)", display: "none" }} className='absolute top-0 w-full h-[100vh] flex justify-center items-center'>
                     <div className="spinner2"></div>
                 </div>
             </section>

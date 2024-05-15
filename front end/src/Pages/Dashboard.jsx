@@ -22,6 +22,7 @@ import '../assets/Styles/pages.css'
 const Dashboard = () => {
   let navigate = useNavigate();
   const [user, setuser] = useState("")
+  const [userBal, setuserBal] = useState("")
   const [profilePic, setprofilePic] = useState(profileDemo)
 
 
@@ -41,6 +42,7 @@ const Dashboard = () => {
         setprofilePic(res.data.userResult.photoUrl)
       }
       setuser(res.data.userResult)
+      setuserBal(res.data.userResult.accountBal.toLocaleString())
       if (res.data.emailVerified == false) {
         navigate('/user/verify')
       }
@@ -117,7 +119,7 @@ const Dashboard = () => {
           <div className='w-full h-[10rem] bg-blue-900 rounded-lg mt-3 px-5 md:px-10 lg:px-10 relative'>
             <h1 className='text-gray-200 text-[1.2rem] pt-4 '>Your balance:</h1>
             <div className="yourBalance">
-              <h1 id='realBalance' className='text-white text-[1.7rem] mt-[-7px]'>₦<span className='text-[2.5rem] ms-1 '>{user.accountBal}</span></h1>
+              <h1 id='realBalance' className='text-white text-[1.7rem] mt-[-7px]'>₦<span className='text-[2.5rem] ms-1 '>{userBal}</span></h1>
             </div>
             <NavLink className='flex items-center justify-center gap-1 bg-white mt-4 w-[50%] md:w-[25%] lg:w-[25%] rounded ms-[50%] md:ms-[75%] lg:ms-[75%] a '>
               <p>View History</p>

@@ -9,6 +9,13 @@ adminUser = new mongoose.Schema(
     }
 )
 
+dataPlans = new mongoose.Schema(
+    {
+        network_id: String,
+        dataPlans: []
+    }
+)
+
 module.exports = {
     adminUser: mongoose.model('adminUser', adminUser)
 }

@@ -80,7 +80,6 @@ const getAllTransaction = (req, res) => {
     }else{
         res.status(500).json({ status: false, msg: "Am error occurred"  })
     }
-    
 }
 
 module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction }

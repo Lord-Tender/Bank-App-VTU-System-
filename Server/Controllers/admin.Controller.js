@@ -1,4 +1,4 @@
-const { adminUser } = require("../Models/admin.Model")
+const { adminUser, dataPlans } = require("../Models/admin.Model")
 const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
 const bcrypt = require('bcrypt');
 
@@ -82,4 +82,20 @@ const getAllTransaction = (req, res) => {
     }
 }
 
-module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction }
+const addNetwork = (req, res) => {
+    const { network_id, network_name } = req.body
+    let network = new dataPlans({
+        network_id,
+        network_name,
+        dataPlans: []
+    })
+    network.save()
+    .then((data)=>{
+        res.status(200).json({ status: true, msg: "added successful", data })
+    })
+    .catch((error)=>{
+        res.status(400).json({ status: false, msg: "an error occurred", error })
+    })
+}
+
+module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction, addNetwork }

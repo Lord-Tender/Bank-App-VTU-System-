@@ -1,5 +1,6 @@
 const { adminUser, dataPlans } = require("../Models/admin.Model")
 const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 
 
@@ -27,26 +28,27 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body
 
     try {
-        let user = await userModel.findOne({ 'emailInfo.email': email })
+        let user = await adminUser.findOne({ email })
         if (user) {
             const comparedPassword = bcrypt.compareSync(password, user.password)
             if (comparedPassword) {
                 const token = jwt.sign({ userId: user._id }, secret, { expiresIn: "1d" });
                 res.status(200).json({
-                    Message: "User found",
-                    token: token,
-                    user: user
+                    status: true,
+                    msg: "User found",
+                    token: token
                 })
             } else {
-                res.status(400).json({ Message: "Invalid detail" })
+                res.status(400).json({ status: false, msg: "Invalid detail" })
             }
         } else {
-            res.status(400).json({ Message: "Invalid detail" })
+            res.status(400).json({ status: false, msg: "Invalid detail" })
         }
     }
     catch (err) {
         console.log(err);
     }
+
 }
 
 const fetchAllUser = async (req, res) => {

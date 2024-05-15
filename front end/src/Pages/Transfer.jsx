@@ -23,7 +23,7 @@ const Transfer = () => {
             },
         }).then((res) => {
             setuser(res.data.userResult)
-            setuserBal(res.data.userResult.accountBal.toLocaleString('en-US', { style: 'currency', currency: 'USD' }))
+            setuserBal(res.data.userResult.accountBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' }))
             if (res.data.emailVerified == false) {
                 navigate('/user/verify')
             }
@@ -72,7 +72,7 @@ const Transfer = () => {
         axios.post(url, { sender: user.emailInfo.email, amount: e.target.value })
             .then((res) => {
                 setamount(e.target.value)
-                setmgs2(res.data.totalCharge)
+                setmgs2(res.data.totalCharge.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' }))
             })
             .catch((err) => {
                 setmgs2(err.response.data.mgs)

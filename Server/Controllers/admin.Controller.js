@@ -52,4 +52,23 @@ const creditUser = async (req, res) => {
     }
 }
 
-module.exports = { addAdminUser, fetchAllUser, creditUser }
+const debitUser = async (req, res) => {
+    const { userEmail, amount } = req.body
+    let user = await userModel.findOne({ 'emailInfo.email': userEmail })
+    if (user) {
+        let oldBalance = Number(user.accountBal)
+        const newBalance = oldBalance - Number(amount)
+        user.accountBal = newBalance
+        user.save()
+        .then((response)=>{
+            res.status(200).json({msg: "Success", status: true, response})
+        })
+        .catch((err)=>{
+            res.status(400).json({msg: "unsuccessful", status: false, error: err})
+        })
+    } else {
+        res.status(500).json({ msg: "An error occured" })
+    }
+}
+
+module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser }

@@ -98,4 +98,22 @@ const addNetwork = (req, res) => {
     })
 }
 
-module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction, addNetwork }
+const addDataPlan = (req, res) =>{
+    const { network_id, server_id, price, byte } = req.body
+    let newPlan = { server_id, price, byte }
+    let network = dataPlans.findOne({ network_id })
+    if (network) {
+        let plan = network.dataPlans
+        plan.push(newPlan)
+        network.save()
+        .then((data)=>{
+            res.status(200).json({ status: true, msg: "added successful", data })
+        })
+        .catch((error)=>{
+            res.status(400).json({ status: false, msg: "an error occurred", error })
+        })
+    }
+
+}
+
+module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction, addNetwork, addDataPlan }

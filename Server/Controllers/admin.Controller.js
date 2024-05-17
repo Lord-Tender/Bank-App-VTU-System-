@@ -1,5 +1,6 @@
 const { adminUser, dataPlans } = require("../Models/admin.Model")
 const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
+const { creditUser, debitUser } = require('./user.Controller')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 
@@ -61,26 +62,18 @@ const fetchAllUser = async (req, res) => {
     }
 }
 
-const creditUser = async (req, res) => {
-    const { userEmail, amount } = req.body
-    let user = await userModel.findOne({ 'emailInfo.email': userEmail })
-    if (user) {
-        let oldBalance = Number(user.accountBal)
-        const newBalance = oldBalance + Number(amount)
-        user.accountBal = newBalance
-        user.save()
-        .then((response)=>{
-            res.status(200).json({msg: "Success", status: true, response})
-        })
-        .catch((err)=>{
-            res.status(400).json({msg: "unsuccessful", status: false, error: err})
-        })
-    } else {
-        res.status(500).json({ msg: "An error occured" })
-    }
+const adminCreditUser = async (req, res) => {
+    const { userEmail, amount, reason } = req.body
+    creditUser(userEmail, amount, reason, "Admin deck")
+    .then((response)=>{
+        res.status(200).json({msg: "Success", status: true, response})
+    })
+    .catch((err)=>{
+        res.status(400).json({msg: "unsuccessful", status: false, error: err})
+    })
 }
 
-const debitUser = async (req, res) => {
+const adminDebitUser = async (req, res) => {
     const { userEmail, amount } = req.body
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
     if (user) {
@@ -144,4 +137,4 @@ const addDataPlan = (req, res) =>{
 
 }
 
-module.exports = { addAdminUser, fetchAllUser, creditUser, debitUser, getAllTransaction, addNetwork, addDataPlan, loginUser }
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser }

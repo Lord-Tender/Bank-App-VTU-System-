@@ -64,6 +64,8 @@ const fetchAllUser = async (req, res) => {
 
 const adminCreditUser = async (req, res) => {
     const { userEmail, amount, reason } = req.body
+    let user = userModel.findOne({ 'emailInfo.email': userEmail })
+    if (user) {
     creditUser(userEmail, amount, reason, "Admin deck")
     .then((response)=>{
         res.status(200).json({msg: "Success", status: true, response})
@@ -71,16 +73,16 @@ const adminCreditUser = async (req, res) => {
     .catch((err)=>{
         res.status(400).json({msg: "unsuccessful", status: false, error: err})
     })
+}else{
+    res.status(404).json({msg: "can not find user", status: false})
+}
 }
 
 const adminDebitUser = async (req, res) => {
     const { userEmail, amount } = req.body
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
     if (user) {
-        let oldBalance = Number(user.accountBal)
-        const newBalance = oldBalance - Number(amount)
-        user.accountBal = newBalance
-        user.save()
+        debitUser(userEmail, amount, "Admin", "Admin" )
         .then((response)=>{
             res.status(200).json({msg: "Success", status: true, response})
         })

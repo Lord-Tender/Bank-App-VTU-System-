@@ -1,4 +1,4 @@
-const { adminUser, dataPlans } = require("../Models/admin.Model")
+const { adminUser, dataPlans, ipWishList } = require("../Models/admin.Model")
 const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
 const { creditUser, debitUser } = require('./user.Controller')
 const jwt = require('jsonwebtoken')
@@ -52,6 +52,26 @@ const loginUser = async (req, res) => {
 
 }
 
+const addIpToWistList = async (req, res) => {
+    const { ip, email } = req.body
+    let theAdmin = await addAdminUser.findOne({ email })
+    if (theAdmin) {
+        let newIpWishList = new ipWishList({
+            ip,
+            addBy: email
+        })
+        newIpWishList.save()
+            .then((response) => {
+                res.status(200).json({ status: "Success", msg: "Ip address is wishlisted" })
+            })
+            .catch((err) => {
+                res.status(500).json({ status: "Error", msg: "Error added ip" })
+            })
+    }else{
+        res.status(400).json({ status: false, msg: "Admin user not found" })
+    }
+}
+
 const fetchAllUser = async (req, res) => {
     try {
         let allUsers = await userModel.find({})
@@ -66,29 +86,29 @@ const adminCreditUser = async (req, res) => {
     const { userEmail, amount, reason } = req.body
     let user = userModel.findOne({ 'emailInfo.email': userEmail })
     if (user) {
-    creditUser(userEmail, amount, reason, "Admin deck")
-    .then((response)=>{
-        res.status(200).json({msg: "Success", status: true, response})
-    })
-    .catch((err)=>{
-        res.status(400).json({msg: "unsuccessful", status: false, error: err})
-    })
-}else{
-    res.status(404).json({msg: "can not find user", status: false})
-}
+        creditUser(userEmail, amount, reason, "Admin deck")
+            .then((response) => {
+                res.status(200).json({ msg: "Success", status: true, response })
+            })
+            .catch((err) => {
+                res.status(400).json({ msg: "unsuccessful", status: false, error: err })
+            })
+    } else {
+        res.status(404).json({ msg: "can not find user", status: false })
+    }
 }
 
 const adminDebitUser = async (req, res) => {
     const { userEmail, amount } = req.body
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
     if (user) {
-        debitUser(userEmail, amount, "Admin", "Admin" )
-        .then((response)=>{
-            res.status(200).json({msg: "Success", status: true, response})
-        })
-        .catch((err)=>{
-            res.status(400).json({msg: "unsuccessful", status: false, error: err})
-        })
+        debitUser(userEmail, amount, "Admin", "Admin")
+            .then((response) => {
+                res.status(200).json({ msg: "Success", status: true, response })
+            })
+            .catch((err) => {
+                res.status(400).json({ msg: "unsuccessful", status: false, error: err })
+            })
     } else {
         res.status(500).json({ msg: "An error occured" })
     }
@@ -100,8 +120,8 @@ const getAllTransaction = (req, res) => {
     let flutterTransaction = debitTransaction.find({})
     if (debitTransaction && creditTransaction && flutterTransaction) {
         res.status(200).json({ status: true, debitTransaction, creditTransaction, flutterTransaction })
-    }else{
-        res.status(500).json({ status: false, msg: "Am error occurred"  })
+    } else {
+        res.status(500).json({ status: false, msg: "Am error occurred" })
     }
 }
 
@@ -113,15 +133,15 @@ const addNetwork = (req, res) => {
         dataPlans: []
     })
     network.save()
-    .then((data)=>{
-        res.status(200).json({ status: true, msg: "added successful", data })
-    })
-    .catch((error)=>{
-        res.status(400).json({ status: false, msg: "an error occurred", error })
-    })
+        .then((data) => {
+            res.status(200).json({ status: true, msg: "added successful", data })
+        })
+        .catch((error) => {
+            res.status(400).json({ status: false, msg: "an error occurred", error })
+        })
 }
 
-const addDataPlan = (req, res) =>{
+const addDataPlan = (req, res) => {
     const { network_id, server_id, price, byte } = req.body
     let newPlan = { server_id, price, byte }
     let network = dataPlans.findOne({ network_id })
@@ -129,14 +149,14 @@ const addDataPlan = (req, res) =>{
         let plan = network.dataPlans
         plan.push(newPlan)
         network.save()
-        .then((data)=>{
-            res.status(200).json({ status: true, msg: "added successful", data })
-        })
-        .catch((error)=>{
-            res.status(400).json({ status: false, msg: "an error occurred", error })
-        })
+            .then((data) => {
+                res.status(200).json({ status: true, msg: "added successful", data })
+            })
+            .catch((error) => {
+                res.status(400).json({ status: false, msg: "an error occurred", error })
+            })
     }
 
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser }
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList }

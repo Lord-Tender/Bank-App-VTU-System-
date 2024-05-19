@@ -17,9 +17,15 @@ dataPlans = new mongoose.Schema(
     }
 )
 
-
+ipWishList = new mongoose.Schema(
+    {
+        ip: { type: String, require: true },
+        addBy: { type: String, require: true }
+    }
+)
 
 module.exports = {
     adminUser: mongoose.model('adminUser', adminUser),
-    dataPlans: mongoose.model('dataPlans', dataPlans)
+    dataPlans: mongoose.model('dataPlans', dataPlans),
+    ipWishList: mongoose.model('ipWishList', ipWishList)
 }

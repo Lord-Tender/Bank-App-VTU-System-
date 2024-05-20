@@ -12,10 +12,20 @@ import Home from './Pages/Home'
 import Transfer from './Pages/Transfer'
 import FlutterConfirm from './Pages/FlutterConfirm'
 import EmailVerifier from './Pages/EmailVerifier'
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthenticated } from './Redux/authSlide';
 
 const App = () => {
 
-  const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(setAuthenticated(true));
+    }
+  }, [dispatch]);
 
   return (
     <>
@@ -26,7 +36,7 @@ const App = () => {
         <Route path="/user/login" element={<Sign />} />
         <Route path="/user/verify" element={ <EmailVerifier /> } />
         <Route path="/user/reset_password" element={<Forgotten />} />
-        <Route path="/user/dashboard" element={token ? <Dashboard /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/profile" element={token ? <Profile /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/fund_wallet" element={token ? <AddMoney /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/fund_wallet/flutter_confirm" element={token ? <FlutterConfirm /> : <Navigate to="/user/login" />} replace />

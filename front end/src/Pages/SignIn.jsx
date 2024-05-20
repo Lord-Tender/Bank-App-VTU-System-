@@ -6,19 +6,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import * as yup from 'yup';
 import { BiHide, BiShow } from 'react-icons/bi';
+import { useDispatch } from 'react-redux';
+import { setAuthenticated } from './authSlice';
 
 
 const SignIn = () => {
     let navigate = useNavigate();
-
-    useEffect(() => {
-        const queryString = window.location.search
-        console.log(queryString);
-        if (queryString.startsWith('?redirected')) {
-            navigate('/user/login')
-            window.location.reload()
-        }
-    }, [])
+    const dispatch = useDispatch();
 
     let url = "http://localhost:5000/user/login";
 
@@ -42,6 +36,7 @@ const SignIn = () => {
             axios.post(url, values).then((res) => {
                 toast.success("Login successfull")
                 localStorage.setItem('token', res.data.token)
+                dispatch(setAuthenticated(true));
                 let emailVerify = res.data.user.emailInfo.emailVerified
                 setTimeout(() => {
                     if (emailVerify === false) {
@@ -49,7 +44,7 @@ const SignIn = () => {
                     } else if (emailVerify === true) {
                         navigate('/user/dashboard')
                     }
-                }, 2500);
+                }, 2000);
             }).catch((err) => {
                 if (err) {
                     document.getElementById('loader').style.display = 'none';
@@ -101,7 +96,7 @@ const SignIn = () => {
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange} value={formik.values.email} />
                         {formik.touched.email ? (
-                            <div className={ formik.errors.email ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.email}</i></div>
+                            <div className={formik.errors.email ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.email}</i></div>
                         ) : null}
 
                         <div className='flex items-center relative'>
@@ -110,12 +105,12 @@ const SignIn = () => {
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange} value={formik.values.password} />
                             <div className='text-[1.5rem] absolute right-3 top-4'>
-                                <BiHide className='hidden' id='hidePassword' onClick={hidePassword}/>
-                                <BiShow id='showPassword' onClick={showPassword}/>
+                                <BiHide className='hidden' id='hidePassword' onClick={hidePassword} />
+                                <BiShow id='showPassword' onClick={showPassword} />
                             </div>
                         </div>
                         {formik.touched.password ? (
-                            <div className={ formik.errors.password ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.password}</i></div>
+                            <div className={formik.errors.password ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.password}</i></div>
                         ) : null}
 
                         <p className='text-center text-dark '>Forgotten password? <Link to='/user/reset_password' className=' text-red-500'>Reset.</Link></p>

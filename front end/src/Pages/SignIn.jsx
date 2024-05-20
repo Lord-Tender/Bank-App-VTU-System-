@@ -91,7 +91,7 @@ const SignIn = () => {
     return (
         <>
             <section className='flex w-fl'>
-                <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-24'>
+                <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-24 bg-[] '>
                     <h1 className='text-center text-2xl text-blue-500 mt-32 mb-1'>Login to account</h1>
                     <p className='text-center text-dark mb-5'>Don't have an account? <Link to='/user/register' className='text-red-500 text-lg'>Create an account.</Link></p>
                     <form onSubmit={formik.handleSubmit}>
@@ -138,7 +138,7 @@ const SignIn = () => {
                             <p id='buttonText'>Sign In</p></button>
                     </form>
                 </div>
-                <div className='w-hf h-[100vh] hidden md:block lg:block bg-blue-400'>
+                <div className='w-hf h-[100vh] hidden md:block lg:block bg-blue-200'>
                     <img src={img} alt="" className='w-[80%] h-[90%] ms-[10%]' />
                 </div>
             </section>

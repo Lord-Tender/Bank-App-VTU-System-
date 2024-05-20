@@ -72,6 +72,10 @@ const addIpToWistList = async (req, res) => {
     }
 }
 
+const verifyIp = (req, res) => {
+    
+}
+
 const fetchAllUser = async (req, res) => {
     try {
         let allUsers = await userModel.find({})

@@ -44,7 +44,7 @@ const Dashboard = () => {
       setuser(res.data.userResult)
       setuserBal(res.data.userResult.accountBal.toLocaleString())
       if (res.data.emailVerified == false) {
-        navigate('/user/verify')
+        navigate('/user/not-verify')
       }
     })
       .catch((err) => {

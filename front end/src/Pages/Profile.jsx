@@ -32,7 +32,7 @@ const Profile = () => {
         setFile(res.data.userResult.photoUrl)
       }
       if (res.data.emailVerified == false) {
-        navigate('/user/verify')
+        navigate('/user/not-verify')
       }
     })
       .catch((err) => {

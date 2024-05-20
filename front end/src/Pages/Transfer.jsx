@@ -25,7 +25,7 @@ const Transfer = () => {
             setuser(res.data.userResult)
             setuserBal(res.data.userResult.accountBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' }))
             if (res.data.emailVerified == false) {
-                navigate('/user/verify')
+                navigate('/user/not-verify')
             }
         })
             .catch((err) => {

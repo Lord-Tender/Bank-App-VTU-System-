@@ -11,6 +11,7 @@ import AddMoney from './Pages/AddMoney'
 import Home from './Pages/Home'
 import Transfer from './Pages/Transfer'
 import FlutterConfirm from './Pages/FlutterConfirm'
+import EmailVerifier from './Pages/EmailVerifier'
 
 const App = () => {
 
@@ -23,13 +24,14 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/user/register" element={<SignUp />} />
         <Route path="/user/login" element={<Sign />} />
+        <Route path="/user/verify" element={ <EmailVerifier /> } />
         <Route path="/user/reset_password" element={<Forgotten />} />
         <Route path="/user/dashboard" element={token ? <Dashboard /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/profile" element={token ? <Profile /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/fund_wallet" element={token ? <AddMoney /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/fund_wallet/flutter_confirm" element={token ? <FlutterConfirm /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/transfer" element={token ? <Transfer /> : <Navigate to="/user/login" />} replace />
-        <Route path="/user/verify" element={token ? <EmailVerification /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/not-verify" element={token ? <EmailVerification /> : <Navigate to="/user/login" />} replace />
       </Routes>
     </>
   )

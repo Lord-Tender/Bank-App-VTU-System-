@@ -220,8 +220,8 @@ const getTokenAndVerify = async (req, res) => {
     const token = req.query.token
     let user = await userModel.findOne({ 'emailInfo.emailVerificationCode': token })
     if (user) {
-        if (user.emailInfo.emailVerified = true) {
-            res.status(200).json({ Message: 'Email is Already verified' });
+        if (user.emailInfo.emailVerified == true) {
+            res.status(400).json({ Message: 'Email is Already verified' });
         } else {
             console.log(user);
             user.emailInfo.emailVerified = true;

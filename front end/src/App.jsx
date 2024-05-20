@@ -25,7 +25,8 @@ const App = () => {
     if (token) {
       dispatch(setAuthenticated(true));
     }
-  }, [dispatch]);
+  }, []);
+  console.log(isAuthenticated);
 
   return (
     <>
@@ -37,11 +38,11 @@ const App = () => {
         <Route path="/user/verify" element={ <EmailVerifier /> } />
         <Route path="/user/reset_password" element={<Forgotten />} />
         <Route path="/user/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/user/login" />} replace />
-        <Route path="/user/dashboard/profile" element={token ? <Profile /> : <Navigate to="/user/login" />} replace />
-        <Route path="/user/dashboard/fund_wallet" element={token ? <AddMoney /> : <Navigate to="/user/login" />} replace />
-        <Route path="/user/dashboard/fund_wallet/flutter_confirm" element={token ? <FlutterConfirm /> : <Navigate to="/user/login" />} replace />
-        <Route path="/user/dashboard/transfer" element={token ? <Transfer /> : <Navigate to="/user/login" />} replace />
-        <Route path="/user/not-verify" element={token ? <EmailVerification /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/dashboard/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/dashboard/fund_wallet" element={isAuthenticated ? <AddMoney /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/dashboard/fund_wallet/flutter_confirm" element={isAuthenticated ? <FlutterConfirm /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/dashboard/transfer" element={isAuthenticated ? <Transfer /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/not-verify" element={isAuthenticated ? <EmailVerification /> : <Navigate to="/user/login" />} replace />
       </Routes>
     </>
   )

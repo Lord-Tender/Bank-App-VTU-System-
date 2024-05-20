@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import * as yup from 'yup';
 import { BiHide, BiShow } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import { setAuthenticated } from './authSlice';
+import { setAuthenticated } from '../Redux/authSlide';
 
 
 const SignIn = () => {

@@ -23,11 +23,11 @@ const registerUser = (req, res) => {
 
     function generateAccountNumber() {
         const random10Digits = Math.floor(Math.random() * (9999999999 - 1000000000 + 1)) + 1000000000;
-      
+
         return random10Digits.toString().slice(0, 10); // Extract the first 10 digits as a string
-      }
-      
-    
+    }
+
+
     const generatedAccountNo = Number(generateAccountNumber())
     const phoneVerificationCode = Math.floor(Math.random(10000) * 99999);
     const hashPassword = bcrypt.hashSync(password, 10);
@@ -220,20 +220,16 @@ const getTokenAndVerify = async (req, res) => {
     const token = req.query.token
     let user = await userModel.findOne({ 'emailInfo.emailVerificationCode': token })
     if (user) {
-        if (user.emailInfo.emailVerified == true) {
-            res.status(400).json({ Message: 'Email is Already verified' });
-        } else {
-            console.log(user);
-            user.emailInfo.emailVerified = true;
-            user.save()
-                .then(result => {
-                    res.status(200).json({ Message: 'Email verified successfully', result: result });
-                    console.log("SUCCUSSFUL");
-                })
-                .catch(err => {
-                    res.status(500).send('Error verifying email');
-                })
-        }
+        console.log(user);
+        user.emailInfo.emailVerified = true;
+        user.save()
+            .then(result => {
+                res.status(200).json({ Message: 'Email verified successfully', result: result });
+                console.log("SUCCUSSFUL");
+            })
+            .catch(err => {
+                res.status(500).send('Error verifying email');
+            })
     } else {
         res.status(400).json({ Message: 'Invalid token', result: user });
     }

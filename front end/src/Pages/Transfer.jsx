@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../assets/Styles/pages.css'
 import toast from 'react-hot-toast'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 
 const Transfer = () => {
     let navigate = useNavigate()
@@ -119,14 +120,24 @@ const Transfer = () => {
         document.getElementById('confirmination').style.display = 'none'
     }
 
+    const showSidebar = () => {
+        document.getElementById('sidebar').style.display = "block"
+      }
+
     return (
         <>
             <section className='flex relative w-full'>
                 <Siderbar />
 
                 {/* Body  */}
+
                 <div className='w-full lg:w-[60%] md:w-[60%] static lg:absolute  md:fixed left-[20%] '>
-                    <div className='bg-blue-100 rounded-lg mx-[3%] h-20 mt-6 px-[5%] flex justify-between text-[2em] items-center text-blue-800 mb-8'>
+                    <div className=' md:hidden lg:hidden bg-blue-50 rounded-lg mx-[3%] h-12 mt-6 px-[5%] flex justify-between items-center'>
+                        <div className='text-[1.5em] ' onClick={showSidebar}><BsThreeDotsVertical /></div>
+
+                    </div>
+
+                    <div className='bg-blue-100 rounded-lg mx-[3%] h-20 mt-3 md:mt-6 lg:mt-6 px-[5%] flex justify-between text-[1.5em] md:text-[2em] lg:text-[2em] items-center text-blue-800 mb-8'>
                         <p>Balance:</p>
                         <p>{userBal}</p>
                     </div>

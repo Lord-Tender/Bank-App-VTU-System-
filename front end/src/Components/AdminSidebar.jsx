@@ -14,7 +14,7 @@ const AdminSidebar = () => {
   return (
     <>
         <div className="sideBar md:block lg:block w-[20%] h-[100vh] fixed " id='sidebar' style={{backgroundColor: "rgb(15, 7, 7)"}}>
-                <div title='Close' onClick={hideSidebar} className=' text-[2rem] absolute right-[-15%] block md:hidden lg:hidden'>
+                <div title='Close' onClick={hideSidebar} className=' text-[2rem] absolute right-[-15%] hidden sm:block'>
                     <IoIosArrowBack />
                 </div>
                 <img src={logo} alt="" className='h-[13%] mt-5  mx-auto' style={{ paddingLeft: "-0.3rem" }} />

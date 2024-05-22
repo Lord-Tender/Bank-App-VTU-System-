@@ -14,60 +14,87 @@ ChartJS.register(
 
 const AdminDashboard = () => {
     const [chartData, setChartData] = useState("");
+    const [totalTransac, settotalTransac] = useState("")
+    const [totalUser, settotalUser] = useState("")
+    const [totalDeposit, settotalDeposit] = useState("")
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await axios.get('http://localhost:5000/admin/get_transactions/for_chart');
-            const data = response.data.result;
-            console.log(data);
-
-            const dates = data.map(item => item.date);
-            const transactionCounts = data.map(item => item.transactionCount);
-            console.log(dates, transactionCounts);
-
-            setChartData({
-                labels: dates,
-                datasets: [
-                    {
-                        label: 'Daily Transaction Counts',
-                        data: transactionCounts,
-                        borderColor: '#4A90E2',
-                        backgroundColor: 'whitesmoke',
-                        fill: true,
-                    },
-                ],
-            });
-        };
-
+        getUser()
+        getTotalTransac()
         fetchData();
     }, []);
+
+    const getUser = () => {
+        axios.get('http://localhost:5000/admin/get_user')
+        .then((res)=>{
+            settotalUser(res.data.allUsers.length)
+            let totalBal = 0
+            res.data.allUsers.map(items => { totalBal += Number(items.accountBal) } )
+            console.log(totalBal);
+            settotalDeposit(totalBal.toLocaleString('ng-en'))
+        })
+        .catch((err)=>{
+        })
+    }
+
+    const getTotalTransac = () =>{
+        axios.get('http://localhost:5000/admin/get_transactions')
+        .then((res)=>{
+            settotalTransac(res.data.allTransaction.length)
+
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+
+    const fetchData = async () => {
+        const response = await axios.get('http://localhost:5000/admin/get_transactions/for_chart');
+        const data = response.data.result;
+
+        const dates = data.map(item => item.date);
+        const transactionCounts = data.map(item => item.transactionCount);
+
+        setChartData({
+            labels: dates,
+            datasets: [
+                {
+                    label: 'Daily Transaction Counts',
+                    data: transactionCounts,
+                    borderColor: '#4A90E2',
+                    backgroundColor: 'whitesmoke',
+                    fill: true,
+                },
+            ],
+        });
+    };
 
     const options = {
         plugins: {
             legend: {
                 labels: {
-                    color: 'black', // Color of the legend text
+                    color: 'black',
                 },
             },
             title: {
                 display: true,
                 text: 'Daily Transaction Counts',
-                color: 'black', // Color of the title text
+                color: 'black',
             },
             tooltip: {
-                titleColor: 'black', // Color of the tooltip title
-                bodyColor: 'black', // Color of the tooltip body text
+                titleColor: 'black',
+                bodyColor: 'black',
             },
         },
         scales: {
             x: {
                 ticks: {
-                    color: 'black', // Color of the x-axis labels
+                    color: 'black',
                 },
             },
             y: {
                 ticks: {
-                    color: 'black', // Color of the y-axis labels
+                    color: 'black',
                 },
             },
         },
@@ -76,12 +103,12 @@ const AdminDashboard = () => {
     const showSidebar = () => {
         console.log("yug");
         document.getElementById('sidebar').style.display = "block"
-        document.getElementById('sideBarDiv').style.display = "block !important"
+        document.getElementById("section").style.overflow = "hidden !important"
       }
 
     return (
         <>
-            <section style={{ width: "100%", height: "100%", display: "flex" }}>
+            <section id='section' style={{ width: "100%", height: "100%", display: "flex" }}>
                 <div className='relative w-[20%] sm:absolute top-0 sm:w-[80%] ' id='sideBarDiv'>
                     <AdminSidebar />
                 </div>
@@ -91,7 +118,7 @@ const AdminDashboard = () => {
                 <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-full pb-10' style={{ backgroundColor: "whitesmoke" }}>
 
                     <div className='sm:flex items-center justify-between'>
-                        <HiOutlineDotsVertical onClick={showSidebar} className='hidden sm:block text-3xl mt-5' />
+                        <HiOutlineDotsVertical onClick={showSidebar} className='hidden sm:block text-3xl sm:text-3xl mt-5' />
                         <h1 className='text-2xl font-semibold mt-5 sm:text-center '>Overviews</h1>
 
                     </div>
@@ -99,15 +126,15 @@ const AdminDashboard = () => {
                     <div className="flex justify-between  my-[2em] w-[100%] sm:flex-wrap sm:gap-y-3 ">
                         <div className='w-[30%] sm:w-[48%] bg-white rounded border-2 sm:h-[8em] h-[10em] flex flex-col items-center justify-center '>
                             <p className='text-xl font-semibold'>Total User</p>
-                            <h2 className='text-3xl font-semibold'>20</h2>
+                            <h2 className='text-3xl sm:text-xl font-semibold'>{totalUser}</h2>
                         </div>
                         <div className='w-[30%] sm:w-[48%] bg-white rounded border-2 border-blue-500 sm:h-[8em] h-[10em] flex flex-col items-center justify-center text-blue-600 sm:border-white sm:text-black '>
                             <p className='text-xl font-semibold'>Total Deposit</p>
-                            <h2 className='text-3xl font-semibold'>50</h2>
+                            <h2 className='text-3xl sm:text-xl font-semibold'>{totalDeposit}</h2>
                         </div>
                         <div className='w-[30%] sm:w-[100%] bg-white rounded border-2 sm:h-[8em] h-[10em] flex flex-col items-center justify-center sm:border-blue-500 sm:text-blue-500'>
                             <p className='text-xl font-semibold'>Total Transaction</p>
-                            <h2 className='text-3xl font-semibold'>70</h2>
+                            <h2 className='text-3xl sm:text-xl font-semibold'>{totalTransac}</h2>
                         </div>
                     </div>
 

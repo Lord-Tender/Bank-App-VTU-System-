@@ -131,7 +131,7 @@ const Dashboard = () => {
             </NavLink>
           </div>
 
-          <div className="mainBody mt-14 p-1 md:px-5 lg:px-5 flex justify-between relative">
+          <div className="mainBody mt-14 p-1 md:px-5 lg:px-5 flex justify-between relative" style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
             <div className='absolute top-[-35%] block md:hidden lg:hidden text-[1.2rem] text-blue-700 bg-blue-200 rounded-full p-1.5' onClick={showSidebar}>
               <MdArrowBackIosNew />
             </div>
@@ -157,7 +157,7 @@ const Dashboard = () => {
 
           </div>
 
-          <div className="mainBody mt-8 p-1 md:px-5 lg:px-5 flex justify-between ">
+          <div className="mainBody mt-8 p-1 md:px-5 lg:px-5 flex justify-between " style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
             <Link className='w-[22%] md:w-[20%] lg:w-[20%]'>
               <div className='bg-blue-100 w-full h-[5rem] flex justify-center items-center rounded-lg text-[1.7rem] md:text-[2.5rem] lg:text-[2.5rem] text-blue-900 '><PiUsersThreeFill /></div>
               <p className=' text-[0.9rem] md:text-xl lg:text-xl text-center mt-2 '>Refer&Earn</p>

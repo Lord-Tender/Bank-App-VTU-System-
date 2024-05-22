@@ -127,7 +127,7 @@ const Transfer = () => {
 
                 {/* Body  */}
 
-                <div className='w-full lg:w-[60%] md:w-[60%] static lg:absolute  md:fixed left-[20%] '>
+                <div className='w-full lg:w-[60%] md:w-[60%] static lg:absolute  md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
                     <div className=' md:hidden lg:hidden bg-blue-50 rounded-lg mx-[3%] h-12 mt-6 px-[5%] flex justify-between items-center'>
                         <div className='text-[1.5em] ' onClick={showSidebar}><BsThreeDotsVertical /></div>
 

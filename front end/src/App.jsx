@@ -15,6 +15,7 @@ import EmailVerifier from './Pages/EmailVerifier'
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthenticated } from './Redux/authSlide';
 import AdminDashboard from './Pages/AdminDashboard'
+import AdminLogin from './Pages/AdminLogin'
 
 const App = () => {
 
@@ -47,6 +48,8 @@ const App = () => {
         {/* Admin routes */}
 
         <Route path="/admin" element={ <AdminDashboard />} />
+        <Route path="/admin/login" element={ <AdminLogin />} />
+        <Route path="/admin/dashboard" element={ <AdminDashboard />} />
 
       </Routes>
     </>

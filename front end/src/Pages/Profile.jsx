@@ -139,7 +139,7 @@ const Profile = () => {
 
         {/* Main body */}
 
-        <div className='w-full lg:w-[60%] md:w-[60%] bg-gray-100 static lg:absolute  md:fixed left-[20%] '>
+        <div className='w-full lg:w-[60%] md:w-[60%] bg-gray-100 static lg:absolute  md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
           <h1 className='text-blue-900 text-[1.5rem] ps-7 p-1.5 border-b-2 border-b-blue-100 flex items-center gap-6'> <Link to='/user/dashboard'><GoArrowLeft /> </Link>  <span>Edit Profile</span> </h1>
 
           {/* Upload profile */}

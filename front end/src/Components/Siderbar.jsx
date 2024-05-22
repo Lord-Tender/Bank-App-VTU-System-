@@ -16,7 +16,7 @@ const Siderbar = () => {
   }
   return (
     <>
-      <div className="sideBar md:block lg:block w-[20%] bg-blue-950 h-[100vh] fixed " id='sidebar' style={{}}>
+      <div className="sideBar md:block lg:block w-[20%] bg-blue-950 h-[100vh] fixed " id='sidebar' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
           <div title='Close' onClick={hideSidebar} className=' text-[2rem] absolute right-[-15%] block md:hidden lg:hidden'>
             <IoIosArrowBack />
           </div>

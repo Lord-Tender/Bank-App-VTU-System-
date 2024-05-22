@@ -112,7 +112,7 @@ const AdminDashboard = () => {
 
                 {/* Body */}
 
-                <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-full pb-10' style={{ backgroundColor: "whitesmoke" }}>
+                <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-full pb-10' style={{ backgroundColor: "whitesmoke", fontFamily: '"Josefin Sans", sans-serif' }}>
 
                     <div className='sm:flex items-center justify-between'>
                         <HiOutlineDotsVertical onClick={showSidebar} className='hidden sm:block text-3xl sm:text-3xl mt-5' />

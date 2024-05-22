@@ -18,7 +18,7 @@ const AdminSidebar = () => {
                     <IoIosArrowBack />
                 </div>
                 <img src={logo} alt="" className='h-[13%] mt-5  mx-auto' style={{ paddingLeft: "-0.3rem" }} />
-                <NavLink to='/admin' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-4 mt-8 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/user/dashboard' ? 'border-l-4 border-blue-100 ps-4' : ''
+                <NavLink to='/admin/dashboard' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-4 mt-8 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/dashboard' ? 'border-l-4 border-blue-100 ps-4' : ''
                     }`}>
                     <LuView />
                     <p>Overviews</p>

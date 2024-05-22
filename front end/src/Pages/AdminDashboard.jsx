@@ -30,8 +30,7 @@ const AdminDashboard = () => {
             settotalUser(res.data.allUsers.length)
             let totalBal = 0
             res.data.allUsers.map(items => { totalBal += Number(items.accountBal) } )
-            console.log(totalBal);
-            settotalDeposit(totalBal.toLocaleString('ng-en'))
+            settotalDeposit(totalBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' }))
         })
         .catch((err)=>{
         })
@@ -44,7 +43,6 @@ const AdminDashboard = () => {
 
         })
         .catch((err)=>{
-            console.log(err);
         })
     }
 
@@ -101,7 +99,6 @@ const AdminDashboard = () => {
     };
 
     const showSidebar = () => {
-        console.log("yug");
         document.getElementById('sidebar').style.display = "block"
         document.getElementById("section").style.overflow = "hidden !important"
       }
@@ -130,7 +127,7 @@ const AdminDashboard = () => {
                         </div>
                         <div className='w-[30%] sm:w-[48%] bg-white rounded border-2 border-blue-500 sm:h-[8em] h-[10em] flex flex-col items-center justify-center text-blue-600 sm:border-white sm:text-black '>
                             <p className='text-xl font-semibold'>Total Deposit</p>
-                            <h2 className='text-3xl sm:text-xl font-semibold'>{totalDeposit}</h2>
+                            <h2 className='text-3xl sm:text-xl font-normal'>{totalDeposit}</h2>
                         </div>
                         <div className='w-[30%] sm:w-[100%] bg-white rounded border-2 sm:h-[8em] h-[10em] flex flex-col items-center justify-center sm:border-blue-500 sm:text-blue-500'>
                             <p className='text-xl font-semibold'>Total Transaction</p>
@@ -138,7 +135,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
 
-                    <div className=' h-[25em] w-[100%] bg-white ' style={{ display: "Flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "100%", height: "25em" }}>
+                    <div className=' h-[25em] w-[100%] bg-white border-2' style={{ display: "Flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "100%", height: "25em" }}>
                         <h1>Transaction Stats</h1>
                         <div className='sm:h-[1000em]' style={{ width: "100%", height: "90%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                             {chartData ? (<Line className='w-[90%] h-[80%] sm:!h-[95%] ' options={options} data={chartData} />) : (<p>Loading chart data...</p>)}

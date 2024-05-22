@@ -91,7 +91,6 @@ const Transfer = () => {
 
     const showConfirmination = () => {
         let validator = validate()
-        console.log(validator);
         if (validator == false) {
             toast.error("Invalid account or insufficent fund")
         } else if (validator == true && validator != false) {
@@ -102,15 +101,12 @@ const Transfer = () => {
     const sendMoney = () => {
         document.getElementById('loader').style.display = 'flex'
         const url = 'http://localhost:5000/user/intra_transfer'
-        console.log(receiver, amount)
         axios.post(url, { sender: user.emailInfo.email, receiver, amount })
             .then((res) => {
-                console.log(res);
                 document.getElementById('loader').style.display = 'none'
                 window.location.reload()
             })
             .catch((err) => {
-                console.log(err);
                 toast.error(err.response.data.mgs)
                 document.getElementById('loader').style.display = 'none'
             })

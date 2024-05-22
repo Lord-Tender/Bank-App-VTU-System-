@@ -67,13 +67,13 @@ const addIpToWistList = async (req, res) => {
             .catch((err) => {
                 res.status(500).json({ status: "Error", msg: "Error added ip" })
             })
-    }else{
+    } else {
         res.status(400).json({ status: false, msg: "Admin user not found" })
     }
 }
 
 const verifyIp = (req, res) => {
-    
+
 }
 
 const fetchAllUser = async (req, res) => {
@@ -129,6 +129,39 @@ const getAllTransaction = (req, res) => {
     }
 }
 
+const getAllTransForChart = async (req, res) => {
+    let debitTransactio = await debitTransaction.find({})
+    let creditTransactio = await debitTransaction.find({})
+    let flutterTransactio = await debitTransaction.find({})
+    let allTransaction = []
+    let newAllTrans = allTransaction.concat(debitTransactio, creditTransactio, flutterTransactio)
+
+    const extractDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0];
+    };
+
+    const aggregatedData = newAllTrans.reduce((acc, transaction) => {
+        const date = extractDate(transaction.date)
+        if (!acc[date]) {
+            acc[date] = 0;
+        }
+        acc[date] += 1;
+        return acc;
+    }, {});
+
+    const result = Object.keys(aggregatedData).map(date => ({
+        date,
+        transactionCount: aggregatedData[date]
+    }));
+
+    if (debitTransactio && creditTransactio && flutterTransactio) {
+        res.status(200).json({ status: true, result })
+    } else {
+        res.status(500).json({ status: false, msg: "Am error occurred" })
+    }
+}
+
 const addNetwork = (req, res) => {
     const { network_id, network_name } = req.body
     let network = new dataPlans({
@@ -163,4 +196,4 @@ const addDataPlan = (req, res) => {
 
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList }
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart }

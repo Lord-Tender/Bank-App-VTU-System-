@@ -14,6 +14,7 @@ import FlutterConfirm from './Pages/FlutterConfirm'
 import EmailVerifier from './Pages/EmailVerifier'
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthenticated } from './Redux/authSlide';
+import AdminDashboard from './Pages/AdminDashboard'
 
 const App = () => {
 
@@ -26,7 +27,6 @@ const App = () => {
       dispatch(setAuthenticated(true));
     }
   }, []);
-  console.log(isAuthenticated);
 
   return (
     <>
@@ -35,7 +35,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/user/register" element={<SignUp />} />
         <Route path="/user/login" element={<Sign />} />
-        <Route path="/user/verify" element={ <EmailVerifier /> } />
+        <Route path="/user/verify" element={<EmailVerifier />} />
         <Route path="/user/reset_password" element={<Forgotten />} />
         <Route path="/user/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/user/login" />} replace />
@@ -43,6 +43,11 @@ const App = () => {
         <Route path="/user/dashboard/fund_wallet/flutter_confirm" element={isAuthenticated ? <FlutterConfirm /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/transfer" element={isAuthenticated ? <Transfer /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/not-verify" element={isAuthenticated ? <EmailVerification /> : <Navigate to="/user/login" />} replace />
+
+        {/* Admin routes */}
+
+        <Route path="/admin" element={ <AdminDashboard />} />
+
       </Routes>
     </>
   )

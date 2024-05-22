@@ -118,12 +118,14 @@ const adminDebitUser = async (req, res) => {
     }
 }
 
-const getAllTransaction = (req, res) => {
-    let debitTransaction = debitTransaction.find({})
-    let creditTransaction = debitTransaction.find({})
-    let flutterTransaction = debitTransaction.find({})
+const getAllTransaction = async (req, res) => {
+    let debitTransactio = await debitTransaction.find({})
+    let creditTransactio = await debitTransaction.find({})
+    let flutterTransactio = await debitTransaction.find({})
+    let allTransaction = []
+    let newAllTrans = allTransaction.concat(debitTransactio, creditTransactio, flutterTransactio)
     if (debitTransaction && creditTransaction && flutterTransaction) {
-        res.status(200).json({ status: true, debitTransaction, creditTransaction, flutterTransaction })
+        res.status(200).json({ status: true, allTransaction: newAllTrans })
     } else {
         res.status(500).json({ status: false, msg: "Am error occurred" })
     }

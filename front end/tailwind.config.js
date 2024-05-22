@@ -6,10 +6,9 @@ export default {
   ],
   theme: {
     screens: {
-      sm: '480px',
-      md: '768px',
-      lg: '976px',
-      xl: '1440px',
+      'sm': {'min': '0px', 'max': '600px'},
+      'md': {'min': '640px', 'max': '976px'},
+      'lg': {'min': '1024px', 'max': '1279px'},
     },
     extend: {
       spacing: {

@@ -4,6 +4,7 @@ const secret = process.env.SECRET
 const { creditUser, debitUser } = require('./user.Controller')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
+const adminModel = require("../Models/admin.Model");
 
 
 const addAdminUser = (req, res) => {
@@ -34,7 +35,7 @@ const loginUser = async (req, res) => {
         if (user) {
             const comparedPassword = bcrypt.compareSync(password, user.password)
             if (comparedPassword) {
-                const token = jwt.sign({ userId: user._id }, secret, { expiresIn: "1d" });
+                const token = jwt.sign({ userId: user._id }, secret, { expiresIn: "2m" });
                 res.status(200).json({
                     status: true,
                     msg: "User found",
@@ -60,10 +61,9 @@ const pageAuth = async (req, res) => {
             return res.status(400).json({ Message: "User not found", error: err })
         } else {
             let userId = result.userId
-            userModel.findById(userId)
+            adminUser.findById(userId)
                 .then((userResult) => {
-                    let emailVerified = userResult.emailInfo.emailVerified
-                    return res.status(200).json({ Message: "User found", user: result, emailVerified, userResult })
+                    return res.status(200).json({ Message: "User found", userResult })
                 })
         }
     })

@@ -15,7 +15,6 @@ const AdminLogin = () => {
         const url = "http://localhost:5000/admin/login"
         axios.post(url, { email, password })
             .then((res) => {
-                console.log(res.data);
                 localStorage.setItem('admin_token', res.data.token)
                 toast.success("Login Successfull")
                 document.getElementById('loader').style.display = 'none';
@@ -25,7 +24,7 @@ const AdminLogin = () => {
                 }, 2000);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error("Invalid details")
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('buttonText').style.display = 'block';
             })

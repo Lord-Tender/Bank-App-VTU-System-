@@ -4,6 +4,7 @@ import logo from '../assets/Image/sublogo.png'
 import '../assets/Styles/comp.css'
 import { LuView } from 'react-icons/lu'
 import { IoIosArrowBack } from 'react-icons/io'
+import { MdHomeRepairService } from 'react-icons/md'
 
 const AdminSidebar = () => {
     
@@ -24,10 +25,10 @@ const AdminSidebar = () => {
                     <p>Overviews</p>
                 </NavLink>
 
-                <NavLink to='/user/dashboard/transfer' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-5 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/user/dashboard/transfer' ? 'border-l-4 border-blue-100 ps-4' : ''
+                <NavLink to='/admin/service' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-5 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/service' ? 'border-l-4 border-blue-100 ps-3' : ''
                     }`}>
-                    {/* <FaMoneyBillTransfer /> */}
-                    <p>Transfer</p>
+                    <MdHomeRepairService />
+                    <p>Services</p>
                 </NavLink>
 
                 <NavLink to='/user/dashboard/pay-bills' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-5 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/user/dashboard/pay-bills' ? 'border-l-4 border-blue-100 ps-4' : ''

@@ -4,7 +4,7 @@ const { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTrans
 
 router.post("/add_user", addAdminUser)
 router.post("/login", loginUser)
-router.post("/page_auth", pageAuth)
+router.get("/page_auth", pageAuth)
 router.post("/add_ipwishlist", addIpToWistList)
 router.get("/get_user", fetchAllUser)
 router.post("/credit_user", adminCreditUser)

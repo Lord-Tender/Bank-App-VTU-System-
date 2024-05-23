@@ -6,6 +6,8 @@ import {
     Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend, Filler,
 } from 'chart.js';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 ChartJS.register(
     LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend, Filler
@@ -17,33 +19,53 @@ const AdminDashboard = () => {
     const [totalTransac, settotalTransac] = useState("")
     const [totalUser, settotalUser] = useState("")
     const [totalDeposit, settotalDeposit] = useState("")
+    let navigate = useNavigate()
 
     useEffect(() => {
+        userAuth()
         getUser()
         getTotalTransac()
         fetchData();
     }, []);
 
-    const getUser = () => {
-        axios.get('http://localhost:5000/admin/get_user')
-        .then((res)=>{
-            settotalUser(res.data.allUsers.length)
-            let totalBal = 0
-            res.data.allUsers.map(items => { totalBal += Number(items.accountBal) } )
-            settotalDeposit(totalBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' }))
+    const userAuth = () => {
+        let token = localStorage.getItem('admin_token')
+        let url = 'http://localhost:5000/admin/page_auth'
+
+        axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+        }).then((res) => {
+            toast.success("Welcome Back!!!")
         })
-        .catch((err)=>{
+        .catch((err) => {
+            navigate("/admin/login")
         })
     }
 
-    const getTotalTransac = () =>{
-        axios.get('http://localhost:5000/admin/get_transactions')
-        .then((res)=>{
-            settotalTransac(res.data.allTransaction.length)
+    const getUser = () => {
+        axios.get('http://localhost:5000/admin/get_user')
+            .then((res) => {
+                settotalUser(res.data.allUsers.length)
+                let totalBal = 0
+                res.data.allUsers.map(items => { totalBal += Number(items.accountBal) })
+                settotalDeposit(totalBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' }))
+            })
+            .catch((err) => {
+            })
+    }
 
-        })
-        .catch((err)=>{
-        })
+    const getTotalTransac = () => {
+        axios.get('http://localhost:5000/admin/get_transactions')
+            .then((res) => {
+                settotalTransac(res.data.allTransaction.length)
+
+            })
+            .catch((err) => {
+            })
     }
 
     const fetchData = async () => {
@@ -101,7 +123,7 @@ const AdminDashboard = () => {
     const showSidebar = () => {
         document.getElementById('sidebar').style.display = "block"
         document.getElementById("section").style.overflow = "hidden !important"
-      }
+    }
 
     return (
         <>

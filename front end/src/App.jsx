@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAuthenticated } from './Redux/authSlide';
 import AdminDashboard from './Pages/AdminDashboard'
 import AdminLogin from './Pages/AdminLogin'
+import AdminService from './Pages/AdminService'
 
 const App = () => {
 
@@ -50,6 +51,7 @@ const App = () => {
         <Route path="/admin" element={ <AdminDashboard />} />
         <Route path="/admin/login" element={ <AdminLogin />} />
         <Route path="/admin/dashboard" element={ <AdminDashboard />} />
+        <Route path="/admin/service" element={ <AdminService />} />
 
       </Routes>
     </>

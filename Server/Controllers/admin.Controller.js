@@ -53,6 +53,22 @@ const loginUser = async (req, res) => {
 
 }
 
+const pageAuth = async (req, res) => {
+    let token = req.headers.authorization.split(" ")[1]
+    jwt.verify(token, secret, (err, result) => {
+        if (err) {
+            return res.status(400).json({ Message: "User not found", error: err })
+        } else {
+            let userId = result.userId
+            userModel.findById(userId)
+                .then((userResult) => {
+                    let emailVerified = userResult.emailInfo.emailVerified
+                    return res.status(200).json({ Message: "User found", user: result, emailVerified, userResult })
+                })
+        }
+    })
+}
+
 const addIpToWistList = async (req, res) => {
     const { ip, email } = req.body
     let theAdmin = await addAdminUser.findOne({ email })
@@ -199,4 +215,4 @@ const addDataPlan = (req, res) => {
 
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart }
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth }

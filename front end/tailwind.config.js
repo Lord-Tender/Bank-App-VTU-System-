@@ -8,7 +8,7 @@ export default {
     screens: {
       'sm': {'min': '0px', 'max': '600px'},
       'md': {'min': '640px', 'max': '976px'},
-      'lg': {'min': '1024px', 'max': '1279px'},
+      'lg': {'min': '1024px', 'max': '2279px'},
     },
     extend: {
       spacing: {

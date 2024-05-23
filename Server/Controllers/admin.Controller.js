@@ -1,5 +1,6 @@
 const { adminUser, dataPlans, ipWishList } = require("../Models/admin.Model")
 const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
+const secret = process.env.SECRET
 const { creditUser, debitUser } = require('./user.Controller')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');

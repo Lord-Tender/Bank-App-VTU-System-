@@ -17,6 +17,7 @@ import { setAuthenticated } from './Redux/authSlide';
 import AdminDashboard from './Pages/AdminDashboard'
 import AdminLogin from './Pages/AdminLogin'
 import AdminService from './Pages/AdminService'
+import AdminTransac from './Pages/AdminTransac'
 
 const App = () => {
 
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/admin/login" element={ <AdminLogin />} />
         <Route path="/admin/dashboard" element={ <AdminDashboard />} />
         <Route path="/admin/service" element={ <AdminService />} />
+        <Route path="/admin/transactions" element={ <AdminTransac />} />
 
       </Routes>
     </>

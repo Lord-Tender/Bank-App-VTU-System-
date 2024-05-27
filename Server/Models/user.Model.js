@@ -51,7 +51,7 @@ debitTransaction = new mongoose.Schema(
         transactor: String,
         Recipient: String,
         transactionType: String,
-        transactionId: String,
+        transactionId: { type: String, unique: true },
         amount: String,
         date: String,
         time: String
@@ -63,7 +63,7 @@ creditTransaction = new mongoose.Schema(
         transactor: String,
         From: String,
         transactionType: String,
-        transactionId: String,
+        transactionId: { type: String, unique: true },
         amount: String,
         date: String,
         time: String

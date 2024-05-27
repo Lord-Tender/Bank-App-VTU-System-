@@ -65,7 +65,7 @@ const AdminLogin = () => {
                     <div className='flex items-center relative'>
                         <input className='block w-full h-[3em] rounded mb-3 p-3 border border-blue-300 focus:border-blue-500 focus:outline-none ' onChange={(e) => { setpassword(e.target.value) }}
                             type="password" placeholder='Password' name='password' id='password' />
-                        <div className='text-[1.4rem] absolute right-3 top-3 text-blue-700'>
+                        <div className='text-[1.4rem] absolute right-3 top-3 text-blue-800'>
                             <BiHide className='hidden' id='hidePassword' onClick={hidePassword} />
                             <BiShow id='showPassword' onClick={showPassword} />
                         </div>

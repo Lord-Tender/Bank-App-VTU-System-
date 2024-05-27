@@ -181,6 +181,19 @@ const getAllTransForChart = async (req, res) => {
     }
 }
 
+const searchTransac = async (res, req) => {
+    const { transactionId } = req.body
+    let debitTransaction = await debitTransaction.findOne({ transactionId })
+    let creditTransaction = await creditTransaction.findOne({ transactionId })
+    if (debitTransaction) {
+        res.status(200).json({ msg: "success", transactionDetail: debitTransaction })
+    }else if (creditTransaction) {
+        res.status(200).json({ msg: "success", transactionDetail: creditTransaction })
+    }else{
+        res.status(400).json({ msg: "No transaction found!" })
+    }
+}
+
 const addNetwork = (req, res) => {
     const { network_id, network_name } = req.body
     let network = new dataPlans({
@@ -215,4 +228,4 @@ const addDataPlan = (req, res) => {
 
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth }
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac }

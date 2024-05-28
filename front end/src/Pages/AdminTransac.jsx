@@ -24,7 +24,7 @@ const AdminTransac = () => {
             }).then((res) => {
             })
                 .catch((err) => {
-                    // navigate("/admin/login")
+                    navigate("/admin/login")
                 })
         }
         userAuth()
@@ -46,15 +46,12 @@ const AdminTransac = () => {
             let url = 'http://localhost:5000/admin/transaction/get_one'
             axios.post(url, { transactionId })
                 .then((res) => {
-                    console.log(res);
                     setresult(res.data.transactionDetail)
                     settransacType(res.data.transactionType)
                     document.getElementById('loader').style.display = 'none';
                     document.getElementById('buttonText').style.display = 'block';
                 })
                 .catch((err) => {
-                    toast.error("An error occurred")
-                    console.log(err);
                     setresult("")
                     document.getElementById('loader').style.display = 'none';
                     document.getElementById('buttonText').style.display = 'block';
@@ -67,16 +64,13 @@ const AdminTransac = () => {
         document.getElementById('loader3').style.display = 'block';
         document.getElementById('buttonText3').style.display = 'none';
         let url = 'http://localhost:5000/admin/credit_user'
-        console.log(result.transactor, result.amount.split("₦")[1]);
         axios.post(url, { userEmail: result.transactor, amount: result.amount.split("₦")[1], reason: "Refunded" })
             .then((res) => {
                 toast.success("Refund made successfully")
-                console.log(res);
                 document.getElementById('loader3').style.display = 'none';
                 document.getElementById('buttonText3').style.display = 'block';
             })
             .catch((err) => {
-                console.log(err);
                 document.getElementById('loader3').style.display = 'none';
                 document.getElementById('buttonText3').style.display = 'block';
             })
@@ -86,17 +80,14 @@ const AdminTransac = () => {
         document.getElementById('loader2').style.display = 'block';
         document.getElementById('buttonText2').style.display = 'none';
         let url = 'http://localhost:5000/admin/debit_user'
-        console.log(result.transactor, result.amount.split("₦")[1]);
         axios.post(url, { userEmail: result.transactor, amount: result.amount.split("₦")[1] })
             .then((res) => {
                 toast.success("Fund reversed successfully")
-                console.log(res);
                 document.getElementById('loader2').style.display = 'none';
                 document.getElementById('buttonText2').style.display = 'block';
             })
             .catch((err) => {
                 toast.error("An error occurred")
-                console.log(err);
                 document.getElementById('loader2').style.display = 'none';
                 document.getElementById('buttonText2').style.display = 'block';
             })

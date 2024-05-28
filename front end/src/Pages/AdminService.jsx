@@ -23,7 +23,7 @@ const AdminService = () => {
             }).then((res) => {
             })
                 .catch((err) => {
-                    navigate("/admin/login")
+                    // navigate("/admin/login")
                 })
         }
         userAuth()
@@ -40,6 +40,18 @@ const AdminService = () => {
 
                 <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-screen pb-10' style={{ backgroundColor: "whitesmoke", fontFamily: '"Josefin Sans", sans-serif' }}>
 
+                    {/* Select Service */}
+                    <div className='w-full bg-white h-28 my-3 rounded-xl'>
+                        <h2 className='text-center text-lg pt-3 text-blue-700'>Select a service to edit</h2>
+                        <div className='flex justify-center mt-3 '>
+                            <select name="" id="service" className='border-2 border-blue-600 rounded p-2 w-[50%]  text-blue-600 focus:outline-none'>
+                                <option value="null" className=''>Select service</option>
+                                <option value="airtime">Airtime</option>
+                                <option value="data">Data</option>
+                            </select>
+                            
+                        </div>
+                    </div>
                 </div>
             </section>
         </>

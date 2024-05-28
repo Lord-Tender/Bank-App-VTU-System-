@@ -62,6 +62,17 @@ const AdminTransac = () => {
         }
     }
 
+    const refundDebit = () => {
+        let url = 'http://localhost:5000/admin/credit_user'
+        axios.post(url, { userEmail: result.transactor, amount: result.amount, reason: "Refunded" })
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+
     return (
         <>
             <section style={{ width: "100%", height: "100%", display: "flex" }} >
@@ -125,7 +136,7 @@ const AdminTransac = () => {
                                 </tr>
                                 <tr>
                                     <td>Action</td>
-                                    <td>{ transacType == "Credit" ? ( <button className='bg-red-600 w-28 h-[2em] rounded text-white'>Reverse</button> ) : ( <button className='bg-blue-800 w-28 h-[2em] rounded text-white'>Refund</button> ) }</td>
+                                    <td>{ transacType == "Credit" ? ( <button className='bg-red-600 w-28 h-[2em] rounded text-white'>Reverse</button> ) : ( <button className='bg-blue-800 w-28 h-[2em] rounded text-white' onClick={refundDebit}>Refund</button> ) }</td>
                                 </tr>
                             </table>
                         </div> : <div> { errorMsg } </div> }

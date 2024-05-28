@@ -1,0 +1,12 @@
+table{
+    /* border: 2px solid whitesmoke; */
+}
+
+td{
+    /* border: 2px solid whitesmoke; */
+    padding: 7px;
+}
+
+tr:nth-child(even) {
+    background-color: whitesmoke;
+}

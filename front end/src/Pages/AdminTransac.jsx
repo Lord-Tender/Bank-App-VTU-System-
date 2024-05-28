@@ -3,6 +3,7 @@ import AdminSidebar from '../Components/AdminSidebar'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import "../assets/Styles/admin.css"
 
 const AdminTransac = () => {
 
@@ -97,9 +98,9 @@ const AdminTransac = () => {
 
                     {/* Search result */}
                     <div className='w-full bg-white h-96 my-3 rounded-xl flex justify-center items-center'>
-                        { result ? <div className='h-[90%] w-[90%]  '>
-                            <table className='h-full w-full border-2 border-blue-800 '>
-                                <tr className='p-20'>
+                        { result ? <div className='h-[90%] w-[90%] border-2 border-[whitesmoke] rounded-xl '>
+                            <table className='h-full w-full '>
+                                <tr>
                                     <td>Transaction Type:</td>
                                     <td>{result.transactionType}</td>
                                 </tr>

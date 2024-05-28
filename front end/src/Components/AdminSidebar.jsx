@@ -32,7 +32,7 @@ const AdminSidebar = () => {
                     <p>Services</p>
                 </NavLink>
 
-                <NavLink to='/admin/transactions' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-5 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/transactions' ? 'border-l-4 border-blue-100 ps-2.5' : ''
+                <NavLink to='/admin/transactions' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-4 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/transactions' ? 'border-l-4 border-blue-100 ps-2.5' : ''
                     }`}>
                     <BiHistory />
                     <p>Transactions</p>

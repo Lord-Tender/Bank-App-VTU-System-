@@ -33,6 +33,7 @@ const AdminTransac = () => {
     const [transactionId, settransactionId] = useState("")
     const [result, setresult] = useState("")
     const [errorMsg, seterrorMsg] = useState("Search transaction with ID")
+    const [transacType, settransacType] = useState("")
 
     const searchTransac = () => {
         document.getElementById('loader').style.display = 'block';
@@ -47,11 +48,13 @@ const AdminTransac = () => {
                 .then((res) => {
                     console.log(res);
                     setresult(res.data.transactionDetail)
+                    settransacType(res.data.transactionType)
                     document.getElementById('loader').style.display = 'none';
                     document.getElementById('buttonText').style.display = 'block';
                 })
                 .catch((err) => {
                     console.log(err);
+                    setresult("")
                     document.getElementById('loader').style.display = 'none';
                     document.getElementById('buttonText').style.display = 'block';
                     seterrorMsg("No transaction found!")
@@ -102,7 +105,7 @@ const AdminTransac = () => {
                             <table className='h-full w-full '>
                                 <tr>
                                     <td>Transaction Type:</td>
-                                    <td>{result.transactionType}</td>
+                                    <td>{ `${result.transactionType} (${transacType == "Credit" ? "Credit" : "Debit"})` }</td>
                                 </tr>
                                 <tr>
                                     <td>Transactor Email:</td>
@@ -122,7 +125,7 @@ const AdminTransac = () => {
                                 </tr>
                                 <tr>
                                     <td>Action</td>
-                                    <td>{result.date}</td>
+                                    <td>{ transacType == "Credit" ? ( <button className='bg-red-600 w-28 h-[2em] rounded text-white'>Reverse</button> ) : ( <button className='bg-blue-800 w-28 h-[2em] rounded text-white'>Refund</button> ) }</td>
                                 </tr>
                             </table>
                         </div> : <div> { errorMsg } </div> }

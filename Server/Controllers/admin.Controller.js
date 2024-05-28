@@ -186,9 +186,9 @@ const searchTransac = async (req, res) => {
     let debitTransactio = await debitTransaction.findOne({ transactionId })
     let creditTransactio = await creditTransaction.findOne({ transactionId })
     if (debitTransactio) {
-        res.status(200).json({ msg: "success", transactionDetail: debitTransactio })
+        res.status(200).json({ msg: "success", transactionDetail: debitTransactio, transactionType: "Debit" })
     }else if (creditTransactio) {
-        res.status(200).json({ msg: "success", transactionDetail: creditTransactio })
+        res.status(200).json({ msg: "success", transactionDetail: creditTransactio, transactionType: "Credit" })
     }else{
         res.status(400).json({ msg: "No transaction found!" })
     }

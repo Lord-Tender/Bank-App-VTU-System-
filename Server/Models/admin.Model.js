@@ -17,6 +17,13 @@ dataPlans = new mongoose.Schema(
     }
 )
 
+settings = new mongoose.Schema(
+    {
+        airtimePrice: { type: Number },
+        
+    }
+)
+
 ipWishList = new mongoose.Schema(
     {
         ip: { type: String, require: true },

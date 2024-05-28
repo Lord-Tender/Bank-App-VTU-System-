@@ -52,6 +52,14 @@ const AdminService = () => {
                             
                         </div>
                     </div>
+
+                    {/* Service settings */}
+
+                    <div className='w-full bg-white h-96 my-3 rounded-xl flex justify-center items-center'>
+                        {
+                            
+                        }
+                    </div>
                 </div>
             </section>
         </>

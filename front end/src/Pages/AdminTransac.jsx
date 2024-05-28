@@ -53,6 +53,7 @@ const AdminTransac = () => {
                     document.getElementById('buttonText').style.display = 'block';
                 })
                 .catch((err) => {
+                    toast.error("An error occurred")
                     console.log(err);
                     setresult("")
                     document.getElementById('loader').style.display = 'none';
@@ -69,6 +70,7 @@ const AdminTransac = () => {
         console.log(result.transactor, result.amount.split("₦")[1]);
         axios.post(url, { userEmail: result.transactor, amount: result.amount.split("₦")[1], reason: "Refunded" })
             .then((res) => {
+                toast.success("Refund made successfully")
                 console.log(res);
                 document.getElementById('loader3').style.display = 'none';
                 document.getElementById('buttonText3').style.display = 'block';
@@ -87,11 +89,13 @@ const AdminTransac = () => {
         console.log(result.transactor, result.amount.split("₦")[1]);
         axios.post(url, { userEmail: result.transactor, amount: result.amount.split("₦")[1] })
             .then((res) => {
+                toast.success("Fund reversed successfully")
                 console.log(res);
                 document.getElementById('loader2').style.display = 'none';
                 document.getElementById('buttonText2').style.display = 'block';
             })
             .catch((err) => {
+                toast.error("An error occurred")
                 console.log(err);
                 document.getElementById('loader2').style.display = 'none';
                 document.getElementById('buttonText2').style.display = 'block';

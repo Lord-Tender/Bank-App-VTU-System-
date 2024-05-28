@@ -181,14 +181,14 @@ const getAllTransForChart = async (req, res) => {
     }
 }
 
-const searchTransac = async (res, req) => {
+const searchTransac = async (req, res) => {
     const { transactionId } = req.body
-    let debitTransaction = await debitTransaction.findOne({ transactionId })
-    let creditTransaction = await creditTransaction.findOne({ transactionId })
-    if (debitTransaction) {
-        res.status(200).json({ msg: "success", transactionDetail: debitTransaction })
-    }else if (creditTransaction) {
-        res.status(200).json({ msg: "success", transactionDetail: creditTransaction })
+    let debitTransactio = await debitTransaction.findOne({ transactionId })
+    let creditTransactio = await creditTransaction.findOne({ transactionId })
+    if (debitTransactio) {
+        res.status(200).json({ msg: "success", transactionDetail: debitTransactio })
+    }else if (creditTransactio) {
+        res.status(200).json({ msg: "success", transactionDetail: creditTransactio })
     }else{
         res.status(400).json({ msg: "No transaction found!" })
     }

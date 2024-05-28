@@ -20,7 +20,8 @@ dataPlans = new mongoose.Schema(
 settings = new mongoose.Schema(
     {
         airtimePrice: { type: Number },
-        
+        monnifyTransactionFee: { type: Number },
+        intraTransferFee: { type: Number }
     }
 )
 
@@ -34,5 +35,6 @@ ipWishList = new mongoose.Schema(
 module.exports = {
     adminUser: mongoose.model('adminUser', adminUser),
     dataPlans: mongoose.model('dataPlans', dataPlans),
-    ipWishList: mongoose.model('ipWishList', ipWishList)
+    ipWishList: mongoose.model('ipWishList', ipWishList),
+    adminSetting: mongoose.model('adminSetting', settings)
 }

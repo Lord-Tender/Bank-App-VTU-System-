@@ -1,4 +1,4 @@
-const { adminUser, dataPlans, ipWishList } = require("../Models/admin.Model")
+const { adminUser, dataPlans, ipWishList, adminSetting } = require("../Models/admin.Model")
 const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
 const secret = process.env.SECRET
 const { creditUser, debitUser } = require('./user.Controller')
@@ -229,4 +229,13 @@ const addDataPlan = (req, res) => {
 
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac }
+const getAdminSettings = async (req, res) => {
+    let settings = await adminSetting.find({})
+    if (settings) {
+        res.status(200).json({ status: true, msg: "Admin settings fetched successfully", settings })
+    }else{
+        res.status(500).json({ status: false, msg: "Server error"})
+    }
+}
+
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings }

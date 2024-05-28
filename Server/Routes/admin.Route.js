@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac } = require("../Controllers/admin.Controller")
+const { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings } = require("../Controllers/admin.Controller")
 
 router.post("/add_user", addAdminUser)
 router.post("/login", loginUser)
 router.get("/page_auth", pageAuth)
+router.get("/get_settings", getAdminSettings)
 router.post("/add_ipwishlist", addIpToWistList)
 router.get("/get_user", fetchAllUser)
 router.post("/credit_user", adminCreditUser)

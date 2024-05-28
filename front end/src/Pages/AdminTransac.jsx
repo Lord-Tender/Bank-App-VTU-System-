@@ -63,14 +63,39 @@ const AdminTransac = () => {
     }
 
     const refundDebit = () => {
+        document.getElementById('loader3').style.display = 'block';
+        document.getElementById('buttonText3').style.display = 'none';
         let url = 'http://localhost:5000/admin/credit_user'
-        axios.post(url, { userEmail: result.transactor, amount: result.amount, reason: "Refunded" })
-        .then((res)=>{
-            console.log(res);
-        })
-        .catch((err)=>{
-            console.log(err);
-        })
+        console.log(result.transactor, result.amount.split("₦")[1]);
+        axios.post(url, { userEmail: result.transactor, amount: result.amount.split("₦")[1], reason: "Refunded" })
+            .then((res) => {
+                console.log(res);
+                document.getElementById('loader3').style.display = 'none';
+                document.getElementById('buttonText3').style.display = 'block';
+            })
+            .catch((err) => {
+                console.log(err);
+                document.getElementById('loader3').style.display = 'none';
+                document.getElementById('buttonText3').style.display = 'block';
+            })
+    }
+
+    const reverseCredit = () => {
+        document.getElementById('loader2').style.display = 'block';
+        document.getElementById('buttonText2').style.display = 'none';
+        let url = 'http://localhost:5000/admin/debit_user'
+        console.log(result.transactor, result.amount.split("₦")[1]);
+        axios.post(url, { userEmail: result.transactor, amount: result.amount.split("₦")[1] })
+            .then((res) => {
+                console.log(res);
+                document.getElementById('loader2').style.display = 'none';
+                document.getElementById('buttonText2').style.display = 'block';
+            })
+            .catch((err) => {
+                console.log(err);
+                document.getElementById('loader2').style.display = 'none';
+                document.getElementById('buttonText2').style.display = 'block';
+            })
     }
 
     return (
@@ -112,11 +137,11 @@ const AdminTransac = () => {
 
                     {/* Search result */}
                     <div className='w-full bg-white h-96 my-3 rounded-xl flex justify-center items-center'>
-                        { result ? <div className='h-[90%] w-[90%] border-2 border-[whitesmoke] rounded-xl '>
+                        {result ? <div className='h-[90%] w-[90%] border-2 border-[whitesmoke] rounded-xl '>
                             <table className='h-full w-full '>
                                 <tr>
                                     <td>Transaction Type:</td>
-                                    <td>{ `${result.transactionType} (${transacType == "Credit" ? "Credit" : "Debit"})` }</td>
+                                    <td>{`${result.transactionType} (${transacType == "Credit" ? "Credit" : "Debit"})`}</td>
                                 </tr>
                                 <tr>
                                     <td>Transactor Email:</td>
@@ -136,10 +161,42 @@ const AdminTransac = () => {
                                 </tr>
                                 <tr>
                                     <td>Action</td>
-                                    <td>{ transacType == "Credit" ? ( <button className='bg-red-600 w-28 h-[2em] rounded text-white'>Reverse</button> ) : ( <button className='bg-blue-800 w-28 h-[2em] rounded text-white' onClick={refundDebit}>Refund</button> ) }</td>
+                                    <td>{transacType == "Credit" ? (<button className='bg-red-600 w-28 h-[2em] rounded text-white' onClick={reverseCredit}>
+                                        <div className="spinner center" id='loader2'>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                        </div>
+                                        <p id='buttonText2'>Reverse</p>
+                                    </button>) : (<button className='bg-blue-800 w-28 h-[2em] rounded text-white' onClick={refundDebit}>
+                                        <div className="spinner center" id='loader3'>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                            <div className="spinner-blade"></div>
+                                        </div>
+                                        <p id='buttonText3'>Refund</p>
+                                    </button>)}</td>
                                 </tr>
                             </table>
-                        </div> : <div> { errorMsg } </div> }
+                        </div> : <div> {errorMsg} </div>}
                     </div>
                 </div>
             </section>

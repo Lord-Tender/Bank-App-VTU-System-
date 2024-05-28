@@ -105,6 +105,7 @@ const fetchAllUser = async (req, res) => {
 
 const adminCreditUser = async (req, res) => {
     const { userEmail, amount, reason } = req.body
+    console.log(req.body);
     let user = userModel.findOne({ 'emailInfo.email': userEmail })
     if (user) {
         creditUser(userEmail, amount, reason, "Admin deck")

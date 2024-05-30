@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminSidebar from '../Components/AdminSidebar'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 
 const AdminService = () => {
     let navigate = useNavigate()
+    const [service, setservice] = useState("")
 
     useEffect(() => {
         const userAuth = () => {
@@ -29,6 +30,10 @@ const AdminService = () => {
         userAuth()
     }, [])
 
+    const getServiceDetails = (e) => {
+        setservice(e.target.value)
+    }
+
 
     return (
         <>
@@ -44,23 +49,43 @@ const AdminService = () => {
                     <div className='w-full bg-white h-28 my-3 rounded-xl'>
                         <h2 className='text-center text-lg pt-3 text-blue-700'>Select a service to edit</h2>
                         <div className='flex justify-center mt-3 '>
-                            <select name="" id="service" className='border-2 border-blue-600 rounded p-2 w-[50%]  text-blue-600 focus:outline-none'>
+                            <select name="" onChange={getServiceDetails} id="service" className='border-2 border-blue-600 rounded p-2 w-[50%]  text-blue-600 focus:outline-none'>
                                 <option value="null" className=''>Select service</option>
                                 <option value="airtime">Airtime</option>
                                 <option value="data">Data</option>
                             </select>
-                            
+
                         </div>
                     </div>
 
                     {/* Service settings */}
 
                     <div className='w-full bg-white h-96 my-3 rounded-xl flex justify-center items-center'>
-                        {
-                            
-                        }
+                        {service ? (<div className='w-[95%] h-[100%]'>
+                            {service === "airtime" ? (<div className='pt-[3em] '>
+                                <h1 className='text-3xl text-center mt-4 text-sky-800 '>Airtime Price</h1>
+                                <h2 className='text-[2em] text-red-700 text-center mt-3 '>Currently set to { } Off</h2>
+                                <button className=' bg-blue-600 w-[30%] h-[2.3em] rounded text-white ms-[35%] mt-7 '>Edit</button>
+                            </div>) : (
+                                <div>
+                                    <h1>Data Plan</h1>
+                                </div>
+                            )}
+                        </div>) : (<div>Select a service to edit.</div>)}
+                    </div>
+
+                </div>
+
+                {/* Edit airtime div */}
+
+                <div className='absolute top-0 w-full h-full flex justify-center items-center ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
+                    <div className='bg-white w-[35%] h-[16em] rounded-lg px-10 pt-2'>
+                        <h3 className='mt-6 font-bold text-lg'>Enter bonus in percentage</h3>
+                        <input type="number" className='mt-3 block w-full h-[3em] rounded mb-3 p-3 border-2 border-blue-400 focus:border-blue-500 focus:outline-none ' placeholder='0%' />
+                        <button className='bg-blue-600 w-[50%] h-10 text-white rounded mt-5 '>Save</button>
                     </div>
                 </div>
+
             </section>
         </>
     )

@@ -94,7 +94,7 @@ const AdminService = () => {
 
                 {/* Edit airtime div */}
 
-                <div id='airtimeEdit' className='absolute top-0 w-full h-full flex justify-center items-center hidden ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
+                <div id='airtimeEdit' className='absolute top-0 w-full h-full justify-center items-center hidden ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
                     <div className='bg-white w-[35%] h-[16em] rounded-lg px-10 pt-2 relative'>
                         <div onClick={() => document.getElementById('airtimeEdit').style.display = "none"}
                             className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 /></div>

@@ -238,6 +238,45 @@ const getAdminSettings = async (req, res) => {
     }
 }
 
+const editAdminSettings = async (req, res) => {
+    const { whatToEdit, newValue } = req.body
+    let settings = await adminSetting.findById(process.env.ADMIN_SID)
+    if ( whatToEdit === "airtimePrice" ) {
+        settings.airtimePrice = newValue
+        settings.save()
+        .then((data) => {
+            console.log(data);
+            res.status(200).json({ status: true, msg: "Change saved successfully"})
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).json({ status: false, msg: "an error occurred", error })
+        })
+    }else if ( whatToEdit === "monnifyFee" ) {
+        settings.monnifyTransactionFee = newValue
+        settings.save()
+        .then((data) => {
+            console.log(data);
+            res.status(200).json({ status: true, msg: "Change saved successfully"})
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).json({ status: false, msg: "an error occurred", error })
+        })
+    }else if ( whatToEdit === "intraFee" ) {
+        settings.intraTransferFee = newValue
+        settings.save()
+        .then((data) => {
+            console.log(data);
+            res.status(200).json({ status: true, msg: "Change saved successfully"})
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).json({ status: false, msg: "an error occurred", error })
+        })
+    }
+}
+
 const text = (req, res) => {
     let gb = new adminSetting({})
     gb.save()

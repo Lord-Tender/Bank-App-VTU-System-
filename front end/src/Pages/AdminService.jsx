@@ -3,6 +3,7 @@ import AdminSidebar from '../Components/AdminSidebar'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { RxCross2 } from 'react-icons/rx'
 
 const AdminService = () => {
     let navigate = useNavigate()
@@ -78,8 +79,10 @@ const AdminService = () => {
 
                 {/* Edit airtime div */}
 
-                <div className='absolute top-0 w-full h-full flex justify-center items-center ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
-                    <div className='bg-white w-[35%] h-[16em] rounded-lg px-10 pt-2'>
+                <div id='airtimeEdit' className='absolute top-0 w-full h-full flex justify-center items-center ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
+                    <div className='bg-white w-[35%] h-[16em] rounded-lg px-10 pt-2 relative'>
+                        <div onClick={()=>document.getElementById('airtimeEdit').style.display = "none"}
+                        className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 /></div>
                         <h3 className='mt-6 font-bold text-lg'>Enter bonus in percentage</h3>
                         <input type="number" className='mt-3 block w-full h-[3em] rounded mb-3 p-3 border-2 border-blue-400 focus:border-blue-500 focus:outline-none ' placeholder='0%' />
                         <button className='bg-blue-600 w-[50%] h-10 text-white rounded mt-5 '>Save</button>

@@ -8,6 +8,7 @@ import { RxCross2 } from 'react-icons/rx'
 const AdminService = () => {
     let navigate = useNavigate()
     const [service, setservice] = useState("")
+    const [airtimeFetched, setairtimeFetched] = useState("")
 
     useEffect(() => {
         const userAuth = () => {
@@ -25,11 +26,23 @@ const AdminService = () => {
             }).then((res) => {
             })
                 .catch((err) => {
-                    // navigate("/admin/login")
                 })
         }
         userAuth()
+        getSettings()
     }, [])
+
+    const getSettings = () => {
+        const url = "http://localhost:5000/admin/get_settings"
+        axios.get(url)
+            .then((res) => {
+                console.log(res);
+                setairtimeFetched(res.data.settings[0].airtimePrice)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
 
     const getServiceDetails = (e) => {
         setservice(e.target.value)
@@ -65,8 +78,10 @@ const AdminService = () => {
                         {service ? (<div className='w-[95%] h-[100%]'>
                             {service === "airtime" ? (<div className='pt-[3em] '>
                                 <h1 className='text-3xl text-center mt-4 text-sky-800 '>Airtime Price</h1>
-                                <h2 className='text-[2em] text-red-700 text-center mt-3 '>Currently set to { } Off</h2>
-                                <button className=' bg-blue-600 w-[30%] h-[2.3em] rounded text-white ms-[35%] mt-7 '>Edit</button>
+                                <h2 className='text-[2em] text-red-700 text-center mt-3 '>Currently set to <span>{airtimeFetched}%</span> Off</h2>
+                                <p className='text-center text-lg'>Your user will get <span>{airtimeFetched}%</span> off their airtimes.</p>
+                                <button className=' bg-blue-600 w-[30%] h-[2.3em] rounded text-white ms-[35%] mt-7 '
+                                    onClick={() => document.getElementById('airtimeEdit').style.display = "flex"}>Edit</button>
                             </div>) : (
                                 <div>
                                     <h1>Data Plan</h1>
@@ -79,11 +94,11 @@ const AdminService = () => {
 
                 {/* Edit airtime div */}
 
-                <div id='airtimeEdit' className='absolute top-0 w-full h-full flex justify-center items-center ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
+                <div id='airtimeEdit' className='absolute top-0 w-full h-full flex justify-center items-center hidden ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
                     <div className='bg-white w-[35%] h-[16em] rounded-lg px-10 pt-2 relative'>
-                        <div onClick={()=>document.getElementById('airtimeEdit').style.display = "none"}
-                        className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 /></div>
-                        <h3 className='mt-6 font-bold text-lg'>Enter bonus in percentage</h3>
+                        <div onClick={() => document.getElementById('airtimeEdit').style.display = "none"}
+                            className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 /></div>
+                        <h3 className='mt-6 font-bold text-lg'>Enter bonus in percentage:</h3>
                         <input type="number" className='mt-3 block w-full h-[3em] rounded mb-3 p-3 border-2 border-blue-400 focus:border-blue-500 focus:outline-none ' placeholder='0%' />
                         <button className='bg-blue-600 w-[50%] h-10 text-white rounded mt-5 '>Save</button>
                     </div>

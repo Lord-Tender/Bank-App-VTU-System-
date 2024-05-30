@@ -238,4 +238,12 @@ const getAdminSettings = async (req, res) => {
     }
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings }
+const text = (req, res) => {
+    let gb = new adminSetting({})
+    gb.save()
+    .then((ee)=>{
+        console.log("Saved");
+    })
+}
+
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings, text }

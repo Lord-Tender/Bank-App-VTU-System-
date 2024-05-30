@@ -19,9 +19,9 @@ dataPlans = new mongoose.Schema(
 
 settings = new mongoose.Schema(
     {
-        airtimePrice: { type: Number },
-        monnifyTransactionFee: { type: Number },
-        intraTransferFee: { type: Number }
+        airtimePrice: { type: Number, default: 0},
+        monnifyTransactionFee: { type: Number, default: 0 },
+        intraTransferFee: { type: Number, default: 0 }
     }
 )
 

@@ -46,7 +46,9 @@ const AdminService = () => {
 
     const editAirtime = () => {
         const url = "http://localhost:5000/admin/settings/edit"
-        axios.post(url {  })
+        let newValue = document.getElementById("airtimePercentage").value
+        console.log(newValue);
+        axios.post(url, { whatToEdit: "airtimePrice", newValue })
             .then((res) => {
                 console.log(res);
             })
@@ -105,8 +107,8 @@ const AdminService = () => {
                         <div onClick={() => document.getElementById('airtimeEdit').style.display = "none"}
                             className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 /></div>
                         <h3 className='mt-6 font-bold text-lg'>Enter bonus in percentage:</h3>
-                        <input type="number" className='mt-3 block w-full h-[3em] rounded mb-3 p-3 border-2 border-blue-400 focus:border-blue-500 focus:outline-none ' placeholder='0%' />
-                        <button className='bg-blue-600 w-[50%] h-10 text-white rounded mt-5 '>Save</button>
+                        <input type="number" id='airtimePercentage' className='mt-3 block w-full h-[3em] rounded mb-3 p-3 border-2 border-blue-400 focus:border-blue-500 focus:outline-none ' placeholder='0%' />
+                        <button onClick={editAirtime} className='bg-blue-600 w-[50%] h-10 text-white rounded mt-5 '>Save</button>
                     </div>
                 </div>
 

@@ -7,3 +7,25 @@ td{
 tr:nth-child(even) {
     background-color: whitesmoke;
 }
+
+#adminAddDataPlan h1{
+    font-size: 1.4em;
+    text-align: center;
+    font-weight: 500;
+    color: rgb(2, 2, 119);
+}
+
+#adminAddDataPlan input{
+    display: block;
+    border: 2px solid rgb(13, 13, 119);
+    width: 100%;
+    height: 2.5em;
+    border-radius: 7px;
+    padding: 8px;
+}
+
+#adminAddDataPlan input:focus{
+    border: 2px solid rgb(13, 13, 119);
+    outline: none;
+}
+

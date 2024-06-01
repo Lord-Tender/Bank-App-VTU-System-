@@ -212,8 +212,8 @@ const addNetwork = (req, res) => {
 }
 
 const addDataPlan = (req, res) => {
-    const { network_id, server_id, price, byte } = req.body
-    let newPlan = { server_id, price, byte }
+    const { network_id, server_id, price, valid_period, byte } = req.body
+    let newPlan = { server_id, price, valid_period, byte }
     let network = dataPlans.findOne({ network_id })
     if (network) {
         let plan = network.dataPlans

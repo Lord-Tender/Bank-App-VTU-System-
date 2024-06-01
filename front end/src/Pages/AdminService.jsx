@@ -49,10 +49,10 @@ const AdminService = () => {
 
     const formik = useFormik({
         initialValues: {
-            network: "", 
-            serverId: "", 
-            dataPrice: "", 
-            validationPeriod: "", 
+            network: "",
+            serverId: "",
+            dataPrice: "",
+            validationPeriod: "",
             dataSize: ""
         },
         validationSchema: yup.object({
@@ -62,7 +62,7 @@ const AdminService = () => {
             dataSize: yup.string().required("Data size is required")
         }),
         onSubmit: (values) => {
-           console.log(values);
+            console.log(values);
         }
     })
 
@@ -159,29 +159,41 @@ const AdminService = () => {
                             <form onSubmit={formik.handleSubmit}>
                                 <label htmlFor="">Network</label>
                                 <select id='network' onBlur={formik.handleBlur}
-                            onChange={formik.handleChange} value={formik.values.network} >
+                                    onChange={formik.handleChange} value={formik.values.network} >
                                     <option value="">Select network</option>
                                 </select>
-                                
+
                                 <label htmlFor="serverId">Server ID</label>
-                                <input type="number" name="" id="serverId" placeholder='000' 
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange} value={formik.values.serverId} />
+                                <input type="number" name="" id="serverId" placeholder='000'
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange} value={formik.values.serverId} />
+                                {formik.touched.serverId ? (
+                                    <div className={formik.errors.serverId ? 'my-[-7px] text-center text-blue-500 ' : 'hidden'}><i>{formik.errors.serverId}</i></div>
+                                ) : null}
 
                                 <label htmlFor="dataPrice">Price</label>
                                 <input type="number" name="" id="dataPrice" placeholder='300'
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange} value={formik.values.dataPrice} />
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange} value={formik.values.dataPrice} />
+                                {formik.touched.dataPrice ? (
+                                    <div className={formik.errors.dataPrice ? 'my-[-7px] text-center text-blue-500 ' : 'hidden'}><i>{formik.errors.dataPrice}</i></div>
+                                ) : null}
 
                                 <label htmlFor="validationPeriod">Valid For</label>
                                 <input type="text" name="" id="validationPeriod" placeholder='1 Day'
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange} value={formik.values.validationPeriod} />
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange} value={formik.values.validationPeriod} />
+                                {formik.touched.validationPeriod ? (
+                                    <div className={formik.errors.validationPeriod ? 'my-[-7px] text-center text-blue-500 ' : 'hidden'}><i>{formik.errors.validationPeriod}</i></div>
+                                ) : null}
 
                                 <label htmlFor="dataSize">Data Size</label>
                                 <input type="text" id='dataSize' placeholder='E.G: 500MB or 1GB'
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange} value={formik.values.dataSize} />
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange} value={formik.values.dataSize} />
+                                    {formik.touched.dataSize ? (
+                                    <div className={formik.errors.dataSize ? 'my-[-7px] mb-3 text-center text-blue-500 ' : 'hidden'}><i>{formik.errors.dataSize}</i></div>
+                                ) : null}
 
                                 <button type='submit'>Add plan</button>
                             </form>

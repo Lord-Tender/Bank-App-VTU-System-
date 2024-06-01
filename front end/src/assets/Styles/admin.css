@@ -15,17 +15,49 @@ tr:nth-child(even) {
     color: rgb(2, 2, 119);
 }
 
-#adminAddDataPlan input{
+#adminAddDataPlan select{
     display: block;
-    border: 2px solid rgb(13, 13, 119);
     width: 100%;
-    height: 2.5em;
+    height: 2.4em;
+    margin-bottom: 10px;
     border-radius: 7px;
-    padding: 8px;
+    border: 2px solid rgb(42, 42, 245) !important;
 }
 
-#adminAddDataPlan input:focus{
-    border: 2px solid rgb(13, 13, 119);
+#adminAddDataPlan input{
+    display: block;
+    border: 2px solid rgb(42, 42, 245);
+    width: 100%;
+    height: 2.4em;
+    border-radius: 7px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+#adminAddDataPlan input:focus, #adminAddDataPlan select:focus{
+    border: 2px solid rgb(83, 83, 245);
     outline: none;
 }
 
+#adminAddDataPlan input::placeholder{
+    color: rgb(79, 79, 187) !important;
+}
+
+#adminAddDataPlan label{
+    font-weight: 500;
+    color: rgb(1, 1, 17);
+    padding-top: 100px;
+}
+
+#adminAddDataPlan button{
+    width: 50%;
+    background-color: rgb(67, 67, 243);
+    margin-left: 25%;
+    height: 2.3em;
+    border-radius: 50px;
+    margin-top: 9px;
+}
+
+#adminAddDataPlan > :nth-child(2){
+    margin-top: 5px;
+}

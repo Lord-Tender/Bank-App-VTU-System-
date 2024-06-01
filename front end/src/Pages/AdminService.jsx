@@ -128,7 +128,7 @@ const AdminService = () => {
                 {/* Add data plan ui */}
 
                 <div id='addDataPlan' className='absolute top-0 w-full h-full justify-center items-center hidden  ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
-                    <div className='bg-white sm:w-[85%] w-[35%] h-[30em] rounded-lg px-10 pt-2 relative'>
+                    <div className='bg-white sm:w-[85%] w-[35%] h-[34em] rounded-lg px-10 pt-2 relative'>
                         <div onClick={() => document.getElementById('addDataPlan').style.display = "none"}
                             className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 />
                         </div>
@@ -137,18 +137,18 @@ const AdminService = () => {
                             <h1>Add new data plan</h1>
                             <form action="">
                                 <label htmlFor="">Network</label>
-                                <section id='network'>
+                                <select id='network'>
                                     <option value="">Select network</option>
-                                </section>
+                                </select>
 
-                                <label htmlFor="serverId">Server ID :</label>
-                                <input type="text" name="" id="serverId" />
+                                <label htmlFor="serverId">Server ID</label>
+                                <input type="text" name="" id="serverId" placeholder='000' />
 
-                                <label htmlFor="dataPrice">Price :</label>
-                                <input type="text" name="" id="dataPrice" placeholder='' />
+                                <label htmlFor="dataPrice">Price</label>
+                                <input type="text" name="" id="dataPrice" placeholder='300' />
 
-                                <label htmlFor="validationPeriod">Valid For:</label>
-                                <input type="text" name="" id="validationPeriod" />
+                                <label htmlFor="validationPeriod">Valid For</label>
+                                <input type="text" name="" id="validationPeriod" placeholder='1 Day' />
 
                                 <label htmlFor="dataSize">Data Size</label>
                                 <input type="text" id='dataSize' placeholder='E.G: 500MB or 1GB' />

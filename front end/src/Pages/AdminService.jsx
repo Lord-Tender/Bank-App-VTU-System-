@@ -56,12 +56,10 @@ const AdminService = () => {
             dataSize: ""
         },
         validationSchema: yup.object({
-            // email: yup.string().email("invalid email address").required("Email is required"),
-            // password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters long').matches(/[a-z]/, 'Password must contain at least one lowercase')
-            //     .matches(/[A-Z]/, 'Password must contain at least one uppercase')
-            //     .matches(/[0-9]/, 'Password must contain at least number')
-            //     .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
-
+            serverId: yup.number().required("Server Id is required"),
+            dataPrice: yup.number().required("Price is required"),
+            validationPeriod: yup.string().required("Valid for is required"),
+            dataSize: yup.string().required("Data size is required")
         }),
         onSubmit: (values) => {
            console.log(values);
@@ -166,12 +164,12 @@ const AdminService = () => {
                                 </select>
                                 
                                 <label htmlFor="serverId">Server ID</label>
-                                <input type="text" name="" id="serverId" placeholder='000' 
+                                <input type="number" name="" id="serverId" placeholder='000' 
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange} value={formik.values.serverId} />
 
                                 <label htmlFor="dataPrice">Price</label>
-                                <input type="text" name="" id="dataPrice" placeholder='300'
+                                <input type="number" name="" id="dataPrice" placeholder='300'
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange} value={formik.values.dataPrice} />
 

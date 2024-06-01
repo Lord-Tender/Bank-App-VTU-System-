@@ -5,6 +5,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { RxCross2 } from 'react-icons/rx'
+import { useFormik } from 'formik'
+import * as yup from 'yup';
 
 const AdminService = () => {
     let navigate = useNavigate()
@@ -44,6 +46,27 @@ const AdminService = () => {
                 console.log(err);
             })
     }
+
+    const formik = useFormik({
+        initialValues: {
+            network: "", 
+            serverId: "", 
+            dataPrice: "", 
+            validationPeriod: "", 
+            dataSize: ""
+        },
+        validationSchema: yup.object({
+            // email: yup.string().email("invalid email address").required("Email is required"),
+            // password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters long').matches(/[a-z]/, 'Password must contain at least one lowercase')
+            //     .matches(/[A-Z]/, 'Password must contain at least one uppercase')
+            //     .matches(/[0-9]/, 'Password must contain at least number')
+            //     .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
+
+        }),
+        onSubmit: (values) => {
+           console.log(values);
+        }
+    })
 
     const editAirtime = () => {
         const url = "http://localhost:5000/admin/settings/edit"
@@ -135,25 +158,34 @@ const AdminService = () => {
 
                         <div id='adminAddDataPlan'>
                             <h1>Add new data plan</h1>
-                            <form action="">
+                            <form onSubmit={formik.handleSubmit}>
                                 <label htmlFor="">Network</label>
-                                <select id='network'>
+                                <select id='network' onBlur={formik.handleBlur}
+                            onChange={formik.handleChange} value={formik.values.network} >
                                     <option value="">Select network</option>
                                 </select>
-
+                                
                                 <label htmlFor="serverId">Server ID</label>
-                                <input type="text" name="" id="serverId" placeholder='000' />
+                                <input type="text" name="" id="serverId" placeholder='000' 
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.serverId} />
 
                                 <label htmlFor="dataPrice">Price</label>
-                                <input type="text" name="" id="dataPrice" placeholder='300' />
+                                <input type="text" name="" id="dataPrice" placeholder='300'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.dataPrice} />
 
                                 <label htmlFor="validationPeriod">Valid For</label>
-                                <input type="text" name="" id="validationPeriod" placeholder='1 Day' />
+                                <input type="text" name="" id="validationPeriod" placeholder='1 Day'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.validationPeriod} />
 
                                 <label htmlFor="dataSize">Data Size</label>
-                                <input type="text" id='dataSize' placeholder='E.G: 500MB or 1GB' />
+                                <input type="text" id='dataSize' placeholder='E.G: 500MB or 1GB'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.dataSize} />
 
-                                <button >Add plan</button>
+                                <button type='submit'>Add plan</button>
                             </form>
                         </div>
 

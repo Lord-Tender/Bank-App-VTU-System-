@@ -44,10 +44,16 @@ const AdminService = () => {
             })
     }
 
-    const getServiceDetails = (e) => {
-        setservice(e.target.value)
+    const editAirtime = () => {
+        const url = "http://localhost:5000/admin/settings/edit"
+        axios.post(url {  })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
-
 
     return (
         <>
@@ -63,7 +69,7 @@ const AdminService = () => {
                     <div className='w-full bg-white h-28 my-3 rounded-xl'>
                         <h2 className='text-center text-lg pt-3 text-blue-700'>Select a service to edit</h2>
                         <div className='flex justify-center mt-3 '>
-                            <select name="" onChange={getServiceDetails} id="service" className='border-2 border-blue-600 rounded p-2 w-[50%]  text-blue-600 focus:outline-none'>
+                            <select name="" onChange={(e)=>{setservice(e.target.value)}} id="service" className='border-2 border-blue-600 rounded p-2 w-[50%]  text-blue-600 focus:outline-none'>
                                 <option value="null" className=''>Select service</option>
                                 <option value="airtime">Airtime</option>
                                 <option value="data">Data</option>

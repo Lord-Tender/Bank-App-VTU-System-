@@ -285,4 +285,4 @@ const text = (req, res) => {
     })
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings, text }
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings, editAdminSettings, text }

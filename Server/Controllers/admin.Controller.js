@@ -277,9 +277,11 @@ const editAdminSettings = async (req, res) => {
     }
 }
 
-const getDataPlan = (req, res) => {
-    let plans = dataPlans.find({})
+const getDataPlan = async (req, res) => {
+    // console.log(req);
+    let plans = await dataPlans.find({})
     if (plans) {
+        console.log(plans);
         res.status(200).json({ status: true, msg: "Data plan fetched", data: plans })
     }else {
         res.status(500).json({ status: false, msg: "Server error" })

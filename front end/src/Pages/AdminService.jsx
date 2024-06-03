@@ -12,6 +12,7 @@ const AdminService = () => {
     let navigate = useNavigate()
     const [service, setservice] = useState("")
     const [airtimeFetched, setairtimeFetched] = useState("")
+    const [dataPlan, setdataPlan] = useState("")
 
     useEffect(() => {
         const userAuth = () => {
@@ -40,19 +41,19 @@ const AdminService = () => {
         const url = "http://localhost:5000/admin/get_settings"
         axios.get(url)
             .then((res) => {
-                console.log(res);
                 setairtimeFetched(res.data.settings[0].airtimePrice)
             })
             .catch((err) => {
-                console.log(err);
             })
     }
 
     const getDataPlan = () => {
+        console.log("Getting plans ....");
         const url = "http://localhost:5000/admin/get_plan"
         axios.get(url)
             .then((res) => {
                 console.log(res);
+                setdataPlan(res.data.data)
             })
             .catch((err) => {
                 console.log(err);
@@ -143,7 +144,7 @@ const AdminService = () => {
 
                     {/* Service settings */}
 
-                    <div className='w-full bg-white h-[26em] my-3 rounded-xl flex justify-center items-center'>
+                    <div className='w-full bg-white h-[29em] my-3 rounded-xl flex justify-center items-center'>
                         {service ? (<div className='w-[95%] h-[100%]'>
                             {service === "airtime" ? (<div className='pt-[3em] '>
                                 <h1 className='text-3xl text-center mt-4 text-sky-800 '>Airtime Price</h1>
@@ -156,7 +157,7 @@ const AdminService = () => {
                                     <h1 className='text-center text-2xl mt-4'>Data Plan</h1>
                                     <p className='text-center text-lg my-4 sm:text-md'>Here you can add, check and delete data plan available on your app.</p>
                                     <div className='flex flex-col justify-center items-center'>
-                                        <table className='w-hf mt-3'>
+                                        <table className='w-hf mt-3 bg-[whitesmoke] border '>
                                             <thead>
                                                 <tr>
                                                     <th>Network name</th>
@@ -164,7 +165,16 @@ const AdminService = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                {
+                                                    dataPlan ? ( 
+                                                        dataPlan.map(user => (
+                                                            <tr key={user.network_id}>
+                                                                <td>{user.network_name}</td>
+                                                                <td>{user.network_id}</td>
+                                                            </tr>
+                                                        ))
+                                                     ) : null
+                                                }
                                             </tbody>
                                         </table>
                                         <button className='bg-blue-700 w-[40%] sm:text-sm text-white h-[2.6em] rounded mt-8 ' onClick={() => { document.getElementById('addNetwork').style.display = "flex" }}>Add network</button>

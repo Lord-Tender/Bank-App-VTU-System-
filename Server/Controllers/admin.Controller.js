@@ -195,20 +195,27 @@ const searchTransac = async (req, res) => {
     }
 }
 
-const addNetwork = (req, res) => {
+const addNetwork = async (req, res) => {
     const { network_id, network_name } = req.body
-    let network = new dataPlans({
-        network_id,
-        network_name,
-        dataPlans: []
-    })
-    network.save()
-        .then((data) => {
-            res.status(200).json({ status: true, msg: "added successful", data })
+    let plans = await dataPlans.find({})
+    if (plans.network_id == network_id) {
+        res.status(400).json({ status: false, msg: "A network already has the Id or name" })
+    }else if (plans.length >= 4) {
+        res.status(400).json({ status: false, msg: "You added upto 4 network already" })
+    }else {
+        let network = new dataPlans({
+            network_id,
+            network_name,
+            dataPlans: []
         })
-        .catch((error) => {
-            res.status(400).json({ status: false, msg: "an error occurred", error })
-        })
+        network.save()
+            .then((data) => {
+                res.status(200).json({ status: true, msg: "added successful", data })
+            })
+            .catch((error) => {
+                res.status(400).json({ status: false, msg: "an error occurred", error })
+            })
+    }
 }
 
 const addDataPlan = (req, res) => {
@@ -278,10 +285,9 @@ const editAdminSettings = async (req, res) => {
 }
 
 const getDataPlan = async (req, res) => {
-    // console.log(req);
     let plans = await dataPlans.find({})
     if (plans) {
-        console.log(plans);
+        console.log(plans)
         res.status(200).json({ status: true, msg: "Data plan fetched", data: plans })
     }else {
         res.status(500).json({ status: false, msg: "Server error" })

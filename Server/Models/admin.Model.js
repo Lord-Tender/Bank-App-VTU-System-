@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 adminUser = new mongoose.Schema(
     {
         email: { type: String, unique: true },
-        fullName: { type: String, unique: true },
+        fullName: { type: String},
         role: String,
         password: { type: String, require: true}
     }
@@ -11,8 +11,8 @@ adminUser = new mongoose.Schema(
 
 dataPlans = new mongoose.Schema(
     {
-        network_id: String,
-        network_name: String,
+        network_id: { type: String, unique: true },
+        network_name: { type: String, unique: true },
         dataPlans: []
     }
 )

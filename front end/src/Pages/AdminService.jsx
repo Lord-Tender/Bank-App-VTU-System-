@@ -57,6 +57,7 @@ const AdminService = () => {
             })
             .catch((err) => {
                 console.log(err);
+                setdataPlan(null)
             })
     }
 
@@ -102,7 +103,9 @@ const AdminService = () => {
         let network_name = document.getElementById('networkName').value
         if (network_id == "" || network_name == "") {
             toast.error("Spaces can't be empty")
-        } else {
+        } else if (dataPlan.length == 4) {
+            toast.error("You can only add 4 network")
+        }else {
             const url = "http://localhost:5000/admin/add_network"
             axios.post(url, { network_id, network_name })
                 .then((res) => {
@@ -173,7 +176,12 @@ const AdminService = () => {
                                                                 <td>{user.network_id}</td>
                                                             </tr>
                                                         ))
-                                                     ) : null
+                                                     ) : (
+                                                        <tr>
+                                                            <td>Network Id will show here</td>
+                                                            <td>Network name will show here</td>
+                                                        </tr>
+                                                     )
                                                 }
                                             </tbody>
                                         </table>
@@ -212,9 +220,9 @@ const AdminService = () => {
                             className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 /></div>
                         <h2 className='text-2xl text-center font-bold text-blue-700'>Add a new network</h2>
                         <label htmlFor="networkId">Network ID</label>
-                        <input type="number" id='networkId' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none mb-3 placeholder:text-blue-400' placeholder='0' />
+                        <input type="number" id='networkId' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none mb-3 placeholder:text-blue-400' placeholder='ID' />
                         <label htmlFor="networkName">Network name</label>
-                        <input type="text" id='networkName' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none placeholder:text-blue-400' placeholder='MTN' />
+                        <input type="text" id='networkName' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none placeholder:text-blue-400' placeholder='Name' />
                         <button className='focus:bg-blue-400 bg-blue-600 w-[50%] h-10 text-white rounded mt-5 ' onClick={addNetwork}>Add</button>
                     </div>
                 </div>

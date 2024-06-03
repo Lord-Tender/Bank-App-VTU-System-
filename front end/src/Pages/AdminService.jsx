@@ -84,6 +84,12 @@ const AdminService = () => {
             })
     }
 
+    const addNetwork = () => {
+        let network_id = document.getElementById('networkId').value
+        let network_name = document.getElementById('networkName').value
+
+    }
+
     return (
         <>
             <section style={{ width: "100%", height: "100%", display: "flex" }} >
@@ -109,7 +115,7 @@ const AdminService = () => {
 
                     {/* Service settings */}
 
-                    <div className='w-full bg-white h-96 my-3 rounded-xl flex justify-center items-center'>
+                    <div className='w-full bg-white h-[26em] my-3 rounded-xl flex justify-center items-center'>
                         {service ? (<div className='w-[95%] h-[100%]'>
                             {service === "airtime" ? (<div className='pt-[3em] '>
                                 <h1 className='text-3xl text-center mt-4 text-sky-800 '>Airtime Price</h1>
@@ -118,10 +124,20 @@ const AdminService = () => {
                                 <button className=' bg-blue-600 w-[30%] h-[2.3em] rounded text-white ms-[35%] mt-7 '
                                     onClick={() => document.getElementById('airtimeEdit').style.display = "flex"}>Edit</button>
                             </div>) : (
-                                <div className='pt-[8%]'>
+                                <div className=''>
                                     <h1 className='text-center text-2xl mt-4'>Data Plan</h1>
                                     <p className='text-center text-lg my-4 sm:text-md'>Here you can add, check and delete data plan available on your app.</p>
-                                    <div className='flex justify-center gap-[10%] w-full mt-10 '>
+                                    <div className='flex flex-col justify-center items-center'>
+                                        <table className='w-hf mt-3'>
+                                            <tr>
+                                                <th>Network name</th>
+                                                <th>Network Id</th>
+                                            </tr>
+
+                                        </table>
+                                        <button className='bg-blue-700 w-[40%] sm:text-sm text-white h-[2.6em] rounded mt-8 ' onClick={()=>{document.getElementById('addNetwork').style.display = "flex"}}>Add network</button>
+                                    </div>
+                                    <div className='flex justify-center gap-[10%] w-full mt-8 '>
                                         <button className='bg-blue-500 w-[40%] sm:text-sm text-white h-[2.6em] rounded '>Show data plans</button>
                                         <button onClick={() => document.getElementById('addDataPlan').style.display = "flex"}
                                             className='bg-blue-500 w-[40%] sm:text-sm text-white h-[2.6em] rounded '>Add new data plan</button>
@@ -142,9 +158,26 @@ const AdminService = () => {
                         <h3 className='mt-6 font-bold text-lg'>Enter bonus in percentage:</h3>
                         <p>Please enter new value without any sign, Just a number!</p>
                         <input type="number" id='airtimePercentage' className='mt-3 block w-full h-[3em] rounded mb-3 p-3 border-2 border-blue-400 focus:border-blue-500 focus:outline-none ' placeholder='0' />
-                        <button onClick={editAirtime} className='bg-blue-600 w-[50%] h-10 text-white rounded mt-5 '>Save</button>
+                        <button onClick={editAirtime} className=' focus:bg-blue-400 bg-blue-600 w-[50%] h-10 text-white rounded mt-5 '>Save</button>
                     </div>
                 </div>
+
+                {/* Addnetwork UI */}
+
+                <div id='addNetwork' className='absolute top-0 w-full h-full justify-center items-center hidden ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
+                    <div className='bg-white sm:w-[85%] w-[45%] h-[19em] rounded-lg px-10 pt-2 relative'>
+                        <div onClick={() => document.getElementById('addNetwork').style.display = "none"}
+                            className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 /></div>
+                            <h2 className='text-2xl text-center font-bold text-blue-700'>Add a new network</h2>
+                            <label htmlFor="networkId">Network ID</label>
+                            <input type="number" id='networkId' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none mb-3' placeholder='0' />
+                            <label htmlFor="networkName">Network name</label>
+                            <input type="text" id='networkName' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none' placeholder='MTN' />
+                        <button  className='focus:bg-blue-400 bg-blue-600 w-[50%] h-10 text-white rounded mt-5 ' >Add</button>
+                    </div>
+                </div>
+
+
 
                 {/* Add data plan ui */}
 
@@ -191,11 +224,11 @@ const AdminService = () => {
                                 <input type="text" id='dataSize' placeholder='E.G: 500MB or 1GB'
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange} value={formik.values.dataSize} />
-                                    {formik.touched.dataSize ? (
+                                {formik.touched.dataSize ? (
                                     <div className={formik.errors.dataSize ? 'my-[-7px] mb-3 text-center text-blue-500 ' : 'hidden'}><i>{formik.errors.dataSize}</i></div>
                                 ) : null}
 
-                                <button type='submit'>Add plan</button>
+                                <button type='submit' className='focus:bg-blue-400'>Add plan</button>
                             </form>
                         </div>
 

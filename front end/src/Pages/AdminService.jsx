@@ -87,7 +87,23 @@ const AdminService = () => {
     const addNetwork = () => {
         let network_id = document.getElementById('networkId').value
         let network_name = document.getElementById('networkName').value
-
+        if (network_id == "" || network_name == "") {
+            toast.error("Spaces can't be empty")
+        } else {
+            const url = "http://localhost:5000/admin/add_network"
+            axios.post(url, { network_id, network_name })
+                .then((res) => {
+                    console.log(res);
+                    toast.success("Network added successfully.")
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1500);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    toast.error("An error occured")
+                })
+        }
     }
 
     return (
@@ -129,13 +145,17 @@ const AdminService = () => {
                                     <p className='text-center text-lg my-4 sm:text-md'>Here you can add, check and delete data plan available on your app.</p>
                                     <div className='flex flex-col justify-center items-center'>
                                         <table className='w-hf mt-3'>
-                                            <tr>
-                                                <th>Network name</th>
-                                                <th>Network Id</th>
-                                            </tr>
+                                            <thead>
+                                                <tr>
+                                                    <th>Network name</th>
+                                                    <th>Network Id</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
+                                            </tbody>
                                         </table>
-                                        <button className='bg-blue-700 w-[40%] sm:text-sm text-white h-[2.6em] rounded mt-8 ' onClick={()=>{document.getElementById('addNetwork').style.display = "flex"}}>Add network</button>
+                                        <button className='bg-blue-700 w-[40%] sm:text-sm text-white h-[2.6em] rounded mt-8 ' onClick={() => { document.getElementById('addNetwork').style.display = "flex" }}>Add network</button>
                                     </div>
                                     <div className='flex justify-center gap-[10%] w-full mt-8 '>
                                         <button className='bg-blue-500 w-[40%] sm:text-sm text-white h-[2.6em] rounded '>Show data plans</button>
@@ -168,12 +188,12 @@ const AdminService = () => {
                     <div className='bg-white sm:w-[85%] w-[45%] h-[19em] rounded-lg px-10 pt-2 relative'>
                         <div onClick={() => document.getElementById('addNetwork').style.display = "none"}
                             className='font-bold text-[2em] text-white cursor-pointer absolute top-[-1em] right-0 '><RxCross2 /></div>
-                            <h2 className='text-2xl text-center font-bold text-blue-700'>Add a new network</h2>
-                            <label htmlFor="networkId">Network ID</label>
-                            <input type="number" id='networkId' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none mb-3' placeholder='0' />
-                            <label htmlFor="networkName">Network name</label>
-                            <input type="text" id='networkName' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none' placeholder='MTN' />
-                        <button  className='focus:bg-blue-400 bg-blue-600 w-[50%] h-10 text-white rounded mt-5 ' >Add</button>
+                        <h2 className='text-2xl text-center font-bold text-blue-700'>Add a new network</h2>
+                        <label htmlFor="networkId">Network ID</label>
+                        <input type="number" id='networkId' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none mb-3 placeholder:text-blue-400' placeholder='0' />
+                        <label htmlFor="networkName">Network name</label>
+                        <input type="text" id='networkName' className='block w-full h-10 border-2 border-blue-400 p-3 rounded focus:outline-none placeholder:text-blue-400' placeholder='MTN' />
+                        <button className='focus:bg-blue-400 bg-blue-600 w-[50%] h-10 text-white rounded mt-5 ' onClick={addNetwork}>Add</button>
                     </div>
                 </div>
 

@@ -198,9 +198,7 @@ const searchTransac = async (req, res) => {
 const addNetwork = async (req, res) => {
     const { network_id, network_name } = req.body
     let plans = await dataPlans.find({})
-    if (plans.network_id == network_id) {
-        res.status(400).json({ status: false, msg: "A network already has the Id or name" })
-    }else if (plans.length >= 4) {
+    if (plans.length >= 4) {
         res.status(400).json({ status: false, msg: "You added upto 4 network already" })
     }else {
         let network = new dataPlans({
@@ -218,10 +216,10 @@ const addNetwork = async (req, res) => {
     }
 }
 
-const addDataPlan = (req, res) => {
+const addDataPlan = async (req, res) => {
     const { network_id, server_id, price, valid_period, byte } = req.body
     let newPlan = { server_id, price, valid_period, byte }
-    let network = dataPlans.findOne({ network_id })
+    let network = await dataPlans.findOne({ network_id })
     if (network) {
         let plan = network.dataPlans
         plan.push(newPlan)

@@ -57,13 +57,11 @@ const AdminService = () => {
             })
             .catch((err) => {
                 console.log(err);
-                setdataPlan(null)
             })
     }
 
     const formik = useFormik({
         initialValues: {
-            network: "",
             serverId: "",
             dataPrice: "",
             validationPeriod: "",
@@ -76,7 +74,27 @@ const AdminService = () => {
             dataSize: yup.string().required("Data size is required")
         }),
         onSubmit: (values) => {
-            console.log(values);
+            let networkId = document.getElementById('network').value
+            if (!networkId) {
+                toast.error("Please select a network")
+            }else{
+                console.log(values, networkId);
+                const url = "http://localhost:5000/admin/add_dataplan"
+                const data = {
+                    network_id: networkId, 
+                    server_id: values.serverId, 
+                    price: values.dataPrice, 
+                    valid_period: values.validationPeriod, 
+                    byte: values.dataSize
+                }
+                axios.post(url, data )
+                .then((res)=>{
+                    console.log(res);
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+            }
         }
     })
 
@@ -101,23 +119,31 @@ const AdminService = () => {
     const addNetwork = () => {
         let network_id = document.getElementById('networkId').value
         let network_name = document.getElementById('networkName').value
-        if (network_id == "" || network_name == "") {
+        if (dataPlan.length == 4) {
+            toast.error("You added upto 4 network already")
+        }else if (network_id == "" || network_name == "") {
             toast.error("Spaces can't be empty")
-        } else if (dataPlan.length == 4) {
-            toast.error("You can only add 4 network")
         }else {
             const url = "http://localhost:5000/admin/add_network"
             axios.post(url, { network_id, network_name })
                 .then((res) => {
                     console.log(res);
                     toast.success("Network added successfully.")
+                    toast.loading("Reloading")
                     setTimeout(() => {
                         window.location.reload()
                     }, 1500);
                 })
                 .catch((err) => {
                     console.log(err);
-                    toast.error("An error occured")
+                    let errorMsg = err.response.data.msg
+                    if (err.response.data.error.code == 11000) {
+                        toast.error("Id or name already exist")
+                    }else if (errorMsg) {
+                        toast.error(`${errorMsg}`)
+                    }else{
+                        toast.error("Unknow network error")
+                    }
                 })
         }
     }
@@ -240,10 +266,16 @@ const AdminService = () => {
                         <div id='adminAddDataPlan'>
                             <h1>Add new data plan</h1>
                             <form onSubmit={formik.handleSubmit}>
-                                <label htmlFor="">Network</label>
-                                <select id='network' onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange} value={formik.values.network} >
+                                <label htmlFor="network">Network</label>
+                                <select id='network' >
                                     <option value="">Select network</option>
+                                    {
+                                        dataPlan ? (
+                                            dataPlan.map(item => (
+                                                <option key={item.network_id} value={item.network_id}>{item.network_name}</option>
+                                            ))
+                                        ) : null
+                                    }
                                 </select>
 
                                 <label htmlFor="serverId">Server ID</label>
@@ -278,7 +310,7 @@ const AdminService = () => {
                                     <div className={formik.errors.dataSize ? 'my-[-7px] mb-3 text-center text-blue-500 ' : 'hidden'}><i>{formik.errors.dataSize}</i></div>
                                 ) : null}
 
-                                <button type='submit' className='focus:bg-blue-400'>Add plan</button>
+                                <button type='submit' className='focus:bg-blue-400 text-white'>Add plan</button>
                             </form>
                         </div>
 

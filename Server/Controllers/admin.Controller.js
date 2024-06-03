@@ -277,6 +277,15 @@ const editAdminSettings = async (req, res) => {
     }
 }
 
+const getDataPlan = (req, res) => {
+    let plans = dataPlans.find({})
+    if (plans) {
+        res.status(200).json({ status: true, msg: "Data plan fetched", data: plans })
+    }else {
+        res.status(500).json({ status: false, msg: "Server error" })
+    }
+}
+
 const text = (req, res) => {
     let gb = new adminSetting({})
     gb.save()
@@ -285,4 +294,4 @@ const text = (req, res) => {
     })
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings, editAdminSettings, text }
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings, editAdminSettings, getDataPlan }

@@ -33,6 +33,7 @@ const AdminService = () => {
         }
         userAuth()
         getSettings()
+        getDataPlan()
     }, [])
 
     const getSettings = () => {
@@ -41,6 +42,17 @@ const AdminService = () => {
             .then((res) => {
                 console.log(res);
                 setairtimeFetched(res.data.settings[0].airtimePrice)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    const getDataPlan = () => {
+        const url = "http://localhost:5000/admin/get_plan"
+        axios.get(url)
+            .then((res) => {
+                console.log(res);
             })
             .catch((err) => {
                 console.log(err);

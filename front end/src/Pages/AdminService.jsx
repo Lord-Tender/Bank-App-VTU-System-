@@ -90,9 +90,12 @@ const AdminService = () => {
                 axios.post(url, data)
                     .then((res) => {
                         console.log(res);
+                        toast.success("Added successfully!")
+                        formik.resetForm()
                     })
                     .catch((err) => {
                         console.log(err);
+                        toast.error("An error occured")
                     })
             }
         }
@@ -214,7 +217,7 @@ const AdminService = () => {
                                         <button className='bg-blue-700 w-[40%] sm:text-sm text-white h-[2.6em] rounded mt-8 ' onClick={() => { document.getElementById('addNetwork').style.display = "flex" }}>Add network</button>
                                     </div>
                                     <div className='flex justify-center gap-[10%] w-full mt-8 '>
-                                        <button className='bg-blue-500 w-[40%] sm:text-sm text-white h-[2.6em] rounded '>Show data plans</button>
+                                        <button className='bg-blue-500 w-[40%] sm:text-sm text-white h-[2.6em] rounded ' onClick={() => document.getElementById('showDataPlan').style.display = "flex"}>Show data plans</button>
                                         <button onClick={() => document.getElementById('addDataPlan').style.display = "flex"}
                                             className='bg-blue-500 w-[40%] sm:text-sm text-white h-[2.6em] rounded '>Add new data plan</button>
                                     </div>
@@ -321,7 +324,7 @@ const AdminService = () => {
                 {/* Show data plan ui */}
 
 
-                <div id='showDataPlan' className='absolute top-0 w-full h-full justify-center items-center flex ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
+                <div id='showDataPlan' className='absolute top-0 w-full h-full justify-center items-center hidden ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
                         <div onClick={() => document.getElementById('showDataPlan').style.display = "none"}
                             className='font-bold text-[2em] text-white cursor-pointer absolute top-[9px] sm:right-[7.5%] right-[32.5%]'><RxCross2 />
                         </div>

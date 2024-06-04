@@ -77,23 +77,23 @@ const AdminService = () => {
             let networkId = document.getElementById('network').value
             if (!networkId) {
                 toast.error("Please select a network")
-            }else{
+            } else {
                 console.log(values, networkId);
                 const url = "http://localhost:5000/admin/add_dataplan"
                 const data = {
-                    network_id: networkId, 
-                    server_id: values.serverId, 
-                    price: values.dataPrice, 
-                    valid_period: values.validationPeriod, 
+                    network_id: networkId,
+                    server_id: values.serverId,
+                    price: values.dataPrice,
+                    valid_period: values.validationPeriod,
                     byte: values.dataSize
                 }
-                axios.post(url, data )
-                .then((res)=>{
-                    console.log(res);
-                })
-                .catch((err)=>{
-                    console.log(err);
-                })
+                axios.post(url, data)
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
             }
         }
     })
@@ -121,9 +121,9 @@ const AdminService = () => {
         let network_name = document.getElementById('networkName').value
         if (dataPlan.length == 4) {
             toast.error("You added upto 4 network already")
-        }else if (network_id == "" || network_name == "") {
+        } else if (network_id == "" || network_name == "") {
             toast.error("Spaces can't be empty")
-        }else {
+        } else {
             const url = "http://localhost:5000/admin/add_network"
             axios.post(url, { network_id, network_name })
                 .then((res) => {
@@ -139,9 +139,9 @@ const AdminService = () => {
                     let errorMsg = err.response.data.msg
                     if (err.response.data.error.code == 11000) {
                         toast.error("Id or name already exist")
-                    }else if (errorMsg) {
+                    } else if (errorMsg) {
                         toast.error(`${errorMsg}`)
-                    }else{
+                    } else {
                         toast.error("Unknow network error")
                     }
                 })
@@ -195,19 +195,19 @@ const AdminService = () => {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    dataPlan ? ( 
+                                                    dataPlan ? (
                                                         dataPlan.map(user => (
                                                             <tr key={user.network_id}>
                                                                 <td>{user.network_name}</td>
                                                                 <td>{user.network_id}</td>
                                                             </tr>
                                                         ))
-                                                     ) : (
+                                                    ) : (
                                                         <tr>
                                                             <td>Network Id will show here</td>
                                                             <td>Network name will show here</td>
                                                         </tr>
-                                                     )
+                                                    )
                                                 }
                                             </tbody>
                                         </table>
@@ -316,6 +316,54 @@ const AdminService = () => {
 
                     </div>
                 </div>
+
+
+                {/* Show data plan ui */}
+
+
+                <div id='showDataPlan' className='absolute top-0 w-full h-full justify-center items-center flex ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
+                        <div onClick={() => document.getElementById('showDataPlan').style.display = "none"}
+                            className='font-bold text-[2em] text-white cursor-pointer absolute top-[9px] sm:right-[7.5%] right-[32.5%]'><RxCross2 />
+                        </div>
+                    <div className='listOfPlansDiv bg-white sm:w-[85%] w-[35%] h-[34em] rounded-lg px-10 pt-2 relative'>
+
+                        <h1 className='text-xl text-center text-blue-800 font-bold'>All data plans</h1>
+
+                        <div>
+                            {
+                                dataPlan ? (
+                                    dataPlan.map(item => (
+                                        <div id='listOfPlans'>
+                                            <h1>{item.network_name}</h1>
+                                            <table>
+                                                <thead>
+                                                    <th>Plans</th>
+                                                    <th>Price</th>
+                                                    <th>ID</th>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        item.dataPlans.map(plan =>(
+                                                            <tr>
+                                                                <td>{plan.byte}</td>
+                                                                <td>{plan.price}</td>
+                                                                <td>{plan.server_id}</td>
+                                                            </tr>
+                                                        ))
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className='text-center mt-[50%]'>Please check your internet connection</div>
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
 
             </section>
         </>

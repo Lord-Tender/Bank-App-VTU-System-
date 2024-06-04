@@ -21,12 +21,12 @@ tr:nth-child(even) {
     height: 2.4em;
     margin-bottom: 10px;
     border-radius: 7px;
-    border: 2px solid rgb(42, 42, 245) !important;
+    border: 2px solid rgb(2, 2, 56) !important;
 }
 
 #adminAddDataPlan input{
     display: block;
-    border: 2px solid rgb(42, 42, 245);
+    border: 2px solid rgb(2, 2, 56);
     width: 100%;
     height: 2.4em;
     border-radius: 7px;
@@ -60,4 +60,27 @@ tr:nth-child(even) {
 
 #adminAddDataPlan > :nth-child(2){
     margin-top: 5px;
+}
+
+.listOfPlansDiv{
+    overflow-y: scroll;
+}
+
+#listOfPlans h1{
+    font-size: 1.4em;
+    margin-top: 30px;
+    margin-bottom: 25px;
+    background-color: rgb(248, 219, 219);
+    text-align: center;
+    padding: 3px;
+    border-radius: 7px;
+    font-weight: 400;
+}
+
+#listOfPlans table{
+    width: 100%;
+}
+
+#listOfPlans table, #listOfPlans table td, #listOfPlans table th{
+    border: 2px solid rgb(250, 219, 219);
 }

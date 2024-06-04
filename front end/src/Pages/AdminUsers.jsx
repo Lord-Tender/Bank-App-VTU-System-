@@ -1,7 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AdminSidebar from '../Components/AdminSidebar'
 
 const AdminUsers = () => {
+
+    useEffect(() => {
+        const userAuth = () => {
+            let token = localStorage.getItem('admin_token')
+            let url = 'http://localhost:5000/admin/page_auth'
+    
+            axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+            }).then((res) => {
+                toast.success("Welcome Back!!!")
+            })
+            .catch((err) => {
+                // navigate("/admin/login")
+            })
+        }
+        userAuth()
+    }, [])
+    
     return (
         <>
             <section style={{ width: "100%", height: "100%", display: "flex" }}>

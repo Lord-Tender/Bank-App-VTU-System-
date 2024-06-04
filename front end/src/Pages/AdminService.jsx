@@ -28,6 +28,7 @@ const AdminService = () => {
                     "Accept": "application/json"
                 },
             }).then((res) => {
+                navigate("/admin/login")
             })
                 .catch((err) => {
                 })

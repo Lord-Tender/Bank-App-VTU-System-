@@ -28,9 +28,9 @@ const AdminService = () => {
                     "Accept": "application/json"
                 },
             }).then((res) => {
-                navigate("/admin/login")
             })
                 .catch((err) => {
+                    navigate("/admin/login")
                 })
         }
         userAuth()
@@ -326,9 +326,9 @@ const AdminService = () => {
 
 
                 <div id='showDataPlan' className='absolute top-0 w-full h-full justify-center items-center hidden ' style={{ backgroundColor: "rgba(0, 0, 0, 0.548)" }}>
-                        <div onClick={() => document.getElementById('showDataPlan').style.display = "none"}
-                            className='font-bold text-[2em] text-white cursor-pointer absolute top-[9px] sm:right-[7.5%] right-[32.5%]'><RxCross2 />
-                        </div>
+                    <div onClick={() => document.getElementById('showDataPlan').style.display = "none"}
+                        className='font-bold text-[2em] text-white cursor-pointer absolute top-[9px] sm:right-[7.5%] right-[32.5%]'><RxCross2 />
+                    </div>
                     <div className='listOfPlansDiv bg-white sm:w-[85%] w-[35%] h-[34em] rounded-lg px-10 pt-2 relative'>
 
                         <h1 className='text-xl text-center text-blue-800 font-bold'>All data plans</h1>
@@ -347,7 +347,7 @@ const AdminService = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        item.dataPlans.map(plan =>(
+                                                        item.dataPlans.map(plan => (
                                                             <tr>
                                                                 <td>{plan.byte}</td>
                                                                 <td>{plan.price}</td>

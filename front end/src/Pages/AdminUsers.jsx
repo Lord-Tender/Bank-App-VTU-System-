@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 
 const AdminUsers = () => {
     const [user, setuser] = useState("")
+    const [searchUser, setsearchUser] = useState("")
     const [errorMsg, seterrorMsg] = useState("Loading . . .")
     const [userToCredit, setuserToCredit] = useState("")
     const [userToDebit, setuserToDebit] = useState("")
@@ -72,16 +73,16 @@ const AdminUsers = () => {
     }
 
     const debitUser = () => {
-        let amount = document.getElementById("amountToCredit").value
+        let amount = document.getElementById("amountToDebit").value
         console.log(amount, userToCredit);
-        let url = 'http://localhost:5000/admin/credit_user'
-        axios.post(url, { userEmail: userToCredit, amount, reason: "From Admin" })
+        let url = 'http://localhost:5000/admin/debit_user'
+        axios.post(url, { userEmail: userToDebit, amount })
             .then((res) => {
                 console.log(res);
                 document.getElementById("amountToCredit").value = ""
-                toast.success("User credited successfully!")
+                toast.success("User debited successfully!")
                 setTimeout(() => {
-                    document.getElementById('creditUser').style.display = "none"
+                    document.getElementById('debitUser').style.display = "none"
                 }, 2000);
             })
             .catch((err) => {
@@ -117,7 +118,7 @@ const AdminUsers = () => {
                         <div className='allUser'>
                             {
                                 user ? (
-                                    <table>
+                                    <table id='userTable'>
                                         <thead>
                                             <th>Full name</th>
                                             <th>User email</th>
@@ -130,7 +131,7 @@ const AdminUsers = () => {
                                                     <tr>
                                                         <td><span>{item.firstName}</span> <span>{item.lastName}</span></td>
                                                         <td>{item.emailInfo.email}</td>
-                                                        <td>{item.accountBal}</td>
+                                                        <td>{item.accountBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</td>
                                                         <td><button onClick={()=>initDebitUser(item.emailInfo.email)}>Debit</button> <button onClick={()=>initCreditUser(item.emailInfo.email)}>Credit</button></td>
                                                     </tr>
                                                 ))
@@ -139,6 +140,32 @@ const AdminUsers = () => {
                                     </table>
                                 ) : (
                                     <div className='mt-[10%] text-center'>{errorMsg}</div>
+                                )
+                            }
+                            {
+                                searchUser ? (
+                                    <table id='userTable'>
+                                        <thead>
+                                            <th>Full name</th>
+                                            <th>User email</th>
+                                            <th>Account Balance</th>
+                                            <th>Actions</th>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                searchUser.map(item => (
+                                                    <tr>
+                                                        <td><span>{item.firstName}</span> <span>{item.lastName}</span></td>
+                                                        <td>{item.emailInfo.email}</td>
+                                                        <td>{item.accountBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</td>
+                                                        <td><button onClick={()=>initDebitUser(item.emailInfo.email)}>Debit</button> <button onClick={()=>initCreditUser(item.emailInfo.email)}>Credit</button></td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <div className='mt-[10%] text-center'>No result found!</div>
                                 )
                             }
                         </div>
@@ -168,8 +195,8 @@ const AdminUsers = () => {
                         <h2 className='text-2xl text-center font-bold text-blue-700'>Debit User</h2>
                         <p className='text-xl my-3'>How much do you want to debit user?</p>
                         <label htmlFor="amountToCredit" className='font-bold'>Amount:</label>
-                        <input type="text" id='amountToCredit' className='block w-full h-10 border-2 border-blue-600 p-3 rounded focus:outline-none placeholder:text-blue-400' placeholder='0' />
-                        <button className='focus:bg-blue-400 bg-blue-600 w-[50%] h-10 text-white rounded mt-5 ' onClick={debitUser}>Credit</button>
+                        <input type="text" id='amountToDebit' className='block w-full h-10 border-2 border-blue-600 p-3 rounded focus:outline-none placeholder:text-blue-400' placeholder='0' />
+                        <button className='focus:bg-blue-400 bg-blue-600 w-[50%] h-10 text-white rounded mt-5 ' onClick={debitUser}>Debit</button>
                     </div>
                 </div>
 

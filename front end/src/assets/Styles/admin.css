@@ -97,6 +97,15 @@ tr:nth-child(even) {
     margin-top: 20px;
 }
 
+.allUser table button{
+    width: 6em;
+    background-color: blue;
+    height: 2em;
+    border-radius: 7px;
+    color: aliceblue;
+    margin-left: 5px;
+}
+
 
 @media screen and (max-width: 478px) {
     .allUser table{

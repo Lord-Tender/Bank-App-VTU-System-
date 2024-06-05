@@ -79,14 +79,14 @@ const AdminUsers = () => {
                                                         <td><span>{item.firstName}</span> <span>{item.lastName}</span></td>
                                                         <td>{item.emailInfo.email}</td>
                                                         <td>{item.accountBal}</td>
-                                                        <td><img src={item.photoUrl} alt="" width="30px" /></td>
+                                                        <td><button>Debit</button> <button>Credit</button></td>
                                                     </tr>
                                                 ))
                                             }
                                         </tbody>
                                     </table>
                                 ) : (
-                                    <div className='mt-[10%] '>Loading ...</div>
+                                    <div className='mt-[10%] '>{errorMsg}</div>
                                 )
                             }
                         </div>

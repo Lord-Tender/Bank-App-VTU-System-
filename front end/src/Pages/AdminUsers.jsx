@@ -116,6 +116,8 @@ const AdminUsers = () => {
                     <div className='w-full bg-white h-[30em] my-3 border-2 rounded-xl overflow-auto'>
                         <h1 className='text-xl text-center pt-3'>All user</h1>
                         <div className='allUser'>
+                            <div>
+
                             {
                                 user ? (
                                     <table id='userTable'>
@@ -142,9 +144,11 @@ const AdminUsers = () => {
                                     <div className='mt-[10%] text-center'>{errorMsg}</div>
                                 )
                             }
+                            </div>
+                            <div className='hidden'>
                             {
                                 searchUser ? (
-                                    <table id='userTable'>
+                                    <table id='searchUserTable'>
                                         <thead>
                                             <th>Full name</th>
                                             <th>User email</th>
@@ -168,6 +172,7 @@ const AdminUsers = () => {
                                     <div className='mt-[10%] text-center'>No result found!</div>
                                 )
                             }
+                            </div>
                         </div>
                     </div>
                 </div>

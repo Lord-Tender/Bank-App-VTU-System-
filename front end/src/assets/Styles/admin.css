@@ -84,3 +84,15 @@ tr:nth-child(even) {
 #listOfPlans table, #listOfPlans table td, #listOfPlans table th{
     border: 2px solid rgb(250, 219, 219);
 }
+
+.allUser{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+}
+
+.allUser table{
+    width: 100%;
+    margin-top: 20px;
+}

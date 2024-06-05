@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const AdminUsers = () => {
     const [user, setuser] = useState("")
+    const [errorMsg, seterrorMsg] = useState("Loading . . .")
     useEffect(() => {
         const userAuth = () => {
             let token = localStorage.getItem('admin_token')
@@ -33,6 +34,7 @@ const AdminUsers = () => {
             })
             .catch((err) => {
                 console.log(err);
+                seterrorMsg("An error occurred, Please check your internet connection and refresh.")
             })
     }
     
@@ -51,14 +53,14 @@ const AdminUsers = () => {
                     <div className='w-full bg-white h-28 my-3 rounded-xl'>
                         <h1 className='text-xl text-center pt-3'>Search User</h1>
                         <div className='flex justify-center items-center  mt-3 gap-[5%] px-[5%] '>
-                            <input placeholder='Search by email, name or ID' type="text" className='w-[70%] border-2 border-blue-500 rounded-3xl h-10 p-3.5'/>
-                            <button className='w-[15%] bg-blue-500 h-10 rounded text-white'>Search</button>
+                            <input placeholder='Search by email, name or ID' type="text" className='w-[70%] border-2 border-blue-500 rounded-3xl h-10 p-3.5 sm:text-sm'/>
+                            <button className='w-[15%] bg-blue-500 h-10 rounded text-white sm:text-sm sm:w-[25%] '>Search</button>
                         </div>
                     </div>
 
                     {/* List of all users */}
 
-                    <div className='w-full bg-white h-[20em] my-3 border-2 rounded-xl'>
+                    <div className='w-full bg-white h-[30em] my-3 border-2 rounded-xl overflow-auto'>
                         <h1 className='text-xl text-center pt-3'>All user</h1>
                         <div className='allUser'>
                             {
@@ -68,7 +70,7 @@ const AdminUsers = () => {
                                             <th>Full name</th>
                                             <th>User email</th>
                                             <th>Account Balance</th>
-                                            <th></th>
+                                            <th>Actions</th>
                                         </thead>
                                         <tbody>
                                             {
@@ -84,7 +86,7 @@ const AdminUsers = () => {
                                         </tbody>
                                     </table>
                                 ) : (
-                                    <div>Loading ...</div>
+                                    <div className='mt-[10%] '>Loading ...</div>
                                 )
                             }
                         </div>

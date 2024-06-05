@@ -93,6 +93,17 @@ tr:nth-child(even) {
 }
 
 .allUser table{
-    width: 100%;
+    width: 98%;
     margin-top: 20px;
+}
+
+
+@media screen and (max-width: 478px) {
+    .allUser table{
+        display: block;
+        
+    }
+    .allUser table td{
+        padding: 10px !important;
+    }
 }

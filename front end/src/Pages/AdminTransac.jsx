@@ -73,6 +73,7 @@ const AdminTransac = () => {
             .catch((err) => {
                 document.getElementById('loader3').style.display = 'none';
                 document.getElementById('buttonText3').style.display = 'block';
+                toast.error("An error occured")
             })
     }
 

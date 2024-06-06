@@ -49,15 +49,12 @@ const AdminService = () => {
     }
 
     const getDataPlan = () => {
-        console.log("Getting plans ....");
         const url = "http://localhost:5000/admin/get_plan"
         axios.get(url)
             .then((res) => {
-                console.log(res);
                 setdataPlan(res.data.data)
             })
             .catch((err) => {
-                console.log(err);
             })
     }
 
@@ -79,7 +76,6 @@ const AdminService = () => {
             if (!networkId) {
                 toast.error("Please select a network")
             } else {
-                console.log(values, networkId);
                 const url = "http://localhost:5000/admin/add_dataplan"
                 const data = {
                     network_id: networkId,
@@ -90,12 +86,10 @@ const AdminService = () => {
                 }
                 axios.post(url, data)
                     .then((res) => {
-                        console.log(res);
                         toast.success("Added successfully!")
                         formik.resetForm()
                     })
                     .catch((err) => {
-                        console.log(err);
                         toast.error("An error occured")
                     })
             }
@@ -105,17 +99,14 @@ const AdminService = () => {
     const editAirtime = () => {
         const url = "http://localhost:5000/admin/settings/edit"
         let newValue = document.getElementById("airtimePercentage").value
-        console.log(newValue);
         axios.post(url, { whatToEdit: "airtimePrice", newValue })
             .then((res) => {
-                console.log(res);
                 toast.success("Change saved successfully.")
                 setTimeout(() => {
                     window.location.reload()
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
                 toast.error("An error occured")
             })
     }
@@ -131,7 +122,6 @@ const AdminService = () => {
             const url = "http://localhost:5000/admin/add_network"
             axios.post(url, { network_id, network_name })
                 .then((res) => {
-                    console.log(res);
                     toast.success("Network added successfully.")
                     toast.loading("Reloading")
                     setTimeout(() => {
@@ -139,7 +129,6 @@ const AdminService = () => {
                     }, 1500);
                 })
                 .catch((err) => {
-                    console.log(err);
                     let errorMsg = err.response.data.msg
                     if (err.response.data.error.code == 11000) {
                         toast.error("Id or name already exist")

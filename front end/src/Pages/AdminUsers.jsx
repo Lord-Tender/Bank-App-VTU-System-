@@ -34,11 +34,9 @@ const AdminUsers = () => {
     const getUser = () => {
         axios.get('http://localhost:5000/admin/get_user')
             .then((res) => {
-                console.log(res);
                 setuser(res.data.allUsers)
             })
             .catch((err) => {
-                console.log(err);
                 seterrorMsg("An error occurred, Please check your internet connection and refresh.")
             })
     }
@@ -50,11 +48,9 @@ const AdminUsers = () => {
 
     const creditUser = () => {
         let amount = document.getElementById("amountToCredit").value
-        console.log(amount, userToCredit);
         let url = 'http://localhost:5000/admin/credit_user'
         axios.post(url, { userEmail: userToCredit, amount, reason: "From Admin" })
             .then((res) => {
-                console.log(res);
                 document.getElementById("amountToCredit").value = ""
                 toast.success("User credited successfully!")
                 setTimeout(() => {
@@ -62,7 +58,6 @@ const AdminUsers = () => {
                 }, 2000);
             })
             .catch((err) => {
-                console.log(err);
                 toast.error('Something went wrong')
             })
     }
@@ -74,11 +69,9 @@ const AdminUsers = () => {
 
     const debitUser = () => {
         let amount = document.getElementById("amountToDebit").value
-        console.log(amount, userToCredit);
         let url = 'http://localhost:5000/admin/debit_user'
         axios.post(url, { userEmail: userToDebit, amount })
             .then((res) => {
-                console.log(res);
                 document.getElementById("amountToCredit").value = ""
                 toast.success("User debited successfully!")
                 setTimeout(() => {
@@ -86,7 +79,6 @@ const AdminUsers = () => {
                 }, 2000);
             })
             .catch((err) => {
-                console.log(err);
                 toast.error('Something went wrong')
             })
     }
@@ -95,7 +87,6 @@ const AdminUsers = () => {
         let value = document.getElementById('searchUserInput').value
         user.map((item) => {
             if (item.emailInfo.email == value || item._id == value || item.phoneNo == value) {
-                console.log(item);
                 setsearchUser([item])
                 document.querySelector('.userTableDiv').style.display = "none"
                 document.querySelector('.searchUserTableDiv').style.display = "block"

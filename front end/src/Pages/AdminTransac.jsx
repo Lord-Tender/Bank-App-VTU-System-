@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import "../assets/Styles/admin.css"
+import { PiListDashesBold } from 'react-icons/pi'
 
 const AdminTransac = () => {
 
@@ -103,6 +104,12 @@ const AdminTransac = () => {
                 </div>
 
                 <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-screen pb-10' style={{ backgroundColor: "whitesmoke", fontFamily: '"Josefin Sans", sans-serif' }}>
+
+                    <div className='hidden sm:block text-4xl mt-3 text-blue-900 font-bold'>
+                        <div onClick={() => { document.getElementById('sidebar').style.display = "block" }}>
+                            <PiListDashesBold />
+                        </div>
+                    </div>
 
                     {/* Search bar */}
                     <div className='w-full bg-white h-28 my-3 rounded-xl'>

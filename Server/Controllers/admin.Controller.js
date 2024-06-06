@@ -4,7 +4,6 @@ const secret = process.env.SECRET
 const { creditUser, debitUser } = require('./user.Controller')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
-const adminModel = require("../Models/admin.Model");
 
 
 const addAdminUser = (req, res) => {

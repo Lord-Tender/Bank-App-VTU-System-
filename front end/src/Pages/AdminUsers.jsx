@@ -3,6 +3,7 @@ import AdminSidebar from '../Components/AdminSidebar'
 import axios from 'axios'
 import { RxCross2 } from 'react-icons/rx'
 import toast from 'react-hot-toast'
+import { PiListDashesBold } from 'react-icons/pi'
 
 const AdminUsers = () => {
     const [user, setuser] = useState("")
@@ -90,7 +91,7 @@ const AdminUsers = () => {
                 setsearchUser([item])
                 document.querySelector('.userTableDiv').style.display = "none"
                 document.querySelector('.searchUserTableDiv').style.display = "block"
-            }else{
+            } else {
                 // setsearchUser([])
                 document.querySelector('.userTableDiv').style.display = "none"
                 document.querySelector('.searchUserTableDiv').style.display = "block"
@@ -107,6 +108,12 @@ const AdminUsers = () => {
                 </div>
 
                 <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-screen pb-10' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+
+                    <div className='hidden sm:block text-4xl mt-3 text-blue-900 font-bold'>
+                        <div onClick={() => { document.getElementById('sidebar').style.display = "block" }}>
+                            <PiListDashesBold />
+                        </div>
+                    </div>
 
                     {/* Search section */}
 

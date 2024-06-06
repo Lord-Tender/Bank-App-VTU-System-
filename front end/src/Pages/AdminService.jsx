@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 import { RxCross2 } from 'react-icons/rx'
 import { useFormik } from 'formik'
 import * as yup from 'yup';
+import { PiListDashesBold } from 'react-icons/pi'
 
 const AdminService = () => {
     let navigate = useNavigate()
@@ -150,6 +151,12 @@ const AdminService = () => {
                 </div>
 
                 <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-screen pb-10' style={{ backgroundColor: "whitesmoke", fontFamily: '"Josefin Sans", sans-serif' }}>
+
+                <div className='hidden sm:block text-4xl mt-3 text-blue-900 font-bold'>
+                        <div onClick={() => { document.getElementById('sidebar').style.display = "block" }}>
+                            <PiListDashesBold />
+                        </div>
+                    </div>
 
                     {/* Select Service */}
                     <div className='w-full bg-white h-28 my-3 rounded-xl'>

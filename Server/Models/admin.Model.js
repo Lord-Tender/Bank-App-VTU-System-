@@ -4,7 +4,7 @@ adminUser = new mongoose.Schema(
     {
         email: { type: String, unique: true },
         fullName: { type: String},
-        role: String,
+        role: { type: String, default: "admin" },
         password: { type: String, require: true}
     }
 )

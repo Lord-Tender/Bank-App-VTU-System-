@@ -128,11 +128,22 @@ const AdminSettings = () => {
 
                     {/* Add new User UI */}
 
-                    <div className='w-full bg-white h-[20em] my-5 rounded-xl px-[3%] '>
+                    <div className='w-full bg-white h-[28em] my-5 rounded-xl px-[3%] '>
                         <h1 className='text-2xl text-center text-blue-700 pt-3 pb-3'>Add new admin</h1>
-                        <p className='text-lg w-[80%]'>Enter new admin detail to give new user access to backend, NOTE: He/She ip address must be wishlisted.</p>
+                        <p className='text-lg w-[80%] mb-2'>Enter new admin detail to give new user access to backend, NOTE: He/She ip address must be wishlisted.</p>
 
-                        <input id='monnifyFeeNewValue' placeholder='0' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
+                        <form >
+                            <label htmlFor="" className='block'>Email:</label>
+                            <input id='newAdminEmail' placeholder='example@email.com' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2' />
+
+                            <label htmlFor="" className='block'>Full name:</label>
+                            <input id='newAdminFullName' placeholder='John Doe' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2' />
+
+                            <label htmlFor="" className='block'>Password:</label>
+                            <input id='newAdminFullName' placeholder='•••••••••' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2' />
+
+                            <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-9 block mt-2 text-white sm:text-sm sm:w-[25%] '>Save</button>
+                        </form>
                     </div>
                 </div>
 

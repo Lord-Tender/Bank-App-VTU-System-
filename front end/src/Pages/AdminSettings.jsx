@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { PiListDashesBold } from 'react-icons/pi'
+import * as yup from 'yup';
+import { useFormik } from 'formik'
 
 const AdminSettings = () => {
     let navigate = useNavigate()
@@ -83,6 +85,42 @@ const AdminSettings = () => {
         }
     }
 
+    const formik = useFormik({
+        initialValues: {
+            newAdminEmail: '',
+            newAdminFullName: '',
+            newAdminPassword: ""
+        },
+        validationSchema: yup.object({
+            newAdminEmail: yup.string().email("invalid email address").required("Email is required"),
+            newAdminFullName: yup.string().required("Full name is required"),
+            newAdminPassword: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters long').matches(/[a-z]/, 'Password must contain at least one lowercase')
+                .matches(/[A-Z]/, 'Password must contain at least one uppercase')
+                .matches(/[0-9]/, 'Password must contain at least number')
+                .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
+
+        }),
+        onSubmit: (values) => {
+            const url = "http://localhost:5000/admin/add_user"
+            let data = { 
+                email: values.newAdminEmail, 
+                fullName: values.newAdminFullName, 
+                password: values.newAdminPassword
+            }
+            axios.post(url, data)
+                .then((res) => {
+                    console.log(res);
+                    toast.success("New admin user added")
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000);
+                }).catch((err) => {
+                    console.log(err);
+                    toast.error("An error occur")
+                })
+        }
+    })
+
     return (
         <>
             <section style={{ width: "100%", height: "100%", display: "flex", backgroundColor: "whitesmoke" }}>
@@ -128,21 +166,36 @@ const AdminSettings = () => {
 
                     {/* Add new User UI */}
 
-                    <div className='w-full bg-white h-[28em] my-5 rounded-xl px-[3%] '>
+                    <div className='w-full bg-white h-[30em] sm:h-[33em] my-5 rounded-xl px-[3%] '>
                         <h1 className='text-2xl text-center text-blue-700 pt-3 pb-3'>Add new admin</h1>
-                        <p className='text-lg w-[80%] mb-2'>Enter new admin detail to give new user access to backend, NOTE: He/She ip address must be wishlisted.</p>
+                        <p className='text-lg sm:text-sm w-[80%] mb-2'>Enter new admin detail to give new user access to backend, NOTE: He/She ip address must be wishlisted.</p>
 
-                        <form >
-                            <label htmlFor="" className='block'>Email:</label>
-                            <input id='newAdminEmail' placeholder='example@email.com' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2' />
+                        <form onSubmit={formik.handleSubmit}>
+                            <label htmlFor="newAdminEmail" className='block'>Email:</label>
+                            <input id='newAdminEmail' placeholder='example@email.com' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.newAdminEmail} />
+                            {formik.touched.newAdminEmail ? (
+                                <div className={formik.errors.newAdminEmail ? ' text-red-600 ' : 'hidden'}>{formik.errors.newAdminEmail}</div>
+                            ) : null}
 
-                            <label htmlFor="" className='block'>Full name:</label>
-                            <input id='newAdminFullName' placeholder='John Doe' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2' />
+                            <label htmlFor="newAdminFullName" className='block'>Full name:</label>
+                            <input id='newAdminFullName' placeholder='John Doe' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.newAdminFullName} />
+                                {formik.touched.newAdminFullName ? (
+                                <div className={formik.errors.newAdminFullName ? ' text-red-600 ' : 'hidden'}>{formik.errors.newAdminFullName}</div>
+                            ) : null}
 
-                            <label htmlFor="" className='block'>Password:</label>
-                            <input id='newAdminFullName' placeholder='•••••••••' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2' />
+                            <label htmlFor="newAdminPassword" className='block'>Password:</label>
+                            <input id='newAdminPassword' placeholder='•••••••••' type="text" className='w-[70%] border-2 border-blue-500  h-9 p-3.5 sm:text-sm my-2'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.newAdminPassword} />
+                                {formik.touched.newAdminPassword ? (
+                                <div className={formik.errors.newAdminPassword ? ' text-red-600 ' : 'hidden'}>{formik.errors.newAdminPassword}</div>
+                            ) : null}
 
-                            <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-9 block mt-2 text-white sm:text-sm sm:w-[25%] '>Save</button>
+                            <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-9 block mt-2 text-white sm:text-sm sm:w-[25%]' type='submit'>Add</button>
                         </form>
                     </div>
                 </div>

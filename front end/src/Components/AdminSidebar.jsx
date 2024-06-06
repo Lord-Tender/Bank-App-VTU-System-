@@ -40,13 +40,13 @@ const AdminSidebar = () => {
                     <p>Transactions</p>
                 </NavLink>
 
-                <NavLink to='/admin/users' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-5 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/users' ? 'border-l-4 border-blue-100 ps-3.5' : ''
+                <NavLink to='/admin/users' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-4 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/users' ? 'border-l-4 border-blue-100 ps-3.5' : ''
                     }`}>
                     <FaUsers />
                     <p>Users</p>
                 </NavLink>
 
-                <NavLink to='/admin/settings' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-5 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/settings' ? 'border-l-4 border-blue-100 ps-4' : ''
+                <NavLink to='/admin/settings' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-4 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/settings' ? 'border-l-4 border-blue-100 ps-3.5' : ''
                     }`}>
                     <RiUserSettingsFill />
                     <p>Settings</p>

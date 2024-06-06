@@ -37,6 +37,7 @@ const AdminSettings = () => {
         axios.get(url)
             .then((res) => {
                 console.log(res);
+                setsettings(res.data.settings)
             })
             .catch((err) => {
             })
@@ -54,11 +55,13 @@ const AdminSettings = () => {
 
                 {/* Body */}
                 <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-screen pb-10' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
-                    <div className='w-full bg-white h-32 my-3 rounded-xl'>
-                        <h1 className='text-xl text-center pt-3'>Search User</h1>
-                        <div className='flex justify-center items-center  mt-3 gap-[5%] px-[5%] '>
-                            <input id='searchUserInput' placeholder='Search by email, Phone no or ID' type="text" className='w-[70%] border-2 border-blue-500 rounded-3xl h-10 p-3.5 sm:text-sm' />
-                            <button className='w-[15%] bg-blue-500 h-10 rounded text-white sm:text-sm sm:w-[25%] ' >Search</button>
+                    <div className='w-full bg-white h-48 my-5 rounded-xl px-[3%] '>
+                        <h1 className='text-2xl text-center text-blue-700 pt-3 pb-3'>Intra-transfer Fee</h1>
+                        <p className='text-lg'>This is the fee that will be charge per transaction for <b>Intra - Transfer feature.</b></p>
+                        <h2 className='text-xl'>Currently set to <span>{ settings ? ( <span>{settings[0].intraTransferFee}</span> ) : ( <span>Loading ...</span> )}</span></h2>
+                        <div className='flex items-center  mt-3 gap-[5%] '>
+                            <input id='searchUserInput' placeholder='0' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
+                            <button className='w-[15%] bg-blue-500 h-10 text-white sm:text-sm sm:w-[25%] ' >Search</button>
                         </div>
                     </div>
                 </div>

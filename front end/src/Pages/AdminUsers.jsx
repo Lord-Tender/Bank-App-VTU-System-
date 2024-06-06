@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 
 const AdminUsers = () => {
     const [user, setuser] = useState("")
-    const [searchUser, setsearchUser] = useState("")
+    const [searchUser, setsearchUser] = useState([])
     const [errorMsg, seterrorMsg] = useState("Loading . . .")
     const [userToCredit, setuserToCredit] = useState("")
     const [userToDebit, setuserToDebit] = useState("")
@@ -91,6 +91,22 @@ const AdminUsers = () => {
             })
     }
 
+    const searchUserNow = () => {
+        let value = document.getElementById('searchUserInput').value
+        user.map((item) => {
+            if (item.emailInfo.email == value || item._id == value || item.phoneNo == value) {
+                console.log(item);
+                setsearchUser([item])
+                document.querySelector('.userTableDiv').style.display = "none"
+                document.querySelector('.searchUserTableDiv').style.display = "block"
+            }else{
+                // setsearchUser([])
+                document.querySelector('.userTableDiv').style.display = "none"
+                document.querySelector('.searchUserTableDiv').style.display = "block"
+            }
+        })
+    }
+
     return (
         <>
             <section style={{ width: "100%", height: "100% !important", display: "flex", backgroundColor: "whitesmoke" }}>
@@ -106,8 +122,8 @@ const AdminUsers = () => {
                     <div className='w-full bg-white h-28 my-3 rounded-xl'>
                         <h1 className='text-xl text-center pt-3'>Search User</h1>
                         <div className='flex justify-center items-center  mt-3 gap-[5%] px-[5%] '>
-                            <input placeholder='Search by email, name or ID' type="text" className='w-[70%] border-2 border-blue-500 rounded-3xl h-10 p-3.5 sm:text-sm' />
-                            <button className='w-[15%] bg-blue-500 h-10 rounded text-white sm:text-sm sm:w-[25%] '>Search</button>
+                            <input id='searchUserInput' placeholder='Search by email, Phone no or ID' type="text" className='w-[70%] border-2 border-blue-500 rounded-3xl h-10 p-3.5 sm:text-sm' />
+                            <button className='w-[15%] bg-blue-500 h-10 rounded text-white sm:text-sm sm:w-[25%] ' onClick={searchUserNow}>Search</button>
                         </div>
                     </div>
 
@@ -116,62 +132,62 @@ const AdminUsers = () => {
                     <div className='w-full bg-white h-[30em] my-3 border-2 rounded-xl overflow-auto'>
                         <h1 className='text-xl text-center pt-3'>All user</h1>
                         <div className='allUser'>
-                            <div>
+                            <div className='userTableDiv w-full'>
 
-                            {
-                                user ? (
-                                    <table id='userTable'>
-                                        <thead>
-                                            <th>Full name</th>
-                                            <th>User email</th>
-                                            <th>Account Balance</th>
-                                            <th>Actions</th>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                user.map(item => (
-                                                    <tr>
-                                                        <td><span>{item.firstName}</span> <span>{item.lastName}</span></td>
-                                                        <td>{item.emailInfo.email}</td>
-                                                        <td>{item.accountBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</td>
-                                                        <td><button onClick={()=>initDebitUser(item.emailInfo.email)}>Debit</button> <button onClick={()=>initCreditUser(item.emailInfo.email)}>Credit</button></td>
-                                                    </tr>
-                                                ))
-                                            }
-                                        </tbody>
-                                    </table>
-                                ) : (
-                                    <div className='mt-[10%] text-center'>{errorMsg}</div>
-                                )
-                            }
+                                {
+                                    user ? (
+                                        <table id='userTable'>
+                                            <thead>
+                                                <th>Full name</th>
+                                                <th>User email</th>
+                                                <th>Account Balance</th>
+                                                <th>Actions</th>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    user.map(item => (
+                                                        <tr>
+                                                            <td><span>{item.firstName}</span> <span>{item.lastName}</span></td>
+                                                            <td>{item.emailInfo.email}</td>
+                                                            <td className='flex'>{item.accountBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</td>
+                                                            <td><button onClick={() => initDebitUser(item.emailInfo.email)}>Debit</button> <button onClick={() => initCreditUser(item.emailInfo.email)}>Credit</button></td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    ) : (
+                                        <div className='mt-[35%] text-center'>{errorMsg}</div>
+                                    )
+                                }
                             </div>
-                            <div className='hidden'>
-                            {
-                                searchUser ? (
-                                    <table id='searchUserTable'>
-                                        <thead>
-                                            <th>Full name</th>
-                                            <th>User email</th>
-                                            <th>Account Balance</th>
-                                            <th>Actions</th>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                searchUser.map(item => (
-                                                    <tr>
-                                                        <td><span>{item.firstName}</span> <span>{item.lastName}</span></td>
-                                                        <td>{item.emailInfo.email}</td>
-                                                        <td>{item.accountBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</td>
-                                                        <td><button onClick={()=>initDebitUser(item.emailInfo.email)}>Debit</button> <button onClick={()=>initCreditUser(item.emailInfo.email)}>Credit</button></td>
-                                                    </tr>
-                                                ))
-                                            }
-                                        </tbody>
-                                    </table>
-                                ) : (
-                                    <div className='mt-[10%] text-center'>No result found!</div>
-                                )
-                            }
+                            <div className='hidden w-full searchUserTableDiv'>
+                                {
+                                    searchUser ? (
+                                        <table id='searchUserTable'>
+                                            <thead>
+                                                <th>Full name</th>
+                                                <th>User email</th>
+                                                <th>Account Balance</th>
+                                                <th>Actions</th>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    searchUser.map(item => (
+                                                        <tr>
+                                                            <td><span>{item.firstName}</span> <span>{item.lastName}</span></td>
+                                                            <td>{item.emailInfo.email}</td>
+                                                            <td>{item.accountBal.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</td>
+                                                            <td><button onClick={() => initDebitUser(item.emailInfo.email)}>Debit</button> <button onClick={() => initCreditUser(item.emailInfo.email)}>Credit</button></td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    ) : (
+                                        <div className='mt-[35%] text-center'>No result found! Reload page for all user.</div>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

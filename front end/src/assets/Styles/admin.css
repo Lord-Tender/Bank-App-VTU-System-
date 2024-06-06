@@ -95,6 +95,7 @@ tr:nth-child(even) {
 .allUser table{
     width: 98%;
     margin-top: 20px;
+    margin-left: 1%;
 }
 
 .allUser table button{

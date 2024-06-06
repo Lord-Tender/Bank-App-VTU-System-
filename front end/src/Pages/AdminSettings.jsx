@@ -50,14 +50,12 @@ const AdminSettings = () => {
         console.log(newValue);
         axios.post(url, { whatToEdit: "intraFee", newValue })
             .then((res) => {
-                console.log(res);
                 toast.success("Change saved successfully.")
                 setTimeout(() => {
                     window.location.reload()
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
                 toast.error("An error occured")
             })
     }
@@ -74,10 +72,25 @@ const AdminSettings = () => {
 
                 {/* Body */}
                 <div className='sm:w-[100%] w-[80%] px-[2.5em] sm:px-[1em] h-screen pb-10' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+
+                    {/* Intra transfer setting */}
+
                     <div className='w-full bg-white h-48 my-5 rounded-xl px-[3%] '>
                         <h1 className='text-2xl text-center text-blue-700 pt-3 pb-3'>Intra-transfer Fee</h1>
                         <p className='text-lg'>This is the fee that will be charge per transaction for <b>Intra - Transfer feature.</b></p>
                         <h2 className='text-xl'>Currently set to <span>{ settings ? ( <span>{settings[0].intraTransferFee.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span> ) : ( <span>Loading ...</span> )}</span></h2>
+                        <div className='flex items-center  mt-3 gap-[5%] '>
+                            <input id='intraFeeNewValue' placeholder='0' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
+                            <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-10 text-white sm:text-sm sm:w-[25%] ' onClick={setIntraTransferFee}>Save</button>
+                        </div>
+                    </div>
+
+                    {/* Monnify fee */}
+
+                    <div className='w-full bg-white h-48 my-5 rounded-xl px-[3%] '>
+                        <h1 className='text-2xl text-center text-blue-700 pt-3 pb-3'>Monnify Fee</h1>
+                        <p className='text-lg'>This is the fee that will be charge per transaction for <b>Monnify wallet funding method.</b></p>
+                        <h2 className='text-xl'>Currently set to <span>{ settings ? ( <span>{settings[0].monnifyTransactionFee.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span> ) : ( <span>Loading ...</span> )}</span></h2>
                         <div className='flex items-center  mt-3 gap-[5%] '>
                             <input id='intraFeeNewValue' placeholder='0' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
                             <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-10 text-white sm:text-sm sm:w-[25%] ' onClick={setIntraTransferFee}>Save</button>

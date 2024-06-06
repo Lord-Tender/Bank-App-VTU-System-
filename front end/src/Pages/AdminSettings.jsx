@@ -30,7 +30,7 @@ const AdminSettings = () => {
         userAuth()
         getSettings()
     }, [])
-    
+
 
 
     const getSettings = () => {
@@ -47,33 +47,39 @@ const AdminSettings = () => {
     const setIntraTransferFee = () => {
         const url = "http://localhost:5000/admin/settings/edit"
         let newValue = document.getElementById("intraFeeNewValue").value
-        console.log(newValue);
-        axios.post(url, { whatToEdit: "intraFee", newValue })
-            .then((res) => {
-                toast.success("Change saved successfully.")
-                setTimeout(() => {
-                    window.location.reload()
-                }, 1000);
-            })
-            .catch((err) => {
-                toast.error("An error occured")
-            })
+        if (newValue == "") {
+            toast.error("Please input a new value")
+        } else {
+            axios.post(url, { whatToEdit: "intraFee", newValue })
+                .then((res) => {
+                    toast.success("Change saved successfully.")
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000);
+                })
+                .catch((err) => {
+                    toast.error("An error occured")
+                })
+        }
     }
 
     const setMonnifyTransacFee = () => {
         const url = "http://localhost:5000/admin/settings/edit"
         let newValue = document.getElementById("monnifyFeeNewValue").value
-        console.log(newValue);
-        axios.post(url, { whatToEdit: "monnifyFee", newValue })
-            .then((res) => {
-                toast.success("Change saved successfully.")
-                setTimeout(() => {
-                    window.location.reload()
-                }, 1000);
-            })
-            .catch((err) => {
-                toast.error("An error occured")
-            })
+        if (newValue == "") {
+            toast.error("Please input a new value")
+        } else {
+            axios.post(url, { whatToEdit: "monnifyFee", newValue })
+                .then((res) => {
+                    toast.success("Change saved successfully.")
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000);
+                })
+                .catch((err) => {
+                    toast.error("An error occured")
+                })
+        }
     }
 
     return (
@@ -94,7 +100,7 @@ const AdminSettings = () => {
                     <div className='w-full bg-white h-48 my-5 rounded-xl px-[3%] '>
                         <h1 className='text-2xl text-center text-blue-700 pt-3 pb-3'>Intra-transfer Fee</h1>
                         <p className='text-lg'>This is the fee that will be charge per transaction for <b>Intra - Transfer feature.</b></p>
-                        <h2 className='text-xl'>Currently set to <span>{ settings ? ( <span>{settings[0].intraTransferFee.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span> ) : ( <span>Loading ...</span> )}</span></h2>
+                        <h2 className='text-xl'>Currently set to <span>{settings ? (<span>{settings[0].intraTransferFee.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span>) : (<span>Loading ...</span>)}</span></h2>
                         <div className='flex items-center  mt-3 gap-[5%] '>
                             <input id='intraFeeNewValue' placeholder='0' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
                             <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-10 text-white sm:text-sm sm:w-[25%] ' onClick={setIntraTransferFee}>Save</button>
@@ -106,7 +112,7 @@ const AdminSettings = () => {
                     <div className='w-full bg-white h-48 my-5 rounded-xl px-[3%] '>
                         <h1 className='text-2xl text-center text-blue-700 pt-3 pb-3'>Monnify Fee</h1>
                         <p className='text-lg'>This is the fee that will be charge per transaction for <b>Monnify wallet funding method.</b></p>
-                        <h2 className='text-xl'>Currently set to <span>{ settings ? ( <span>{settings[0].monnifyTransactionFee.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span> ) : ( <span>Loading ...</span> )}</span></h2>
+                        <h2 className='text-xl'>Currently set to <span>{settings ? (<span>{settings[0].monnifyTransactionFee.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span>) : (<span>Loading ...</span>)}</span></h2>
                         <div className='flex items-center  mt-3 gap-[5%] '>
                             <input id='monnifyFeeNewValue' placeholder='0' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
                             <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-10 text-white sm:text-sm sm:w-[25%] ' onClick={setMonnifyTransacFee}>Save</button>

@@ -10,6 +10,7 @@ import { useFormik } from 'formik'
 const AdminSettings = () => {
     let navigate = useNavigate()
     const [settings, setsettings] = useState("")
+    const [currentAdmin, setcurrentAdmin] = useState("")
 
     useEffect(() => {
         const userAuth = () => {
@@ -25,9 +26,11 @@ const AdminSettings = () => {
                     "Accept": "application/json"
                 },
             }).then((res) => {
+                console.log(res);
+                setcurrentAdmin(res.data.userResult)
             })
                 .catch((err) => {
-                    // navigate("/admin/login")
+                    navigate("/admin/login")
                 })
         }
         userAuth()
@@ -40,7 +43,6 @@ const AdminSettings = () => {
         const url = "http://localhost:5000/admin/get_settings"
         axios.get(url)
             .then((res) => {
-                console.log(res);
                 setsettings(res.data.settings)
             })
             .catch((err) => {
@@ -75,6 +77,26 @@ const AdminSettings = () => {
             axios.post(url, { whatToEdit: "monnifyFee", newValue })
                 .then((res) => {
                     toast.success("Change saved successfully.")
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000);
+                })
+                .catch((err) => {
+                    toast.error("An error occured")
+                })
+        }
+    }
+
+    const addIpToWishList = () => {
+        const url = "http://localhost:5000/admin/add_ipwishlist"
+        let newValue = document.getElementById("newIp").value
+        if (newValue == "") {
+            toast.error("Please enter an IP address")
+        } else {
+            axios.post(url, { ip: newValue, email: currentAdmin.email})
+                .then((res) => {
+                    console.log(res);
+                    toast.success("Ip address added Successfully.")
                     setTimeout(() => {
                         window.location.reload()
                     }, 1000);
@@ -147,10 +169,11 @@ const AdminSettings = () => {
                         <p className='text-lg'>This is the fee that will be charge per transaction for <b>Intra - Transfer feature.</b></p>
                         <h2 className='text-xl'>Currently set to <span>{settings ? (<span>{settings[0].intraTransferFee.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span>) : (<span>Loading ...</span>)}</span></h2>
                         <div className='flex items-center  mt-3 gap-[5%] '>
-                            <input id='intraFeeNewValue' placeholder='0' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
+                            <input id='intraFeeNewValue' placeholder='0' type="number" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
                             <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-10 text-white sm:text-sm sm:w-[25%] ' onClick={setIntraTransferFee}>Save</button>
                         </div>
                     </div>
+
 
                     {/* Monnify fee */}
 
@@ -159,10 +182,22 @@ const AdminSettings = () => {
                         <p className='text-lg'>This is the fee that will be charge per transaction for <b>Monnify wallet funding method.</b></p>
                         <h2 className='text-xl'>Currently set to <span>{settings ? (<span>{settings[0].monnifyTransactionFee.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span>) : (<span>Loading ...</span>)}</span></h2>
                         <div className='flex items-center  mt-3 gap-[5%] '>
-                            <input id='monnifyFeeNewValue' placeholder='0' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
+                            <input id='monnifyFeeNewValue' placeholder='0' type="number" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
                             <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-10 text-white sm:text-sm sm:w-[25%] ' onClick={setMonnifyTransacFee}>Save</button>
                         </div>
                     </div>
+
+                    {/* Add Ip wish list  */}
+
+                    <div className='w-full bg-white h-48 my-5 sm:h-[16em] rounded-xl px-[3%] '>
+                        <h1 className='text-2xl text-center text-blue-700 pt-3 pb-3'>IP wishlist</h1>
+                        <p className='text-lg'>Add a new IP to your IP wishlist for an admin user with that IP to be able to access admin end.</p>
+                        <div className='flex items-center  mt-3 gap-[5%] '>
+                            <input id='newIp' placeholder='000-000-000' type="text" className='w-[70%] border-2 border-blue-500  h-10 p-3.5 sm:text-sm' />
+                            <button className='w-[15%] bg-blue-500 focus:bg-blue-400 h-10 text-white sm:text-sm sm:w-[25%] ' onClick={addIpToWishList}>Add</button>
+                        </div>
+                    </div>
+
 
                     {/* Add new User UI */}
 

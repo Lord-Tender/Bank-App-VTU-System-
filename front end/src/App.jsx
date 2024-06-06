@@ -20,8 +20,10 @@ import AdminService from './Pages/AdminService'
 import AdminTransac from './Pages/AdminTransac'
 import AdminUsers from './Pages/AdminUsers'
 import AdminSettings from './Pages/AdminSettings'
+import axios from 'axios'
 
 const App = () => {
+  const [verifiedIp, setverifiedIp] = useState(false)
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
@@ -31,7 +33,21 @@ const App = () => {
     if (token) {
       dispatch(setAuthenticated(true));
     }
+    verifyIp()
   }, []);
+
+  const verifyIp = () => {
+    let url = 'http://localhost:5000/admin/verify_ip'
+    axios.get(url)
+    .then((res)=>{
+      console.log(res);
+      setverifiedIp(true)
+    })
+    .catch((err)=>{
+      console.log(err);
+      setverifiedIp(true)
+    })
+  }
 
   return (
     <>
@@ -51,13 +67,13 @@ const App = () => {
 
         {/* Admin routes */}
 
-        <Route path="/admin" element={ <AdminDashboard />} />
-        <Route path="/admin/login" element={ <AdminLogin />} />
-        <Route path="/admin/dashboard" element={ <AdminDashboard />} />
-        <Route path="/admin/service" element={ <AdminService />} />
-        <Route path="/admin/transactions" element={ <AdminTransac />} />
-        <Route path="/admin/users" element={ <AdminUsers />} />
-        <Route path="/admin/settings" element={ <AdminSettings />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/service" element={<AdminService />} />
+        <Route path="/admin/transactions" element={<AdminTransac />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/settings" element={<AdminSettings />} />
 
       </Routes>
     </>

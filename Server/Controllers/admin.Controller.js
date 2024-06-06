@@ -34,7 +34,7 @@ const loginUser = async (req, res) => {
         if (user) {
             const comparedPassword = bcrypt.compareSync(password, user.password)
             if (comparedPassword) {
-                const token = jwt.sign({ userId: user._id }, secret, { expiresIn: "2m" });
+                const token = jwt.sign({ userId: user._id }, secret, { expiresIn: "10m" });
                 res.status(200).json({
                     status: true,
                     msg: "User found",
@@ -70,7 +70,7 @@ const pageAuth = async (req, res) => {
 
 const addIpToWistList = async (req, res) => {
     const { ip, email } = req.body
-    let theAdmin = await addAdminUser.findOne({ email })
+    let theAdmin = await adminUser.findOne({ email })
     if (theAdmin) {
         let newIpWishList = new ipWishList({
             ip,
@@ -88,7 +88,15 @@ const addIpToWistList = async (req, res) => {
     }
 }
 
-const verifyIp = (req, res) => {
+const verifyIp = async (req, res) => {
+    let ipAddress = req.ip
+    console.log(ipAddress);
+    let verifyIp = await ipWishList.findOne({ip: ipAddress})
+    if (verifyIp) {
+        res.status(200).json({ status: true, msg: "Ip address verified" })
+    }else{
+        res.status(400).json({ status: false, msg: "Ip address not allowed" })
+    }
 
 }
 
@@ -299,4 +307,4 @@ const text = (req, res) => {
     })
 }
 
-module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings, editAdminSettings, getDataPlan }
+module.exports = { addAdminUser, fetchAllUser, adminCreditUser, adminDebitUser, getAllTransaction, addNetwork, addDataPlan, loginUser, addIpToWistList, getAllTransForChart, pageAuth, searchTransac, getAdminSettings, editAdminSettings, getDataPlan, verifyIp }

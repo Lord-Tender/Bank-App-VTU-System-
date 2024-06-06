@@ -25,7 +25,7 @@ const AdminUsers = () => {
             }).then((res) => {
             })
                 .catch((err) => {
-                    // navigate("/admin/login")
+                    navigate("/admin/login")
                 })
         }
         userAuth()

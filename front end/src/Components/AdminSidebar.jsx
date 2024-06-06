@@ -7,6 +7,7 @@ import { IoIosArrowBack } from 'react-icons/io'
 import { MdHomeRepairService } from 'react-icons/md'
 import { BiHistory } from 'react-icons/bi'
 import { FaUsers } from 'react-icons/fa6'
+import { RiUserSettingsFill } from 'react-icons/ri'
 
 const AdminSidebar = () => {
     
@@ -45,10 +46,10 @@ const AdminSidebar = () => {
                     <p>Users</p>
                 </NavLink>
 
-                <NavLink to='/user/dashboard/help' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-5 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/user/dashboard/help' ? 'border-l-4 border-blue-100 ps-4' : ''
+                <NavLink to='/admin/settings' className={`text-gray-300 flex text-[1.3rem] items-center gap-2.5 ps-5 mt-2 h-14 justify-items-center align-items-center hover:bg-gray-700 hover:text-white ${location.pathname === '/admin/settings' ? 'border-l-4 border-blue-100 ps-4' : ''
                     }`}>
-                    {/* <MdLiveHelp /> */}
-                    <p>Support</p>
+                    <RiUserSettingsFill />
+                    <p>Settings</p>
                 </NavLink>
             </div>
     </>

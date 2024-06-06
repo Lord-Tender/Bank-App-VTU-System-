@@ -19,6 +19,7 @@ import AdminLogin from './Pages/AdminLogin'
 import AdminService from './Pages/AdminService'
 import AdminTransac from './Pages/AdminTransac'
 import AdminUsers from './Pages/AdminUsers'
+import AdminSettings from './Pages/AdminSettings'
 
 const App = () => {
 
@@ -56,6 +57,7 @@ const App = () => {
         <Route path="/admin/service" element={ <AdminService />} />
         <Route path="/admin/transactions" element={ <AdminTransac />} />
         <Route path="/admin/users" element={ <AdminUsers />} />
+        <Route path="/admin/settings" element={ <AdminSettings />} />
 
       </Routes>
     </>

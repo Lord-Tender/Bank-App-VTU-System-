@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, test } = require("../Controllers/user.Controller");
+const { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, getUserTransactions, test } = require("../Controllers/user.Controller");
 
 router.post("/register", registerUser);
 router.post("/verify", verifyEmail);
 router.get("/verify", getTokenAndVerify)
 router.post("/login", loginUser)
 router.get("/page_auth", pageAuth)
+router.post("/transaction", getUserTransactions)
 router.post("/resendlink", resendVerificationLink)
 router.post("/upload_profile", upLoadProfile)
 router.post("/reset_password", resetPassword)

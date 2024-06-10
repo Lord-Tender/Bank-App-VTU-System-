@@ -1,8 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Siderbar from '../Components/Siderbar'
 import Rightbar from '../Components/Rightbar'
+import axios from 'axios'
 
 const Transaction = () => {
+    const [user, setuser] = useState("")
+
+    useEffect(() => {
+        let token = localStorage.getItem('token')
+        let url = 'http://localhost:5000/user/page_auth'
+
+        axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+        }).then((res) => {
+            setuser(res.data.userResult)
+            if (res.data.emailVerified == false) {
+                navigate('/user/not-verify')
+            }
+        })
+            .catch((err) => {
+                if (err.response.data.error.name == "TokenExpiredError") {
+                    toast.error("Session expired!!!")
+                    setTimeout(() => {
+                        localStorage.removeItem('token')
+                        navigate('/user/login')
+                    }, 3000);
+                } else if (err) {
+                    navigate('/user/login')
+                }
+            })
+    }, [])
+
+
     return (
         <>
             <section id='section' className="mainSection flex relative w-full " >
@@ -26,11 +59,11 @@ const Transaction = () => {
                         </div>
                     </div>
 
-                        {/* Transaction UI */}
+                    {/* Transaction UI */}
 
-                        <div className=''>
-                            
-                        </div>
+                    <div className=''>
+
+                    </div>
                 </div>
 
 

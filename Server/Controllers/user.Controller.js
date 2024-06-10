@@ -715,6 +715,23 @@ const receiverValidator = async (req, res) => {
     }
 }
 
+const getUserTransactions = async (req, res) => {
+    const { email } = req.body
+    let user = await userModel.findOne({ 'emailInfo.email': email })
+
+    if (user) {
+        let debitTransac = await debitTransaction.findOne({ transactor: email })
+        let creditTransac = await creditTransaction.findOne({ transactor: email })
+        if (debitTransac || creditTransac) {
+            res.status(200).json({ status: true, msg: "Transaction fetched successfully", debitTransac, creditTransac })
+        } else {
+            res.status(201).json({ status: true, msg: "No transaction founded." })
+        }
+    }else{
+        res.status(404).json({ status: false, msg: "No record found" })
+    }
+}
+
 // Flutterwave payment integration
 
 const initFlutterPayment = (req, res) => {
@@ -768,6 +785,8 @@ const initFlutterPayment = (req, res) => {
         })
 }
 
+
+
 // Verify flutterwave's transaction
 
 const verifyFlutterTransaction = async (req, res) => {
@@ -796,4 +815,4 @@ const buyData = async (req, res) => {
 
 
 
-module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, test, creditUser, debitUser };
+module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, test, creditUser, debitUser, getUserTransactions };

@@ -21,6 +21,7 @@ import AdminTransac from './Pages/AdminTransac'
 import AdminUsers from './Pages/AdminUsers'
 import AdminSettings from './Pages/AdminSettings'
 import axios from 'axios'
+import Transaction from './Pages/Transaction'
 
 const App = () => {
   const [verifiedIp, setverifiedIp] = useState(false)
@@ -63,6 +64,7 @@ const App = () => {
         <Route path="/user/dashboard/fund_wallet" element={isAuthenticated ? <AddMoney /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/fund_wallet/flutter_confirm" element={isAuthenticated ? <FlutterConfirm /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/transfer" element={isAuthenticated ? <Transfer /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/dashboard/transactions" element={isAuthenticated ? <Transaction /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/not-verify" element={isAuthenticated ? <EmailVerification /> : <Navigate to="/user/login" />} replace />
 
         {/* Admin routes */}

@@ -115,7 +115,7 @@ const adminCreditUser = async (req, res) => {
     console.log(req.body);
     let user = userModel.findOne({ 'emailInfo.email': userEmail })
     if (user) {
-        creditUser(userEmail, amount, reason, "Admin deck")
+        creditUser(userEmail, amount, reason, "Admin")
             .then((response) => {
                 res.status(200).json({ msg: "Success", status: true, response })
             })

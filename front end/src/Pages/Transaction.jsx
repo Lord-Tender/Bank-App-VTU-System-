@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Siderbar from '../Components/Siderbar'
 import Rightbar from '../Components/Rightbar'
 import axios from 'axios'
-import { FaMoneyBillTransfer } from 'react-icons/fa6'
+import { FaHospitalUser, FaMoneyBillTransfer } from 'react-icons/fa6'
 import { TbRecharging } from 'react-icons/tb'
 import { MdOutlineDataSaverOn } from 'react-icons/md'
 
@@ -40,6 +40,7 @@ const Transaction = () => {
                     navigate('/user/login')
                 }
             })
+        console.log(window.innerHeight);
     }, [])
 
 
@@ -47,7 +48,6 @@ const Transaction = () => {
         let url = 'http://localhost:5000/user/transaction'
         axios.post(url, { email })
             .then((response) => {
-                console.log(response);
                 let theData = []
                 let credit = response.data.creditTransac
                 let debit = response.data.debitTransac
@@ -71,7 +71,7 @@ const Transaction = () => {
     }
 
     const transactionIcon = (type, dc) => {
-        if (type == "Intra_Transaction") {
+        if (type == "Intra_Transfer") {
             return <FaMoneyBillTransfer />
         }
         if (type == "Airtime") {
@@ -80,16 +80,49 @@ const Transaction = () => {
         if (type == "Data") {
             return <MdOutlineDataSaverOn />
         }
+        if (type == "Admin") {
+            return <FaHospitalUser />
+        }
+
     }
 
     const transactionText = (type, dc, FR) => {
-        console.log(type, dc, FR);
-        if (type == "Intra_Transaction" && dc == "Debit") {
+        if (type == "Intra_Transfer" && dc == "Debit") {
             return `Transfer to ${FR}`
         }
-        if (type == "Intra_Transaction" && dc == "Credit") {
+        if (type == "Intra_Transfer" && dc == "Credit") {
             return `Transfer from ${FR}`
         }
+        if (type == "Admin" && dc == "Credit") {
+            return `${FR} (From Admin)`
+        }
+        if (type == "Admin" && dc == "Debit") {
+            return `By ${FR}`
+        }
+    }
+
+    const transactionAmount = (DC, amount) => {
+        if (DC == "Debit") {
+            return `-${Number(amount).toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}`
+        }
+        if (DC == "Credit") {
+            return `+${Number(amount).toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}`
+        }
+    }
+
+    const displayDate = (date) => {
+        let nowDate = new Date(date)
+        let localTime = nowDate.toLocaleString()
+        return localTime
+    }
+
+    const calcuHeight = () => {
+        const windowHeight = 513;
+        const itemsInGivenHeight = 6;
+        const itemHeight = windowHeight / itemsInGivenHeight;
+        const currentWindowHeight = window.innerHeight;
+        const itemsFit = Math.floor(currentWindowHeight / itemHeight);
+        return itemsFit;
     }
 
 
@@ -100,17 +133,17 @@ const Transaction = () => {
 
                 {/* MAin body */}
 
-                <div className='w-full lg:w-[60%] md:w-[60%] h-screen bg-gray-100 static lg:absolute px-7 md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+                <div className='w-full lg:w-[60%] md:w-[60%] h-screen bg-gray-100 static lg:absolute px-7 sm:px-3 md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
 
                     {/* Search Transactions */}
 
-                    <div className='w-full bg-white h-28 my-3 rounded-xl'>
-                        <h2 className='text-center text-lg pt-1.5'>Search transactions</h2>
-                        <div className='flex justify-center gap-5 mt-3 '>
+                    <div className='w-full bg-white h-[6em] my-3 rounded-xl'>
+                        <h2 className='text-center text-[1em] pt-1'>Search transactions</h2>
+                        <div className='flex justify-center gap-5 sm:gap-3 mt-2 '>
                             <input type="text" placeholder='Transaction ID'
-                                className='w-[50%] border-2 border-blue-950 bg-blue-50 rounded h-10 focus:outline-none px-3'
+                                className='w-[50%] sm:w-[60%] border border-blue-400 focus:border-blue-800 focus:outline-blue-200 focus:outline-offset-0 bg-slate-50 rounded h-9 focus:outline-none px-3 placeholder:text-[0.7em] '
                             />
-                            <button onClick={check} className='bg-blue-600 text-white w-[15%] rounded focus:outline-none ' >
+                            <button onClick={check} className='bg-blue-400 focus:bg-blue-500 text-white w-[15%] rounded-[2px] focus:outline-none text-[0.9em] sm:w-[20%] ' >
                                 Search
                             </button>
                         </div>
@@ -118,28 +151,33 @@ const Transaction = () => {
 
                     {/* Transaction UI */}
 
-                    <div className='bg-white rounded-lg h-[30em] w-full '>
+                    <div className='bg-white rounded-lg h-[32em] w-full overflow-auto shadow-lg '>
                         {
                             userTransaction ? (
                                 <div>
-                                    <h1 className='text-xl text-center py-3'>Transactions</h1>
+                                    <h1 className='text-md text-center pt-1.5 text-blue-800 '>Transactions</h1>
                                     <div>
                                         {userTransaction.length > 0 ?
-                                            userTransaction.map((item) => (
-                                                <div>
-                                                    <div className='text-blue-800'>{transactionIcon(item.transactionType)}</div>
-                                                    <div>
-                                                        <p>{transactionText(item.transactionType, item.DC, item.Recipient ? item.Recipient : item.Creditor)}</p>
-                                                        <p>{item.date}</p>
+                                            userTransaction.map((item, i) => (
+                                                <div className='flex justify-between my-2.5 mx-[2%] h-14 bg-slate-100 py-1 px-[3%] rounded-xl items-center border'>
+                                                    <div className='w-[20%] sm:w-[17%] '>
+                                                        <div className='text-blue-500 bg-white rounded-[100%] h-[42px] w-[42px] flex justify-center items-center text-[1.3em] '>{transactionIcon(item.transactionType)}</div>
                                                     </div>
-                                                    <div></div>
+                                                    <div className='w-[55%] text-[14px] sm:text-[11px] sm:w-[50%]'>
+                                                        <p>{transactionText(item.transactionType, item.DC, item.Recipient ? item.Recipient : item.Creditor)}</p>
+                                                        <p>{displayDate(item.date)}</p>
+                                                    </div>
+                                                    <div className='w-[25%] text-[14px] sm:text-[11px] sm:w-[33%] '>
+                                                        <p>{transactionAmount(item.DC, item.amount)}</p>
+                                                        <p className={item.DC == "Credit" ? 'ms-3 text-[16px] text-blue-600' : 'ms-3 text-[16px] text-red-600'}>{item.DC}</p>
+                                                    </div>
                                                 </div>
                                             )) : <div className='text-center mt-[15%] '>{message}</div>
                                         }
                                     </div>
                                 </div>
                             ) : (
-                                <div>{message}</div>
+                                <div className='text-center pt-[30%] '>{message}</div>
                             )
                         }
                     </div>

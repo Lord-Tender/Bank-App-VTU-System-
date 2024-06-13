@@ -130,21 +130,21 @@ const Transfer = () => {
                 <div className='w-full lg:w-[60%] md:w-[60%] static lg:absolute  md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
                     <div className=' md:hidden lg:hidden bg-blue-50 rounded-lg mx-[3%] h-12 mt-6 px-[5%] flex justify-between items-center'>
                         <div className='text-[1.5em] ' onClick={showSidebar}><BsThreeDotsVertical /></div>
-
+                        <h1>Transfer</h1>
                     </div>
 
-                    <div className='bg-blue-100 rounded-lg mx-[3%] h-20 mt-3 md:mt-6 lg:mt-6 px-[5%] flex justify-between text-[1.5em] md:text-[2em] lg:text-[2em] items-center text-blue-800 mb-8'>
+                    <div className='bg-blue-100 rounded-lg mx-[3%] h-20 mt-3 md:mt-6 lg:mt-6 px-[5%] flex justify-between sm:text-[1.3em]  md:text-[2em] lg:text-[2em] items-center text-blue-800 mb-8'>
                         <p>Balance:</p>
                         <p>{userBal}</p>
                     </div>
 
                     <div className=''>
-                        <label htmlFor="accountNo" className='text-[1.6em] ms-[5%] text-blue-500 '>Account Number:</label>
+                        <label htmlFor="accountNo" className='text-[1.6em] sm:text-[1.3em] ms-[5%] text-blue-500 '>Account Number:</label>
                         <input type="number" id='accountNo' placeholder='××××××××××' onChange={getReceiver}
                             className='transaccountNo w-[90%] ms-[5%] mt-3 rounded h-[3.1rem] bg-blue-50 px-5 border-2 border-blue-300 focus:border-blue-500 focus:outline-none' />
                         <div className='bg-blue-50 border-t-2 w-[90%] ms-[5%] h-[2.3em] mt-2 border-t-blue-300 rounded-t-xl mb-4 px-[5%] text-sm py-1 text-blue-500'>{mgs}</div>
 
-                        <label htmlFor="accountNo" className='text-[1.6em] ms-[5%] text-blue-500 '>Amount:</label>
+                        <label htmlFor="accountNo" className='text-[1.6em] sm:text-[1.3em]  ms-[5%] text-blue-500 '>Amount:</label>
                         <input type="number" id='amount' placeholder='0' onChange={transacValidator}
                             className='transAmount mt-3 w-[90%] ms-[5%] rounded h-[3.1rem] bg-blue-50 px-5 border-2 border-blue-300 focus:border-blue-500 focus:outline-none' />
                         <div className='bg-blue-50 border-t-2 w-[90%] ms-[5%] h-[2.3em] mt-2 border-t-blue-300 rounded-t-xl px-[5%] text-sm py-1 text-blue-500'>Total charge: {mgs2}</div>

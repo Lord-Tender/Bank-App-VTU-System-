@@ -156,7 +156,7 @@ const AdminTransac = () => {
                                 </tr>
                                 <tr>
                                     <td>Amount:</td>
-                                    <td>{result.amount}</td>
+                                    <td>{result.amount.toLocaleString()}</td>
                                 </tr>
                                 <tr>
                                     <td>Date:</td>

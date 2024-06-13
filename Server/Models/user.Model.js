@@ -48,25 +48,25 @@ reservedAccount = new mongoose.Schema(
 
 debitTransaction = new mongoose.Schema(
     {
-        transactor: String,
-        Recipient: String,
-        transactionType: String,
-        transactionId: { type: String, unique: true },
-        amount: String,
-        date: String,
-        time: String
+        DC: { type: String, require: true},
+        transactor: { type: String, require: true},
+        Recipient: { type: String, require: true},
+        transactionType: { type: String, require: true},
+        transactionId: { type: String, unique: true, require: true },
+        amount: { type: String, require: true},
+        date: { type: Date, require: true},
     }
 )
 
 creditTransaction = new mongoose.Schema(
     {
-        transactor: String,
-        From: String,
-        transactionType: String,
-        transactionId: { type: String, unique: true },
-        amount: String,
-        date: String,
-        time: String
+        DC: { type: String, require: true},
+        transactor: { type: String, require: true},
+        Creditor: { type: String, require: true},
+        transactionType: { type: String, require: true},
+        transactionId: { type: String, unique: true, require: true },
+        amount: { type: String, require: true},
+        date: { type: Date, require: true},
     }
 )
 

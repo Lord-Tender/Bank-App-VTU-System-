@@ -65,7 +65,7 @@ const AdminTransac = () => {
         document.getElementById('loader3').style.display = 'block';
         document.getElementById('buttonText3').style.display = 'none';
         let url = 'http://localhost:5000/admin/credit_user'
-        axios.post(url, { userEmail: result.transactor, amount: result.amount.split("₦")[1], reason: "Refunded" })
+        axios.post(url, { userEmail: result.transactor, amount: result.amount, reason: "Refunded" })
             .then((res) => {
                 toast.success("Refund made successfully")
                 document.getElementById('loader3').style.display = 'none';
@@ -82,7 +82,7 @@ const AdminTransac = () => {
         document.getElementById('loader2').style.display = 'block';
         document.getElementById('buttonText2').style.display = 'none';
         let url = 'http://localhost:5000/admin/debit_user'
-        axios.post(url, { userEmail: result.transactor, amount: result.amount.split("₦")[1] })
+        axios.post(url, { userEmail: result.transactor, amount: result.amount })
             .then((res) => {
                 toast.success("Fund reversed successfully")
                 document.getElementById('loader2').style.display = 'none';

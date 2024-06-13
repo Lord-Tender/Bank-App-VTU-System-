@@ -74,15 +74,12 @@ const SignIn = () => {
         let password = document.getElementById('password');
         let showPassword = document.getElementById('showPassword');
         let hidePassword = document.getElementById('hidePassword');
-
         if (password.type === "text") {
             password.type = "password";
             showPassword.style.display = 'block';
             hidePassword.style.display = 'none';
         }
     }
-
-
     return (
         <>
             <section className='flex w-fl'>

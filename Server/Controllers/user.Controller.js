@@ -525,25 +525,17 @@ const saveDebitTransac = (email, receiver, tansType, amountDebited) => {
     const date = new Date()
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    let period = ""
-    if (hours >= 12) {
-        period = "PM"
-    } else {
-        period = "AM"
-    }
-    const time = `${hours}:${minutes} ${period}`
+    
     const transactionId = `TPay_${hours}:${minutes}_${generatedNumber}`
-    let amount = `₦${amountDebited}`
-    console.log(time, transactionId);
 
     let transac = new debitTransaction({
+        DC: "Debit",
         transactor: email,
         Recipient: receiver,
         transactionType: tansType,
         transactionId,
-        amount,
+        amount: amountDebited,
         date,
-        time,
     })
     transac.save()
         .then((res) => {
@@ -563,24 +555,17 @@ const saveCreditTransac = (email, from, tansType, amountCredited) => {
     const date = new Date()
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    let period = ""
-    if (hours >= 12) {
-        period = "PM"
-    } else {
-        period = "AM"
-    }
-    const time = `${hours}:${minutes} ${period}`
+
     const transactionId = `TPay_${hours}:${minutes}_${generatedNumber}`
-    let amount = `₦${amountCredited}`
 
     let transac = new creditTransaction({
+        DC: "Credit",
         transactor: email,
-        from: from,
+        Creditor: from,
         transactionType: tansType,
         transactionId,
-        amount,
+        amount: amountCredited,
         date,
-        time,
     })
     transac.save()
         .then((res) => {
@@ -597,7 +582,7 @@ const test = (req, res) => {
     saveCreditTransac(req.body.sender, "OLa Tender", "Intra_transfer", 2000)
 }
 
-const creditUser = async (userEmail, theAmount, from, reason) => {
+const creditUser = async (userEmail, theAmount, from, tansType) => {
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
     return new Promise((resolve, reject) => {
         if (user) {
@@ -609,7 +594,7 @@ const creditUser = async (userEmail, theAmount, from, reason) => {
                 .then((saved) => {
                     const html = `<h1>Your account as been credited with ${theAmount}.</h1>`
                     sendEmails(userEmail, "New Transaction", creditHtml(theAmount))
-                    saveCreditTransac(userEmail, from, reason, theAmount)
+                    saveCreditTransac(userEmail, from, tansType, theAmount)
                     resolve({ mgs: "Credited" })
                 })
                 .catch((err) => {
@@ -621,7 +606,7 @@ const creditUser = async (userEmail, theAmount, from, reason) => {
     })
 }
 
-const debitUser = async (userEmail, theAmount, reason, receiver) => {
+const debitUser = async (userEmail, theAmount, tansType, receiver) => {
     let user = await userModel.findOne({ 'emailInfo.email': userEmail })
     return new Promise((resolve, reject) => {
         if (user) {
@@ -633,7 +618,7 @@ const debitUser = async (userEmail, theAmount, reason, receiver) => {
                 .then((saved) => {
                     const html = `<h1>${theAmount} has been debited from your account.</h1>`
                     sendEmails(userEmail, "New Transaction", html)
-                    saveDebitTransac(userEmail, receiver, reason, theAmount)
+                    saveDebitTransac(userEmail, receiver, tansType, theAmount)
                     resolve({ mgs: "Debited" })
                 })
                 .catch((err) => {
@@ -659,11 +644,11 @@ const intraTransfer = async (req, res) => {
         } else if (amountToDebit > userBalance) {
             res.status(400).json({ mgs: "Insuficent fund", userBalance, transacFee })
         } else {
-            debitUser(user.emailInfo.email, amountToDebit, "Intra_Trasfer", receiver)
+            debitUser(user.emailInfo.email, amountToDebit, "Intra_Transfer", receiver)
                 .then((response) => {
                     console.log(response);
                     if (response) {
-                        creditUser(receiver, amount, `${user.firstName} ${user.firstName}`, "Intra_Transaction")
+                        creditUser(receiver, amount, `${user.firstName} ${user.lastName}`, "Intra_Transfer")
                             .then((credit) => {
                                 res.status(200).json({ mgs: "Transaction Successful", response, credit })
 
@@ -720,8 +705,8 @@ const getUserTransactions = async (req, res) => {
     let user = await userModel.findOne({ 'emailInfo.email': email })
 
     if (user) {
-        let debitTransac = await debitTransaction.findOne({ transactor: email })
-        let creditTransac = await creditTransaction.findOne({ transactor: email })
+        let debitTransac = await debitTransaction.find({ transactor: email })
+        let creditTransac = await creditTransaction.find({ transactor: email })
         if (debitTransac || creditTransac) {
             res.status(200).json({ status: true, msg: "Transaction fetched successfully", debitTransac, creditTransac })
         } else {

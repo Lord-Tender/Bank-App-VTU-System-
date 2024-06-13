@@ -34,7 +34,7 @@ const App = () => {
     if (token) {
       dispatch(setAuthenticated(true));
     }
-    verifyIp()
+    // verifyIp()
   }, []);
 
   const verifyIp = () => {

@@ -141,14 +141,14 @@ const Transfer = () => {
                     <div className=''>
                         <label htmlFor="accountNo" className='text-[1.6em] ms-[5%] text-blue-500 '>Account Number:</label>
                         <input type="number" id='accountNo' placeholder='××××××××××' onChange={getReceiver}
-                            className='transaccountNo w-[90%] ms-[5%] mt-3 rounded-3xl h-[3.1rem] bg-blue-50 px-5 border-2 border-blue-300 focus:border-blue-500 focus:outline-none' />
+                            className='transaccountNo w-[90%] ms-[5%] mt-3 rounded h-[3.1rem] bg-blue-50 px-5 border-2 border-blue-300 focus:border-blue-500 focus:outline-none' />
                         <div className='bg-blue-50 border-t-2 w-[90%] ms-[5%] h-[2.3em] mt-2 border-t-blue-300 rounded-t-xl mb-4 px-[5%] text-sm py-1 text-blue-500'>{mgs}</div>
 
                         <label htmlFor="accountNo" className='text-[1.6em] ms-[5%] text-blue-500 '>Amount:</label>
                         <input type="number" id='amount' placeholder='0' onChange={transacValidator}
-                            className='transAmount mt-3 w-[90%] ms-[5%] rounded-3xl h-[3.1rem] bg-blue-50 px-5 border-2 border-blue-300 focus:border-blue-500 focus:outline-none' />
+                            className='transAmount mt-3 w-[90%] ms-[5%] rounded h-[3.1rem] bg-blue-50 px-5 border-2 border-blue-300 focus:border-blue-500 focus:outline-none' />
                         <div className='bg-blue-50 border-t-2 w-[90%] ms-[5%] h-[2.3em] mt-2 border-t-blue-300 rounded-t-xl px-[5%] text-sm py-1 text-blue-500'>Total charge: {mgs2}</div>
-                        <button onClick={showConfirmination} className='h-[2.4em] bg-blue-600 w-[30%] ms-[35%] mt-4 rounded text-[1.2em] font-[600] text-white '>Send</button>
+                        <button onClick={showConfirmination} className='h-[2.4em] bg-blue-600 w-[30%] ms-[35%] mt-4 text-[1em] font-[600] text-white '>Send</button>
                     </div>
                 </div>
 
@@ -156,7 +156,7 @@ const Transfer = () => {
                 <div id='confirmination' className='absolute top-0 w-full hidden'>
                     <div className=" h-[100vh] w-full flex justify-center items-center" style={{ backgroundColor: "rgba(0, 0, 0, 0.200)" }}>
                         <div className='bg-white w-[80%] md:w-[40%] lg:w-[40%] h-[50%] rounded-lg p-7 mt-[-8%] shadow-lg relative '>
-                            <p className=' text-xl md:text-3xl lg:text-3xl'>Are you sure you want to send <span>{amount}</span> to {mgs}?</p>
+                            <p className=' text-xl md:text-3xl lg:text-3xl'>Are you sure you want to send <span>{amount.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</span> to {mgs}?</p>
                             <div className='text-[1em] md:text-lg lg:text-lg mt-4'>
                                 <p><b>Receiver name: </b>{mgs}</p>
                                 <p><b>Receiver email: </b>{receiver}</p>

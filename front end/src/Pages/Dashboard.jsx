@@ -135,7 +135,7 @@ const Dashboard = () => {
             <div className='absolute top-[-35%] block md:hidden lg:hidden text-[1.2rem] text-blue-700 bg-blue-200 rounded-full p-1.5' onClick={showSidebar}>
               <MdArrowBackIosNew />
             </div>
-            <Link className='w-[22%] md:w-[20%] lg:w-[20%]'>
+            <Link className='w-[22%] md:w-[20%] lg:w-[20%]' to='/user/dashboard/airtime'>
               <div className='bg-blue-100 w-full h-[5rem] flex justify-center items-center rounded-lg text-[1.7rem] md:text-[2.5rem] lg:text-[2.5rem] text-blue-900 '><MdOutlinePhoneInTalk /></div>
               <p className=' text-[0.9rem] md:text-xl lg:text-xl text-center mt-2 '>Airtime</p>
             </Link>

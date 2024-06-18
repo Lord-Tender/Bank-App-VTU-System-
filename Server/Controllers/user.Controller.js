@@ -800,6 +800,15 @@ const getDataPlan = async () => {
 
 // Get setting
 
+const getAdminSetting = async () => {
+    let setting = await settings.find({})
+    if (setting) {
+        res.status(200).json({ status: true, msg: "Admin settings fetched successfully", setting })
+    }else{
+        res.status(500).json({ status: false, msg: "An error occured" })
+    }
+}
+
 // Buy Data 
 
 const buyData = async (req, res) => {
@@ -814,4 +823,4 @@ const buyData = async (req, res) => {
 
 
 
-module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, test, creditUser, debitUser, getUserTransactions };
+module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, test, creditUser, debitUser, getUserTransactions, getDataPlan, getAdminSetting };

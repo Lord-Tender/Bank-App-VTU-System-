@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, getUserTransactions, test } = require("../Controllers/user.Controller");
+const { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, getUserTransactions, getDataPlan, getAdminSetting, test } = require("../Controllers/user.Controller");
 
 router.post("/register", registerUser);
 router.post("/verify", verifyEmail);
@@ -20,6 +20,8 @@ router.post("/intra_transfer/validate", transactionValidator)
 router.post("/intra_transfer/get_receiver", receiverValidator)
 router.post("/fund_wallet/flutterwave", initFlutterPayment)
 router.post("/fund_wallet/flutterwave/comfirmed", verifyFlutterTransaction)
+router.get("/get_plans", getDataPlan)
+router.get("/get_setting", getAdminSetting)
 router.post("/test", test)
 
 

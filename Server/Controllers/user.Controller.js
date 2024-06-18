@@ -1,5 +1,5 @@
 const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
-const { dataPlans, settings } = require('../Models/admin.Model')
+const { dataPlans, adminSetting } = require('../Models/admin.Model')
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
@@ -801,7 +801,7 @@ const getDataPlan = async (req, res) => {
 // Get setting
 
 const getAdminSetting = async (req, res) => {
-    let setting = await settings.find({})
+    let setting = await adminSetting.find({})
     if (setting) {
         res.status(200).json({ status: true, msg: "Admin settings fetched successfully", setting })
     }else{

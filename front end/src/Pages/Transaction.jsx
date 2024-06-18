@@ -41,7 +41,6 @@ const Transaction = () => {
                     navigate('/user/login')
                 }
             })
-        console.log(window.innerHeight);
     }, [])
 
 
@@ -65,10 +64,6 @@ const Transaction = () => {
                 setMessage("An error occurred, please refresh this page!")
                 console.log("Error" + err);
             })
-    }
-
-    const check = () => {
-        console.log(userTransaction)
     }
 
     const transactionIcon = (type, dc) => {
@@ -115,15 +110,6 @@ const Transaction = () => {
         let nowDate = new Date(date)
         let localTime = nowDate.toLocaleString()
         return localTime
-    }
-
-    const calcuHeight = () => {
-        const windowHeight = 513;
-        const itemsInGivenHeight = 6;
-        const itemHeight = windowHeight / itemsInGivenHeight;
-        const currentWindowHeight = window.innerHeight;
-        const itemsFit = Math.floor(currentWindowHeight / itemHeight);
-        return itemsFit;
     }
 
 

@@ -789,7 +789,7 @@ const verifyFlutterTransaction = async (req, res) => {
 
 // Get data plan 
 
-const getDataPlan = async () => {
+const getDataPlan = async (req, res) => {
     let plans = await dataPlans.find({})
     if (plans) {
         res.status(200).json({ status: true, msg: "Data fetched successfully", plans })
@@ -800,7 +800,7 @@ const getDataPlan = async () => {
 
 // Get setting
 
-const getAdminSetting = async () => {
+const getAdminSetting = async (req, res) => {
     let setting = await settings.find({})
     if (setting) {
         res.status(200).json({ status: true, msg: "Admin settings fetched successfully", setting })

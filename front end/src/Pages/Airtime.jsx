@@ -6,8 +6,10 @@ import toast from 'react-hot-toast'
 
 const Airtime = () => {
     const [user, setuser] = useState("")
+    const [network, setnetwork] = useState("")
 
     useEffect(() => {
+        getNetworks()
         let token = localStorage.getItem('token')
         let url = 'http://localhost:5000/user/page_auth'
 
@@ -19,7 +21,6 @@ const Airtime = () => {
             },
         }).then((res) => {
             setuser(res.data.userResult)
-            getUserTransaction(res.data.userResult.emailInfo.email)
             if (res.data.emailVerified == false) {
                 navigate('/user/not-verify')
             }
@@ -38,6 +39,18 @@ const Airtime = () => {
             })
     }, [])
 
+    const getNetworks = () => {
+        let url = 'http://localhost:5000/user/get_plans'
+        axios.get(url)
+        .then((res)=>{
+            console.log(res);
+            setnetwork(res.data.plans)
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+
     return (
         <>
             <section id='section' className="mainSection flex relative w-full " >
@@ -47,9 +60,13 @@ const Airtime = () => {
                 {/* Main body */}
 
                 <div className='w-full lg:w-[60%] md:w-[60%] h-screen bg-gray-100 static lg:absolute px-7 sm:px-3 md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+                    <h1 className='text-[1.5em] text-center pt-2 '>Airtime TopUp</h1>
 
-                    <div className='w-full bg-white h-[6em] my-3 rounded-xl'>
-
+                    <div className='w-full bg-white h-[7em] my-3 rounded-xl border-4 p-3'>
+                        <h2 className='text-[1.2em] '>Network</h2>
+                        <select name="network" id="network">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
 

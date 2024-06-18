@@ -125,10 +125,10 @@ const Dashboard = () => {
               <p>View History</p>
               <FaLongArrowAltRight />
             </NavLink>
-            <NavLink to='/user/dashboard/fund_wallet' className='flex items-center justify-center gap-1 bg- mt-4 w-[50%] md:w-[25%] lg:w-[23%] rounded absolute top-2 right-9 text-white bg-black '>
+            {/* <NavLink to='/user/dashboard/fund_wallet' className='flex items-center justify-center gap-1 bg- mt-4 w-[50%] md:w-[25%] lg:w-[23%] rounded absolute top-2 right-9 text-white bg-black '>
               <p>Add money</p>
               <IoMdAdd />
-            </NavLink>
+            </NavLink> */}
           </div>
 
           <div className="mainBody mt-14 p-1 md:px-5 lg:px-5 flex justify-between relative" style={{ fontFamily: '"Josefin Sans", sans-serif' }}>

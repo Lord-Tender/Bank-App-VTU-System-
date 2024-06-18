@@ -147,7 +147,7 @@ const SignUp = () => {
                                 type="password" placeholder='Password' name='password' id='password'
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange} value={formik.values.password} />
-                            <div className='text-[1.5rem] absolute right-3 top-4'>
+                            <div className='text-[1.5rem] absolute right-3 top-4 cursor-pointer'>
                                 <BiHide className='hidden' id='hidePassword' onClick={hidePassword} />
                                 <BiShow id='showPassword' onClick={showPassword} />
                             </div>

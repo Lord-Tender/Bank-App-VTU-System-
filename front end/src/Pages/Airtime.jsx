@@ -9,8 +9,6 @@ const Airtime = () => {
     const [network, setnetwork] = useState("")
     const [adminSettings, setadminSettings] = useState("")
 
-
-
     useEffect(() => {
         getNetworks()
         getSetting()
@@ -103,7 +101,7 @@ const Airtime = () => {
     const buyAirtime = () => {
         if (!networkId || !artimeType || !mobileNo || !airtimeAmount) {
             toast.error("Fill in empty spaces")
-        }else {
+        } else {
             let regex = /^(070|080|081|090|091)\d{8}$/
             let testNo = regex.test(mobileNo)
             console.log(testNo);
@@ -114,7 +112,7 @@ const Airtime = () => {
                 if (airtimeAmount < 50) {
                     toast.error("Amount must be 50 and above")
                 }
-            }else {
+            } else {
                 console.log(networkId);
                 console.log(artimeType);
                 console.log(mobileNo);
@@ -133,6 +131,10 @@ const Airtime = () => {
                 {/* Main body */}
 
                 <div className='w-full lg:w-[60%] md:w-[60%] bg-gray-100 static lg:absolute px-7 sm:px-3 md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+                    <div className=' md:hidden lg:hidden bg-blue-200 rounded-lg h-12 mt-6 px-[5%] flex justify-between items-center'>
+                        <div className='text-[1.5em] ' onClick={() => { document.getElementById('sidebar').style.display = "block" }}><BsThreeDotsVertical /></div>
+                        <h1>Transaction</h1>
+                    </div>
                     <h1 className='text-[1.5em] text-center pt-2 '>Airtime TopUp</h1>
 
                     {/* Network */}
@@ -164,7 +166,7 @@ const Airtime = () => {
 
                     <div className={`w-full bg-white h-[6.5em] my-3 rounded-xl border-[3px] p-3 `}>
                         <h2 className='text-[1em] text-blue-800 '>Mobile Number</h2>
-                        <input type="number" onChange={(e)=>{setmobileNo(e.target.value)}} className='w-full border px-3 h-8 my-2 rounded border-blue-400 focus:border-blue-500 focus:outline-none' placeholder='' />
+                        <input type="number" onChange={(e) => { setmobileNo(e.target.value) }} className='w-full border px-3 h-8 my-2 rounded border-blue-400 focus:border-blue-500 focus:outline-none' placeholder='' />
                     </div>
 
                     {/* Amount */}
@@ -178,7 +180,7 @@ const Airtime = () => {
 
                     <div className={`w-full bg-white h-[6.5em] my-3 rounded-xl border-[3px] p-3 `}>
                         <h2 className='text-[1em] text-blue-800 '>Amount to pay in total:</h2>
-                        <input type="text" className='w-full border px-3 h-8 my-2 rounded border-blue focus:outline-none' readOnly  value={amounToPay.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}/>
+                        <input type="text" className='w-full border px-3 h-8 my-2 rounded border-blue focus:outline-none' readOnly value={amounToPay.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })} />
                     </div>
 
                     <button onClick={buyAirtime} className='w-full h-10 bg-blue-400 mb-9 rounded text-blue-50 hover:bg-blue-300 hover:text-blue-950 focus:bg-blue-500'>Buy now</button>

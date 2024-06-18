@@ -118,7 +118,7 @@ const Transaction = () => {
             <section id='section' className="mainSection flex relative w-full " >
                 <Siderbar />
 
-                {/* MAin body */}
+                {/* Main body */}
 
                 <div className='w-full lg:w-[60%] md:w-[60%] h-screen bg-gray-100 static lg:absolute px-7 sm:px-3 md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
                     <div className=' md:hidden lg:hidden bg-blue-200 rounded-lg h-12 mt-6 px-[5%] flex justify-between items-center'>
@@ -134,7 +134,7 @@ const Transaction = () => {
                             <input type="text" placeholder='Transaction ID'
                                 className='w-[50%] sm:w-[60%] border border-blue-400 focus:border-blue-800 focus:outline-blue-200 focus:outline-offset-0 bg-slate-50 rounded h-9 focus:outline-none px-3 placeholder:text-[0.7em] '
                             />
-                            <button onClick={check} className='bg-blue-400 focus:bg-blue-500 text-white w-[15%] rounded-[2px] focus:outline-none text-[0.9em] sm:w-[20%] ' >
+                            <button className='bg-blue-400 focus:bg-blue-500 text-white w-[15%] rounded-[2px] focus:outline-none text-[0.9em] sm:w-[20%] ' >
                                 Search
                             </button>
                         </div>

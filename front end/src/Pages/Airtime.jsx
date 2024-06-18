@@ -94,11 +94,35 @@ const Airtime = () => {
     }
 
     const [networkId, setnetworkId] = useState("")
-    const [artimeType, setartimeType] = useState("")
+    const [artimeType, setartimeType] = useState("VTU")
     const [mobileNo, setmobileNo] = useState("")
     const [airtimeAmount, setairtimeAmount] = useState("")
 
     const [amounToPay, setamounToPay] = useState("")
+
+    const buyAirtime = () => {
+        if (!networkId || !artimeType || !mobileNo || !airtimeAmount) {
+            toast.error("Fill in empty spaces")
+        }else {
+            let regex = /^(070|080|081|090|091)\d{8}$/
+            let testNo = regex.test(mobileNo)
+            console.log(testNo);
+            if (!testNo || airtimeAmount < 50) {
+                if (!testNo) {
+                    toast.error("Please enter a valid number")
+                }
+                if (airtimeAmount < 50) {
+                    toast.error("Amount must be 50 and above")
+                }
+            }else {
+                console.log(networkId);
+                console.log(artimeType);
+                console.log(mobileNo);
+                console.log(airtimeAmount);
+            }
+        }
+    }
+
 
     return (
         <>
@@ -157,7 +181,7 @@ const Airtime = () => {
                         <input type="text" className='w-full border px-3 h-8 my-2 rounded border-blue focus:outline-none' readOnly  value={amounToPay.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}/>
                     </div>
 
-                    <button className='w-full h-10 bg-blue-400 mb-9 rounded text-blue-50 hover:bg-blue-300 hover:text-blue-950 focus:bg-blue-500'>Buy now</button>
+                    <button onClick={buyAirtime} className='w-full h-10 bg-blue-400 mb-9 rounded text-blue-50 hover:bg-blue-300 hover:text-blue-950 focus:bg-blue-500'>Buy now</button>
                 </div>
 
 

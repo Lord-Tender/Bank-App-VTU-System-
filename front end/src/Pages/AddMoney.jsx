@@ -7,6 +7,7 @@ import { IoMdClose } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom'
 import wema from '../assets/Image/wema_logo.jpg'
 import starling from '../assets/Image/starlinglogo.png'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 
 const AddMoney = () => {
     const [user, setuser] = useState("")
@@ -136,6 +137,11 @@ const AddMoney = () => {
 
                 {/* Body */}
                 <div className='bg-gray-100 w-full lg:w-[60%] md:w-[60%] static lg:absolute  md:fixed left-[20%] h-screen' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+                <div className=' md:hidden lg:hidden bg-blue-200 rounded-lg h-12 my-3 px-[5%] mx-3 flex justify-between items-center'>
+                        <div className='text-[1.5em] ' onClick={() => { document.getElementById('sidebar').style.display = "block" }}><BsThreeDotsVertical /></div>
+                        <h1></h1>
+                    </div>
+
                     <h1 className='text-blue-500 text-2xl text-center p-5 bg-white'>Fund wallet</h1>
                     <details className='bg-white mt-1 h-56 px-[10%] '>
                         <summary className='text-sky-600 text-lg md:text-xl lg:text-xl px-4 py-4 font-semibold'> From Tender Pay:</summary>

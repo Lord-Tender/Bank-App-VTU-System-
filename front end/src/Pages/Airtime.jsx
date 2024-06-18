@@ -3,6 +3,7 @@ import Siderbar from '../Components/Siderbar'
 import Rightbar from '../Components/Rightbar'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 
 const Airtime = () => {
     const [user, setuser] = useState("")
@@ -133,7 +134,7 @@ const Airtime = () => {
                 <div className='w-full lg:w-[60%] md:w-[60%] bg-gray-100 static lg:absolute px-7 sm:px-3 md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
                     <div className=' md:hidden lg:hidden bg-blue-200 rounded-lg h-12 mt-6 px-[5%] flex justify-between items-center'>
                         <div className='text-[1.5em] ' onClick={() => { document.getElementById('sidebar').style.display = "block" }}><BsThreeDotsVertical /></div>
-                        <h1>Transaction</h1>
+                        <h1></h1>
                     </div>
                     <h1 className='text-[1.5em] text-center pt-2 '>Airtime TopUp</h1>
 

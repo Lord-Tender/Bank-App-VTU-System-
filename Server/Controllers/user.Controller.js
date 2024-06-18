@@ -1,4 +1,5 @@
 const { userModel, reservedAccount, debitTransaction, creditTransaction, flutterTransaction } = require("../Models/user.Model");
+const { dataPlans, settings } = require('../Models/admin.Model')
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
@@ -785,6 +786,19 @@ const verifyFlutterTransaction = async (req, res) => {
     console.log(transactionDetails);
     console.log(response.data);
 }
+
+// Get data plan 
+
+const getDataPlan = async () => {
+    let plans = await dataPlans.find({})
+    if (plans) {
+        res.status(200).json({ status: true, msg: "Data fetched successfully", plans })
+    }else{
+        res.status(500).json({ status: false, msg: "An error occured" })
+    }
+}
+
+// Get setting
 
 // Buy Data 
 

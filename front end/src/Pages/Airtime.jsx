@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 const Airtime = () => {
     const [user, setuser] = useState("")
     const [network, setnetwork] = useState("")
-    const [AdminSettings, setAdminSettings] = useState("")
+    const [adminSettings, setadminSettings] = useState("")
 
 
 
@@ -57,7 +57,7 @@ const Airtime = () => {
         let url = 'http://localhost:5000/user/get_setting'
         axios.get(url)
             .then((res) => {
-                setAdminSettings(res.data.settings[0])
+                setadminSettings(res.data.setting[0])
             })
             .catch((err) => {
             })
@@ -85,8 +85,12 @@ const Airtime = () => {
         }
     }
 
-    const handleAirtimeAmount = () => {
-        
+    const handleAirtimeAmount = (e) => {
+        let value = e.target.value
+        setairtimeAmount(value)
+        let adminBonus = (Number(adminSettings.airtimePrice) / 100) * Number(value)
+        let amountTo = value - adminBonus
+        setamounToPay(amountTo)
     }
 
     const [networkId, setnetworkId] = useState("")
@@ -143,14 +147,14 @@ const Airtime = () => {
 
                     <div className={`w-full bg-white h-[6.5em] my-3 rounded-xl border-[3px] p-3 `}>
                         <h2 className='text-[1em] text-blue-800 '>Amount</h2>
-                        <input type="number" onChange={(e)=>{setairtimeAmount(e.target.value)}} className='w-full border px-3 h-8 my-2 rounded border-blue-400 focus:border-blue-500 focus:outline-none' placeholder='' />
+                        <input type="number" onChange={handleAirtimeAmount} className='w-full border px-3 h-8 my-2 rounded border-blue-400 focus:border-blue-500 focus:outline-none' placeholder='' />
                     </div>
 
                     {/* Amount to pay */}
 
                     <div className={`w-full bg-white h-[6.5em] my-3 rounded-xl border-[3px] p-3 `}>
                         <h2 className='text-[1em] text-blue-800 '>Amount to pay in total:</h2>
-                        <input type="text" className='w-full border px-3 h-8 my-2 rounded border-blue focus:outline-none' readOnly />
+                        <input type="text" className='w-full border px-3 h-8 my-2 rounded border-blue focus:outline-none' readOnly  value={amounToPay.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}/>
                     </div>
 
                     <button className='w-full h-10 bg-blue-400 mb-9 rounded text-blue-50 hover:bg-blue-300 hover:text-blue-950 focus:bg-blue-500'>Buy now</button>

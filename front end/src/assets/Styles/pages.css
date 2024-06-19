@@ -38,6 +38,9 @@
 
 
 @media screen and (max-width: 480px) {
+    .homePage{
+        font-size: 0.8em;
+    }
     #sidebar{
         position: absolute;
         top: 0;

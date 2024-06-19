@@ -47,7 +47,7 @@ const Siderbar = () => {
           <p>Transfer</p>
         </NavLink>
 
-        <div className={`text-gray-200 text-[1.3rem] relative mt-2 
+        <div className={`text-gray-200 text-[1.3rem] relative mt-2 cursor-pointer
           }`} onClick={showChildElement}>
           <div className='flex h-14 items-center gap-2.5 ps-5 hover:bg-gray-700  hover:text-white'>
             <FaMoneyBills />

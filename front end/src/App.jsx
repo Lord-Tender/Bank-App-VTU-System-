@@ -23,6 +23,7 @@ import AdminSettings from './Pages/AdminSettings'
 import axios from 'axios'
 import Transaction from './Pages/Transaction'
 import Airtime from './Pages/Airtime'
+import Data from './Pages/Data'
 
 const App = () => {
   const [verifiedIp, setverifiedIp] = useState(false)
@@ -67,7 +68,9 @@ const App = () => {
         <Route path="/user/dashboard/transfer" element={isAuthenticated ? <Transfer /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/transactions" element={isAuthenticated ? <Transaction /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/dashboard/airtime" element={isAuthenticated ? <Airtime /> : <Navigate to="/user/login" />} replace />
+        <Route path="/user/dashboard/data" element={isAuthenticated ? <Data /> : <Navigate to="/user/login" />} replace />
         <Route path="/user/not-verify" element={isAuthenticated ? <EmailVerification /> : <Navigate to="/user/login" />} replace />
+
 
         {/* Admin routes */}
 

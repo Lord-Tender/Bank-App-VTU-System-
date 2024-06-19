@@ -58,7 +58,7 @@ const Data = () => {
 
         <Siderbar />
 
-        <div className='w-full lg:w-[60%] md:w-[60%] bg-gray-100 static lg:absolute px-7 sm:px-3 md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+        <div className='w-full lg:w-[60%] md:w-[60%] h-screen bg-gray-100 static lg:absolute px-7 sm:px-3 md:fixed left-[20%] ' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
 
         </div>
 

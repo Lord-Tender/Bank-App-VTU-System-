@@ -18,7 +18,6 @@ const Siderbar = () => {
   const showChildElement = () => {
     let element = document.getElementById('bills')
     let current = window.getComputedStyle(element).display
-    console.log(current);
 
     if (current == "block") {
       document.getElementById('bills').style.display = "none"

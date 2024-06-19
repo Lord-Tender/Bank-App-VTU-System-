@@ -4,8 +4,10 @@ import Rightbar from '../Components/Rightbar'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom'
 
 const Airtime = () => {
+    let navigate = useNavigate();
     const [user, setuser] = useState("")
     const [network, setnetwork] = useState("")
     const [adminSettings, setadminSettings] = useState("")

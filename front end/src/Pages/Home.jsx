@@ -58,7 +58,7 @@ const Home = () => {
 
       {/* Section  3*/}
 
-      <div className="section2 w-full h-[30em] bg-white flex sm:flex-col-reverse border-b-8 border-white" style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+      <div className="section2 w-full h-[30em] bg-white flex sm:flex-col border-b-8 border-white sm:border-4" style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
         <div className='w-hf sm:w-full sm:h-hf flex items-center border-4 border-sky-300'>
           <div className='ms-[10%]'>
             <h1 className='text-[2.8em] text-bold border-blue-700 text-blue-800 rounded-[5px]'>Pay Bills</h1>
@@ -84,8 +84,8 @@ const Home = () => {
         </div>
       </div>
 
-      <footer className=''>
-        <p><i>Copy right, (Tender Pay) 2024</i></p>
+      <footer style={{ fontFamily: '"Josefin Sans", sans-serif' }} className='bg-blue-950 h-28 text-blue-50 flex items-center justify-center border-t-8'>
+        <p>Copy right, (Tender Pay) 2024.</p>
       </footer>
     </>
   )

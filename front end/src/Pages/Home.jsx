@@ -7,17 +7,17 @@ import section2Img from '../assets/Image/section2.jpg'
 const Home = () => {
   return (
     <>
-      <nav className='flex justify-between px-14 bg-blue-500 h-20 text-white items-center ' style={{ fontFamily: '"Josefin Sans", sans-serif', position: "sticky", top: "0" }}>
+      <nav className='flex justify-between px-14 sm:px-5 bg-blue-500 h-20 sm:h-16 text-white items-center ' style={{ fontFamily: '"Josefin Sans", sans-serif', position: "sticky", top: "0" }}>
         <div className='homePage'>
           <Link>Tender Pay</Link>
         </div>
-        <ul className='flex gap-10 h-full items-center'>
+        <ul className='flex gap-10 sm:gap-5 h-full items-center '>
           <li className='h-full flex items-center justify-center'>
-            <Link className='bg-white h-[50%] w-28 rounded-3xl text-blue-700 flex items-center justify-center ' to='/user/login'>Login</Link>
+            <Link className='bg-white h-[50%] w-28 sm:w-20 sm:h-[45%] sm:text-[0.8em] rounded-3xl text-blue-700 flex items-center justify-center ' to='/user/login'>Login</Link>
           </li>
 
           <li className='flex gap-10 h-full items-center '>
-            <Link className='bg-white h-[50%] w-28 rounded-3xl text-blue-700 flex items-center justify-center ' to='/user/register'>Register</Link>
+            <Link className='bg-white h-[50%] w-28 sm:w-20 sm:h-[45%] sm:text-[0.8em] rounded-3xl text-blue-700 flex items-center justify-center ' to='/user/register'>Register</Link>
           </li>
         </ul>
       </nav>

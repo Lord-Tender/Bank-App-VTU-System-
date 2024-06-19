@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Siderbar from '../Components/Siderbar'
 import { FaAngleDown } from "react-icons/fa6";
-import proImgDom from '../assets/Image/App monetization.gif'
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
 import { MdArrowBackIosNew, MdElectricBolt, MdNotificationsNone, MdOutlinePhoneInTalk, MdPersonalVideo, MdSpeakerPhone } from "react-icons/md";

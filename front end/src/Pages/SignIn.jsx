@@ -84,7 +84,7 @@ const SignIn = () => {
     return (
         <>
             <section className='flex w-fl' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
-                <div className=' w-[100%] px- md:px-14  lg:w-hf lg:px-20 flex items-center '>
+                <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-20 flex items-center '>
                     <div className='w-[100%] p-5 rounded-lg ' style={{ backgroundColor: "whitesmoke" }}>
                         <p className='text-cente text-dark mb-5'>Don't have an account? <Link to='/user/register' className='text-red-500 text-lg'>Create an account.</Link></p>
                         <form onSubmit={formik.handleSubmit}>

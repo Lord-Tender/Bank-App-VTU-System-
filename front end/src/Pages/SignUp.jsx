@@ -1,12 +1,13 @@
 import { useFormik } from 'formik'
 import React from 'react'
-import img from '../assets/Image/App monetization.gif'
+import img from '../assets/Image/signPage.jpg'
 import '../assets/Styles/form.css'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
 import { BiHide, BiShow } from 'react-icons/bi'
+import { GoArrowLeft } from 'react-icons/go'
 
 const SignUp = () => {
     let navigate = useNavigate()
@@ -98,86 +99,95 @@ const SignUp = () => {
     return (
         <>
             <section className='flex w-fl' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
-                <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-24'>
-                    <h1 className='text-center text-2xl text-blue-500 mt-7 mb-2'>Register a new account</h1>
-                    <p className='text-center text-dark mb-3 px-0 lg:text-center'>Register a new account with us to day, provide the following information to get started.</p>
-                    <form onSubmit={formik.handleSubmit}>
-                        <input className='block bg-gray-100 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
-                            type="text" placeholder='First name' name='firstName'
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange} value={formik.values.firstName} />
-                        {formik.touched.firstName ? (
-                            <div className={formik.errors.firstName ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.firstName}</i></div>
-                        ) : null}
-
-                        <input className='block bg-gray-100 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
-                            type="text" placeholder='Last name' name='lastName'
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange} value={formik.values.lastName} />
-                        {formik.touched.lastName ? (
-                            <div className={formik.errors.lastName ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.lastName}</i></div>
-                        ) : null}
-
-                        <input className='block bg-gray-100 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
-                            type="date" placeholder='' name='dateOfBirth'
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange} value={formik.values.dateOfBirth} />
-                        {formik.touched.dateOfBirth ? (
-                            <div className={formik.errors.dateOfBirth ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.dateOfBirth}</i></div>
-                        ) : null}
-
-                        <input className='block bg-gray-100 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
-                            type="text" placeholder='Phone number' name='phoneNumber'
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange} value={formik.values.phoneNumber} />
-                        {formik.touched.phoneNumber ? (
-                            <div className={formik.errors.phoneNumber ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.phoneNumber}</i></div>
-                        ) : null}
-
-                        <input className='block bg-gray-100 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
-                            type="text" placeholder='Email' name='email'
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange} value={formik.values.email} />
-                        {formik.touched.email ? (
-                            <div className={formik.errors.email ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.email}</i></div>
-                        ) : null}
-
-                        <div className='flex items-center relative'>
-                            <input className='block bg-gray-100 w-full h-14 mb-4 rounded-lg p-3 focus:outline-2 outline-blue-400'
-                                type="password" placeholder='Password' name='password' id='password'
+                <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-20 flex items-center'>
+                    <div className='w-[100%] p-5 rounded-lg ' style={{ backgroundColor: "whitesmoke" }}>
+                        <form onSubmit={formik.handleSubmit}>
+                            <input className='block bg-white border-2 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
+                                type="text" placeholder='First name' name='firstName'
                                 onBlur={formik.handleBlur}
-                                onChange={formik.handleChange} value={formik.values.password} />
-                            <div className='text-[1.5rem] absolute right-3 top-4 cursor-pointer'>
-                                <BiHide className='hidden' id='hidePassword' onClick={hidePassword} />
-                                <BiShow id='showPassword' onClick={showPassword} />
-                            </div>
-                        </div>
-                        {formik.touched.password ? (
-                            <div className={formik.errors.password ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.password}</i></div>
-                        ) : null}
+                                onChange={formik.handleChange} value={formik.values.firstName} />
+                            {formik.touched.firstName ? (
+                                <div className={formik.errors.firstName ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.firstName}</i></div>
+                            ) : null}
 
-                        <p className='text-center text-dark '>Already had an account? <Link to='/user/login' className='text-red-500'>Sign in.</Link></p>
+                            <input className='block bg-white border-2 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
+                                type="text" placeholder='Last name' name='lastName'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.lastName} />
+                            {formik.touched.lastName ? (
+                                <div className={formik.errors.lastName ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.lastName}</i></div>
+                            ) : null}
 
-                        <button type='submit' className='bg-blue-400 p-2 text-white w-[30%] rounded ms-[35%] mt-3'>
-                            <div className="spinner center" id='loader'>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
+                            <input className='block bg-white border-2 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
+                                type="date" placeholder='' name='dateOfBirth'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.dateOfBirth} />
+                            {formik.touched.dateOfBirth ? (
+                                <div className={formik.errors.dateOfBirth ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.dateOfBirth}</i></div>
+                            ) : null}
+
+                            <input className='block bg-white border-2 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
+                                type="text" placeholder='Phone number' name='phoneNumber'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.phoneNumber} />
+                            {formik.touched.phoneNumber ? (
+                                <div className={formik.errors.phoneNumber ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.phoneNumber}</i></div>
+                            ) : null}
+
+                            <input className='block bg-white border-2 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
+                                type="text" placeholder='Email' name='email'
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange} value={formik.values.email} />
+                            {formik.touched.email ? (
+                                <div className={formik.errors.email ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.email}</i></div>
+                            ) : null}
+
+                            <div className='flex items-center relative'>
+                                <input className='block bg-white border-2 w-full h-14 mb-4 rounded-lg p-3 focus:outline-2 outline-blue-400'
+                                    type="password" placeholder='Password' name='password' id='password'
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange} value={formik.values.password} />
+                                <div className='text-[1.5rem] absolute right-3 top-4 cursor-pointer'>
+                                    <BiHide className='hidden' id='hidePassword' onClick={hidePassword} />
+                                    <BiShow id='showPassword' onClick={showPassword} />
+                                </div>
                             </div>
-                            <p id='buttonText'>Sign Up</p></button>
-                    </form>
+                            {formik.touched.password ? (
+                                <div className={formik.errors.password ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.password}</i></div>
+                            ) : null}
+
+                            <p className='text-center text-dark '>Already had an account? <Link to='/user/login' className='text-red-500'>Sign in.</Link></p>
+
+                            <button type='submit' className='bg-blue-500 p-2 text-white w-[30%] rounded ms-[35%] mt-3'>
+                                <div className="spinner center" id='loader'>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                </div>
+                                <p id='buttonText'>Sign Up</p></button>
+                        </form>
+                    </div>
                 </div>
-                <div className='w-hf h-[100vh] hidden md:block lg:block'>
-                    <img src={img} alt="" className='w-[80%] h-[90%] ms-[10%]' />
+                <div className='w-hf h-[100vh] hidden md:block lg:block bg-blue-600'>
+                    <h1 className='text-xl font-bold text-blue-50 text-center mt-8' >Register a new account</h1>
+                    <p className='text-lg text-center my-3 text-white'>Provide the require info to register with us and get started.</p>
+
+                    <div className='w-hf ms-[25%] rounded overflow-hidden h-[20em] mt-7 bg-slate-900 '>
+                        <img src={img} alt="" className='w-full h-full' style={{ objectFit: "cover" }} />
+                    </div>
+
+                    <Link to='/'>
+                        <button className='text-blue-700 font-semibold bg-white w-hf ms-[25%] mt-10 h-12 rounded-3xl flex items-center justify-center'><span className='text-2xl me-[7%] '><GoArrowLeft /></span> <span>Go back Home</span></button>
+                    </Link>
                 </div>
             </section>
         </>

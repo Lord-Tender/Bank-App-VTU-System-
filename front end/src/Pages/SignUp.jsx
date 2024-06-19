@@ -97,7 +97,7 @@ const SignUp = () => {
 
     return (
         <>
-            <section className='flex w-fl'>
+            <section className='flex w-fl' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
                 <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-24'>
                     <h1 className='text-center text-2xl text-blue-500 mt-7 mb-2'>Register a new account</h1>
                     <p className='text-center text-dark mb-3 px-0 lg:text-center'>Register a new account with us to day, provide the following information to get started.</p>

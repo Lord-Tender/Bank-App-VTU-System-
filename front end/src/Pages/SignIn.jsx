@@ -1,4 +1,4 @@
-import img from '../assets/Image/App monetization.gif'
+import img from '../assets/Image/signPage.jpg'
 import { useFormik } from 'formik'
 import axios from 'axios';
 import React, { useEffect } from 'react'
@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { BiHide, BiShow } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
 import { setAuthenticated } from '../Redux/authSlide';
+import { GoArrowLeft } from 'react-icons/go';
 
 
 const SignIn = () => {
@@ -82,56 +83,66 @@ const SignIn = () => {
     }
     return (
         <>
-            <section className='flex w-fl'>
-                <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-24 bg-[] '>
-                    <h1 className='text-center text-2xl text-blue-500 mt-32 mb-1'>Login to account</h1>
-                    <p className='text-center text-dark mb-5'>Don't have an account? <Link to='/user/register' className='text-red-500 text-lg'>Create an account.</Link></p>
-                    <form onSubmit={formik.handleSubmit}>
+            <section className='flex w-fl' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+                <div className=' w-[100%] px- md:px-14  lg:w-hf lg:px-20 flex items-center '>
+                    <div className='w-[100%] p-5 rounded-lg ' style={{ backgroundColor: "whitesmoke" }}>
+                        <p className='text-cente text-dark mb-5'>Don't have an account? <Link to='/user/register' className='text-red-500 text-lg'>Create an account.</Link></p>
+                        <form onSubmit={formik.handleSubmit}>
 
-                        <input className='block bg-gray-100 w-full h-14 mb-4 rounded-lg p-3 focus:outline-2 outline-blue-400'
-                            type="text" placeholder='Email' name='email'
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange} value={formik.values.email} />
-                        {formik.touched.email ? (
-                            <div className={formik.errors.email ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.email}</i></div>
-                        ) : null}
-
-                        <div className='flex items-center relative'>
-                            <input className='block bg-gray-100 w-full h-14 mb-4 rounded-lg p-3 focus:outline-2 outline-blue-400'
-                                type="password" placeholder='Password' name='password' id='password'
+                            <input className='block bg-white border-2 w-full h-14 mb-4 rounded-lg p-3 focus:outline-2 outline-blue-400'
+                                type="text" placeholder='Email' name='email'
                                 onBlur={formik.handleBlur}
-                                onChange={formik.handleChange} value={formik.values.password} />
-                            <div className='text-[1.5rem] absolute right-3 top-4 cursor-pointer'>
-                                <BiHide className='hidden' id='hidePassword' onClick={hidePassword} />
-                                <BiShow id='showPassword' onClick={showPassword} />
-                            </div>
-                        </div>
-                        {formik.touched.password ? (
-                            <div className={formik.errors.password ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.password}</i></div>
-                        ) : null}
+                                onChange={formik.handleChange} value={formik.values.email} />
+                            {formik.touched.email ? (
+                                <div className={formik.errors.email ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.email}</i></div>
+                            ) : null}
 
-                        <p className='text-center text-dark '>Forgotten password? <Link to='/user/reset_password' className=' text-red-500'>Reset.</Link></p>
-
-                        <button type='submit' className='bg-blue-400 p-2 text-white w-[30%] rounded ms-[35%] mt-3'>
-                            <div className="spinner center" id='loader'>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
-                                <div className="spinner-blade"></div>
+                            <div className='flex items-center relative'>
+                                <input className='block bg-white border-2 w-full h-14 mb-4 rounded-lg p-3 focus:outline-2 outline-blue-400'
+                                    type="password" placeholder='Password' name='password' id='password'
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange} value={formik.values.password} />
+                                <div className='text-[1.5rem] absolute right-3 top-4 cursor-pointer'>
+                                    <BiHide className='hidden' id='hidePassword' onClick={hidePassword} />
+                                    <BiShow id='showPassword' onClick={showPassword} />
+                                </div>
                             </div>
-                            <p id='buttonText'>Sign In</p></button>
-                    </form>
+                            {formik.touched.password ? (
+                                <div className={formik.errors.password ? 'mb-3 text-center mt-[-15px] text-red-600 ' : 'hidden'}><i>{formik.errors.password}</i></div>
+                            ) : null}
+
+                            <p className='text-centr text-dark '>Forgotten password? <Link to='/user/reset_password' className=' text-red-500'>Reset.</Link></p>
+
+                            <button type='submit' className='bg-blue-500 p-2 text-white w-[30%] rounded mt-3'>
+                                <div className="spinner center" id='loader'>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                    <div className="spinner-blade"></div>
+                                </div>
+                                <p id='buttonText'>Sign In</p></button>
+                        </form>
+                    </div>
                 </div>
-                <div className='w-hf h-[100vh] hidden md:block lg:block bg-blue-200'>
-                    <img src={img} alt="" className='w-[80%] h-[90%] ms-[10%]' />
+                <div className='w-hf h-[100vh] hidden md:block lg:block bg-blue-600'>
+                    <h1 className='text-xl font-bold text-blue-50 text-center mt-8' >Access your Account here</h1>
+                    <p className='text-lg text-center my-3 text-white'>Login to your account by providing your login details</p>
+
+                    <div className='w-hf ms-[25%] rounded overflow-hidden h-[20em] mt-7 bg-slate-900 '>
+                        <img src={img} alt="" className='w-full h-full' style={{ objectFit: "cover" }} />
+                    </div>
+
+                    <Link to='/'>
+                        <button className='text-blue-700 font-semibold bg-white w-hf ms-[25%] mt-10 h-12 rounded-3xl flex items-center justify-center'><span className='text-2xl me-[7%] '><GoArrowLeft /></span> <span>Go back Home</span></button>
+                    </Link>
                 </div>
             </section>
         </>

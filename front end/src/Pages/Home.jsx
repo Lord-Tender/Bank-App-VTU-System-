@@ -26,7 +26,7 @@ const Home = () => {
 
       {/* Section 1 */}
 
-      <div className="section2 w-full h-[30em] bg-slate-100 flex border-b-8 border-red-500 sm:flex-col" style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
+      <div className="section2 w-full h-[30em] bg-slate-100 flex border-b-8 border-red-400 sm:flex-col" style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
         <div className='w-hf sm:w-full sm:mt-10 sm:h-hf flex mt-[-2em] items-center'>
           <div className='ms-[10%]'>
             <h1 className='text-[2.6em] sm:text-[1.4em] text-bold text-blue-600 border-s-8 border-blue-600 ps-4 rounded-[5px]'>Bank Beyond Imagination</h1>

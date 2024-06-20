@@ -30,7 +30,7 @@ const AdminDashboard = () => {
 
     const userAuth = () => {
         let token = localStorage.getItem('admin_token')
-        let url = 'http://localhost:5000/admin/page_auth'
+        let url = 'https://bank-app-vtu-system.onrender.com/admin/page_auth'
 
         axios.get(url, {
             headers: {
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
     }
 
     const getUser = () => {
-        axios.get('http://localhost:5000/admin/get_user')
+        axios.get('https://bank-app-vtu-system.onrender.com/admin/get_user')
             .then((res) => {
                 settotalUser(res.data.allUsers.length)
                 let totalBal = 0
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
     }
 
     const getTotalTransac = () => {
-        axios.get('http://localhost:5000/admin/get_transactions')
+        axios.get('https://bank-app-vtu-system.onrender.com/admin/get_transactions')
             .then((res) => {
                 settotalTransac(res.data.allTransaction.length)
 
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
     }
 
     const fetchData = async () => {
-        const response = await axios.get('http://localhost:5000/admin/get_transactions/for_chart');
+        const response = await axios.get('https://bank-app-vtu-system.onrender.com/admin/get_transactions/for_chart');
         const data = response.data.result;
 
         const dates = data.map(item => item.date);

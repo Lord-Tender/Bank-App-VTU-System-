@@ -19,7 +19,7 @@ const AddMoney = () => {
 
     useEffect(() => {
         let token = localStorage.getItem('token')
-        let url = 'http://localhost:5000/user/page_auth'
+        let url = 'https://bank-app-vtu-system.onrender.com/user/page_auth'
 
         axios.get(url, {
             headers: {
@@ -49,7 +49,7 @@ const AddMoney = () => {
     }, [])
 
     const fetchAccounts = () => {
-        const url = "http://localhost:5000/user/fund_wallet/monnify/get_account"
+        const url = "https://bank-app-vtu-system.onrender.com/user/fund_wallet/monnify/get_account"
         axios.post(url, { email: userEmail })
             .then((res) => {
                 setuserAccount(res.data.account.reservedAcc)
@@ -81,7 +81,7 @@ const AddMoney = () => {
     const generateAccounts = () => {
         document.getElementById('loader').style.display = 'block';
         document.getElementById('buttonText').style.display = 'none';
-        const url = "http://localhost:5000/user/fund_wallet/monnify"
+        const url = "https://bank-app-vtu-system.onrender.com/user/fund_wallet/monnify"
         const accountReference = `MFY_Tender_Sub(${user.firstName})_${ramdomString()}`
         const data = {
             accountReference,

@@ -12,7 +12,7 @@ const EmailVerification = () => {
 
     const checkStatus = () => {
         let token = localStorage.getItem('token')
-        let url = 'http://localhost:5000/user/page_auth'
+        let url = 'https://bank-app-vtu-system.onrender.com/user/page_auth'
 
         axios.get(url, {
             headers: {
@@ -42,7 +42,7 @@ const EmailVerification = () => {
     }
 
     const resendLink = () => {
-        let url = 'http://localhost:5000/user/resendlink'
+        let url = 'https://bank-app-vtu-system.onrender.com/user/resendlink'
 
         axios.post(url, { userId })
             .then((res) => {

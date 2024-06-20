@@ -14,7 +14,7 @@ const EmailVerifier = () => {
         if (!token) {
             navigate('/user/login')
         }
-        let url = `http://localhost:5000/user/verify?token=${token}`
+        let url = `https://bank-app-vtu-system.vercel.app/user/verify?token=${token}`
         axios.get(url)
             .then((res) => {
                 console.log(res);

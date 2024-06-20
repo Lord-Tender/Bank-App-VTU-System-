@@ -10,7 +10,7 @@ const Forgotten = () => {
         document.getElementById('loader').style.display = 'block';
         document.getElementById('buttonText').style.display = 'none';
 
-        const url = "http://localhost:5000/user/reset_password"
+        const url = "https://bank-app-vtu-system.onrender.com/user/reset_password"
         axios.post(url, { email })
             .then((res) => {
                 document.getElementById('form').style.display = 'none';

@@ -13,7 +13,7 @@ const Data = () => {
   useEffect(() => {
     getNetworks()
     let token = localStorage.getItem("token");
-    let url = "http://localhost:5000/user/page_auth";
+    let url = "https://bank-app-vtu-system.onrender.com/user/page_auth";
 
     axios.get(url, {
       headers: {
@@ -43,7 +43,7 @@ const Data = () => {
   }, []);
 
   const getNetworks = () => {
-    let url = 'http://localhost:5000/user/get_plans'
+    let url = 'https://bank-app-vtu-system.onrender.com/user/get_plans'
     axios.get(url)
       .then((res) => {
         setdataPlan(res.data.plans)

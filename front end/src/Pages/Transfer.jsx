@@ -14,7 +14,7 @@ const Transfer = () => {
   const [user, setuser] = useState("")
     useEffect(() => {
         let token = localStorage.getItem('token')
-        let url = 'http://localhost:5000/user/page_auth'
+        let url = 'https://bank-app-vtu-system.onrender.com/user/page_auth'
 
         axios.get(url, {
             headers: {
@@ -49,7 +49,7 @@ const Transfer = () => {
     const getReceiver = (e) => {
         let value = e.target.value
         if (value.length === 10) {
-            const url = 'http://localhost:5000/user/intra_transfer/get_receiver'
+            const url = 'https://bank-app-vtu-system.onrender.com/user/intra_transfer/get_receiver'
             axios.post(url, { accountNo: e.target.value })
                 .then((res) => {
                     setmgs(res.data.name)
@@ -69,7 +69,7 @@ const Transfer = () => {
     }
 
     const transacValidator = (e) => {
-        const url = 'http://localhost:5000/user/intra_transfer/validate'
+        const url = 'https://bank-app-vtu-system.onrender.com/user/intra_transfer/validate'
         axios.post(url, { sender: user.emailInfo.email, amount: e.target.value })
             .then((res) => {
                 setamount(e.target.value)
@@ -100,7 +100,7 @@ const Transfer = () => {
 
     const sendMoney = () => {
         document.getElementById('loader').style.display = 'flex'
-        const url = 'http://localhost:5000/user/intra_transfer'
+        const url = 'https://bank-app-vtu-system.onrender.com/user/intra_transfer'
         axios.post(url, { sender: user.emailInfo.email, receiver, amount })
             .then((res) => {
                 document.getElementById('loader').style.display = 'none'

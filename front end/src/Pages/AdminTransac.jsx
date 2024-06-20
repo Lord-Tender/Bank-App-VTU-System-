@@ -13,7 +13,7 @@ const AdminTransac = () => {
         const userAuth = () => {
 
             let token = localStorage.getItem('admin_token')
-            let url = 'http://localhost:5000/admin/page_auth'
+            let url = 'https://bank-app-vtu-system.onrender.com/admin/page_auth'
 
 
             axios.get(url, {
@@ -44,7 +44,7 @@ const AdminTransac = () => {
             document.getElementById('loader').style.display = 'none';
             document.getElementById('buttonText').style.display = 'block';
         } else {
-            let url = 'http://localhost:5000/admin/transaction/get_one'
+            let url = 'https://bank-app-vtu-system.onrender.com/admin/transaction/get_one'
             axios.post(url, { transactionId })
                 .then((res) => {
                     setresult(res.data.transactionDetail)
@@ -64,7 +64,7 @@ const AdminTransac = () => {
     const refundDebit = () => {
         document.getElementById('loader3').style.display = 'block';
         document.getElementById('buttonText3').style.display = 'none';
-        let url = 'http://localhost:5000/admin/credit_user'
+        let url = 'https://bank-app-vtu-system.onrender.com/admin/credit_user'
         axios.post(url, { userEmail: result.transactor, amount: result.amount, reason: "Refunded" })
             .then((res) => {
                 toast.success("Refund made successfully")
@@ -81,7 +81,7 @@ const AdminTransac = () => {
     const reverseCredit = () => {
         document.getElementById('loader2').style.display = 'block';
         document.getElementById('buttonText2').style.display = 'none';
-        let url = 'http://localhost:5000/admin/debit_user'
+        let url = 'https://bank-app-vtu-system.onrender.com/admin/debit_user'
         axios.post(url, { userEmail: result.transactor, amount: result.amount })
             .then((res) => {
                 toast.success("Fund reversed successfully")

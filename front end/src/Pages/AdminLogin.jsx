@@ -12,7 +12,7 @@ const AdminLogin = () => {
     const loginUser = () => {
         document.getElementById('loader').style.display = 'block';
         document.getElementById('buttonText').style.display = 'none';
-        const url = "http://localhost:5000/admin/login"
+        const url = "https://bank-app-vtu-system.onrender.com/admin/login"
         axios.post(url, { email, password })
             .then((res) => {
                 localStorage.setItem('admin_token', res.data.token)

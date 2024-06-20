@@ -16,7 +16,7 @@ const AdminSettings = () => {
         const userAuth = () => {
 
             let token = localStorage.getItem('admin_token')
-            let url = 'http://localhost:5000/admin/page_auth'
+            let url = 'https://bank-app-vtu-system.onrender.com/admin/page_auth'
 
 
             axios.get(url, {
@@ -40,7 +40,7 @@ const AdminSettings = () => {
 
 
     const getSettings = () => {
-        const url = "http://localhost:5000/admin/get_settings"
+        const url = "https://bank-app-vtu-system.onrender.com/admin/get_settings"
         axios.get(url)
             .then((res) => {
                 setsettings(res.data.settings)
@@ -50,7 +50,7 @@ const AdminSettings = () => {
     }
 
     const setIntraTransferFee = () => {
-        const url = "http://localhost:5000/admin/settings/edit"
+        const url = "https://bank-app-vtu-system.onrender.com/admin/settings/edit"
         let newValue = document.getElementById("intraFeeNewValue").value
         if (newValue == "") {
             toast.error("Please input a new value")
@@ -69,7 +69,7 @@ const AdminSettings = () => {
     }
 
     const setMonnifyTransacFee = () => {
-        const url = "http://localhost:5000/admin/settings/edit"
+        const url = "https://bank-app-vtu-system.onrender.com/admin/settings/edit"
         let newValue = document.getElementById("monnifyFeeNewValue").value
         if (newValue == "") {
             toast.error("Please input a new value")
@@ -88,7 +88,7 @@ const AdminSettings = () => {
     }
 
     const addIpToWishList = () => {
-        const url = "http://localhost:5000/admin/add_ipwishlist"
+        const url = "https://bank-app-vtu-system.onrender.com/admin/add_ipwishlist"
         let newValue = document.getElementById("newIp").value
         if (newValue == "") {
             toast.error("Please enter an IP address")
@@ -123,7 +123,7 @@ const AdminSettings = () => {
 
         }),
         onSubmit: (values) => {
-            const url = "http://localhost:5000/admin/add_user"
+            const url = "https://bank-app-vtu-system.onrender.com/admin/add_user"
             let data = { 
                 email: values.newAdminEmail, 
                 fullName: values.newAdminFullName, 

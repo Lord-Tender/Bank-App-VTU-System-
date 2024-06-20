@@ -19,7 +19,7 @@ const AdminService = () => {
         const userAuth = () => {
 
             let token = localStorage.getItem('admin_token')
-            let url = 'http://localhost:5000/admin/page_auth'
+            let url = 'https://bank-app-vtu-system.onrender.com/admin/page_auth'
 
 
             axios.get(url, {
@@ -40,7 +40,7 @@ const AdminService = () => {
     }, [])
 
     const getSettings = () => {
-        const url = "http://localhost:5000/admin/get_settings"
+        const url = "https://bank-app-vtu-system.onrender.com/admin/get_settings"
         axios.get(url)
             .then((res) => {
                 setairtimeFetched(res.data.settings[0].airtimePrice)
@@ -50,7 +50,7 @@ const AdminService = () => {
     }
 
     const getDataPlan = () => {
-        const url = "http://localhost:5000/admin/get_plan"
+        const url = "https://bank-app-vtu-system.onrender.com/admin/get_plan"
         axios.get(url)
             .then((res) => {
                 setdataPlan(res.data.data)
@@ -77,7 +77,7 @@ const AdminService = () => {
             if (!networkId) {
                 toast.error("Please select a network")
             } else {
-                const url = "http://localhost:5000/admin/add_dataplan"
+                const url = "https://bank-app-vtu-system.onrender.com/admin/add_dataplan"
                 const data = {
                     network_id: networkId,
                     server_id: values.serverId,
@@ -98,7 +98,7 @@ const AdminService = () => {
     })
 
     const editAirtime = () => {
-        const url = "http://localhost:5000/admin/settings/edit"
+        const url = "https://bank-app-vtu-system.onrender.com/admin/settings/edit"
         let newValue = document.getElementById("airtimePercentage").value
         axios.post(url, { whatToEdit: "airtimePrice", newValue })
             .then((res) => {
@@ -120,7 +120,7 @@ const AdminService = () => {
         } else if (network_id == "" || network_name == "") {
             toast.error("Spaces can't be empty")
         } else {
-            const url = "http://localhost:5000/admin/add_network"
+            const url = "https://bank-app-vtu-system.onrender.com/admin/add_network"
             axios.post(url, { network_id, network_name })
                 .then((res) => {
                     toast.success("Network added successfully.")

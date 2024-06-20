@@ -16,7 +16,7 @@ const Profile = () => {
   const [user, setuser] = useState("")
   useEffect(() => {
     let token = localStorage.getItem('token')
-    let url = 'http://localhost:5000/user/page_auth'
+    let url = 'https://bank-app-vtu-system.onrender.com/user/page_auth'
 
     axios.get(url, {
       headers: {
@@ -68,7 +68,7 @@ const Profile = () => {
     } else {
       document.getElementById('loader').style.display = 'block';
       document.getElementById('buttonText').style.display = 'none';
-      let url = 'http://localhost:5000/user/upload_profile'
+      let url = 'https://bank-app-vtu-system.onrender.com/user/upload_profile'
       axios.post(url, { file, userId })
         .then((user) => {
           document.getElementById('loader').style.display = 'none';
@@ -103,7 +103,7 @@ const Profile = () => {
       document.getElementById('loader2').style.display = 'block';
       document.getElementById('buttonText2').style.display = 'none';
 
-      const url = "http://localhost:5000/user/change_password"
+      const url = "https://bank-app-vtu-system.onrender.com/user/change_password"
       let newValue = {
         email: user.emailInfo.email,
         oldPassword: values.oldPassword,

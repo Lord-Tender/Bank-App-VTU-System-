@@ -14,7 +14,7 @@ const Transaction = () => {
 
     useEffect(() => {
         let token = localStorage.getItem('token')
-        let url = 'http://localhost:5000/user/page_auth'
+        let url = 'https://bank-app-vtu-system.onrender.com/user/page_auth'
 
         axios.get(url, {
             headers: {
@@ -45,7 +45,7 @@ const Transaction = () => {
 
 
     const getUserTransaction = (email) => {
-        let url = 'http://localhost:5000/user/transaction'
+        let url = 'https://bank-app-vtu-system.onrender.com/user/transaction'
         axios.post(url, { email })
             .then((response) => {
                 let theData = []

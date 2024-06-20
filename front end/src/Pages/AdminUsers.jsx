@@ -14,7 +14,7 @@ const AdminUsers = () => {
     useEffect(() => {
         const userAuth = () => {
             let token = localStorage.getItem('admin_token')
-            let url = 'http://localhost:5000/admin/page_auth'
+            let url = 'https://bank-app-vtu-system.onrender.com/admin/page_auth'
 
             axios.get(url, {
                 headers: {
@@ -33,7 +33,7 @@ const AdminUsers = () => {
     }, [])
 
     const getUser = () => {
-        axios.get('http://localhost:5000/admin/get_user')
+        axios.get('https://bank-app-vtu-system.onrender.com/admin/get_user')
             .then((res) => {
                 setuser(res.data.allUsers)
             })
@@ -49,7 +49,7 @@ const AdminUsers = () => {
 
     const creditUser = () => {
         let amount = document.getElementById("amountToCredit").value
-        let url = 'http://localhost:5000/admin/credit_user'
+        let url = 'https://bank-app-vtu-system.onrender.com/admin/credit_user'
         axios.post(url, { userEmail: userToCredit, amount, reason: "From Admin" })
             .then((res) => {
                 document.getElementById("amountToCredit").value = ""
@@ -70,7 +70,7 @@ const AdminUsers = () => {
 
     const debitUser = () => {
         let amount = document.getElementById("amountToDebit").value
-        let url = 'http://localhost:5000/admin/debit_user'
+        let url = 'https://bank-app-vtu-system.onrender.com/admin/debit_user'
         axios.post(url, { userEmail: userToDebit, amount })
             .then((res) => {
                 document.getElementById("amountToCredit").value = ""

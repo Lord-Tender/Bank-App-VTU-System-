@@ -1,8 +1,14 @@
 {
-  "rewrites": [
-    {
-      "source": "/((?!api/.*).*)",
-      "destination": "/index.html"
-    }
-  ]
-}
+    "rewrites": [
+      { "source": "/test-route", "destination": "/index.html" }
+    ],
+    "headers": [
+      {
+        "source": "/index.html",
+        "headers": [
+          { "key": "X-Custom-Header", "value": "Hello from Vercel" }
+        ]
+      }
+    ]
+  }
+  

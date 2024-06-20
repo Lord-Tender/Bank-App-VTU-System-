@@ -12,7 +12,7 @@ import { GoArrowLeft } from 'react-icons/go'
 const SignUp = () => {
     let navigate = useNavigate()
 
-    let url = "http://localhost:5000/user/register"
+    let url = "https://bank-app-vtu-system.vercel.app/user/register"
     const formik = useFormik({
         initialValues: {
             firstName: '',

@@ -15,7 +15,7 @@ const SignIn = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
 
-    let url = "https://tenderpayapi.vercel.app/user/login";
+    let url = "https://bank-app-vtu-system.onrender.com/user/login";
 
     const formik = useFormik({
         initialValues: {

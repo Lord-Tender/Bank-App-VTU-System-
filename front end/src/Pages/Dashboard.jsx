@@ -27,7 +27,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     let token = localStorage.getItem('token')
-    let url = 'http://localhost:5000/user/page_auth'
+    let url = 'https://bank-app-vtu-system.vercel.app/user/page_auth'
 
     axios.get(url, {
       headers: {

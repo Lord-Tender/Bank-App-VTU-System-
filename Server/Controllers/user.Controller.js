@@ -8,6 +8,7 @@ const secret = process.env.SECRET
 var cloudinary = require('cloudinary');
 const { Buffer } = require('buffer');
 const axios = require('axios');
+const { welcomeTem } = require('../Exact/user.template')
 
 
 
@@ -62,6 +63,7 @@ const registerUser = (req, res) => {
         .then(data => {
             console.log("Save succesfully" + data);
             res.status(201).json({ status: "Register sucessfully", data: data })
+            sendEmails(email, "Welcome to Tender Pay", welcomeTem(firstName))
             verifyEmail(email)
         })
         .catch(err => {
@@ -526,7 +528,7 @@ const saveDebitTransac = (email, receiver, tansType, amountDebited) => {
     const date = new Date()
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    
+
     const transactionId = `TPay_${hours}:${minutes}_${generatedNumber}`
 
     let transac = new debitTransaction({
@@ -713,7 +715,7 @@ const getUserTransactions = async (req, res) => {
         } else {
             res.status(201).json({ status: true, msg: "No transaction founded." })
         }
-    }else{
+    } else {
         res.status(404).json({ status: false, msg: "No record found" })
     }
 }
@@ -793,7 +795,7 @@ const getDataPlan = async (req, res) => {
     let plans = await dataPlans.find({})
     if (plans) {
         res.status(200).json({ status: true, msg: "Data fetched successfully", plans })
-    }else{
+    } else {
         res.status(500).json({ status: false, msg: "An error occured" })
     }
 }
@@ -804,7 +806,7 @@ const getAdminSetting = async (req, res) => {
     let setting = await adminSetting.find({})
     if (setting) {
         res.status(200).json({ status: true, msg: "Admin settings fetched successfully", setting })
-    }else{
+    } else {
         res.status(500).json({ status: false, msg: "An error occured" })
     }
 }

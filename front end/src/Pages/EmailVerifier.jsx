@@ -9,13 +9,15 @@ const EmailVerifier = () => {
 
     const token = searchParams.get('token');
     let navigate = useNavigate()
+    console.log(token)
 
     useEffect(() => {
         if (!token) {
             navigate('/user/login')
         }
         let url = `https://bank-app-vtu-system.vercel.app/user/verify?token=${token}`
-        axios.get(url)
+        setTimeout(() => {
+            axios.get(url)
             .then((res) => {
                 console.log(res);
                 if (res) {
@@ -32,6 +34,7 @@ const EmailVerifier = () => {
                     document.getElementById('success').style.display = "none"
             })
 
+        }, 10000);
     }, [])
 
 

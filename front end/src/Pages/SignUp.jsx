@@ -37,7 +37,7 @@ const SignUp = () => {
             email: yup.string().email("invalid email address").required("Email is required"),
             password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters long').matches(/[a-z]/, 'Password must contain at least one lowercase')
                 .matches(/[A-Z]/, 'Password must contain at least one uppercase')
-                .matches(/[0-9]/, 'Password must contain at least number')
+                .matches(/[0-9]/, 'Password must contain at least number').max(15, 'Password must not be longer 15 characters')
                 .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
 
         }),
@@ -101,6 +101,7 @@ const SignUp = () => {
             <section className='flex w-fl' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
                 <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-20 flex items-center'>
                     <div className='w-[100%] p-5 rounded-lg ' style={{ backgroundColor: "whitesmoke" }}>
+                    <h2 className='text-xl text-center mb-2 text-blue-600 hidden sm:block'>Register new account</h2>
                         <form onSubmit={formik.handleSubmit}>
                             <input className='block bg-white border-2 w-full h-12 mb-3.5 rounded-lg p-3 focus:outline-2 outline-blue-400'
                                 type="text" placeholder='First name' name='firstName'

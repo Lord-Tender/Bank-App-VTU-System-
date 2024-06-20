@@ -41,7 +41,7 @@ const SignIn = () => {
                 let emailVerify = res.data.user.emailInfo.emailVerified
                 setTimeout(() => {
                     if (emailVerify === false) {
-                        navigate('/user/verify')
+                        navigate('/user/not-verify')
                     } else if (emailVerify === true) {
                         navigate('/user/dashboard')
                     }
@@ -86,6 +86,7 @@ const SignIn = () => {
             <section className='flex w-fl' style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
                 <div className=' w-[100%] px-4 md:px-14  lg:w-hf lg:px-20 flex items-center '>
                     <div className='w-[100%] p-5 rounded-lg ' style={{ backgroundColor: "whitesmoke" }}>
+                        <h2 className='text-xl text-center mb-2 text-blue-600 hidden sm:block'>Login to your account</h2>
                         <p className='text-cente text-dark mb-5'>Don't have an account? <Link to='/user/register' className='text-red-500 text-lg'>Create an account.</Link></p>
                         <form onSubmit={formik.handleSubmit}>
 

@@ -15,6 +15,5 @@
         },
         "dest": "/index.js"
       }
-    ],
-    "regions": ["sfo1", "iad1", "bru1"]
+    ]
 }  

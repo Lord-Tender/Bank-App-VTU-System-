@@ -1,18 +1,20 @@
 {
     "version": 2,
     "builds": [
-        {
-            "src": "index.js",
-            "use": "@vercel/node"
-        }
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "headers": {
-                "Access-Control-Allow-Origin": "*"
-              },
-            "dest": "/index.js"
-        }
-    ]
-}
+      {
+        "src": "/(.*)",
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=3600"
+        },
+        "dest": "/index.js"
+      }
+    ],
+    "regions": ["sfo1", "iad1", "bru1"]
+}  

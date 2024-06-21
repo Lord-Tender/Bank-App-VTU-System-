@@ -37,4 +37,41 @@ const welcomeTem = (firstName) => {
     `
 }
 
-module.exports = { welcomeTem }
+const verifyEmailTemplate = (firstName, token) => {
+    return `
+        <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* No CSS here, will use inline styles */
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0;">
+    <div style="width: 80%; margin: auto; padding: 20px; border: 1px solid #dddddd; border-radius: 5px; background-color: #f9f9f9;">
+        <div style="text-align: center; background-color: #4CAF50; color: white; padding: 10px 0; border-radius: 5px 5px 0 0;">
+            <h1>Verify Your Email</h1>
+        </div>
+        <div style="margin: 20px 0;">
+            <p>Hi ${firstName},</p>
+            <p>Thank you for signing up with [Your Company]! To complete your registration, please verify your email address by clicking the button below:</p>
+            <a href="https://tenderpay.vercel.app/user/verify?token=${token}" style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 16px; color: white; background-color: #4CAF50; text-align: center; text-decoration: none; border-radius: 5px;">Verify Email</a>
+            <p>If the button above doesn't work, please copy and paste the following link into your web browser:</p>
+            <p><a href="https://tenderpay.vercel.app/user/verify?token=${token}" style="color: #4CAF50;">https://tenderpay.vercel.app/user/verify?token=${token}</a></p>
+            <p>If you did not sign up for a [Your Company] account, please ignore this email.</p>
+            <p>Thank you,<br>The (Tender Pay) Team</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #777777;">
+            <p>&copy; [Current Year] [Your Company]. All rights reserved.</p>
+            <p>Ogbomoso, Oyo state.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+    `
+}
+
+module.exports = { 
+    welcomeTem, 
+    verifyEmailTemplate
+ }

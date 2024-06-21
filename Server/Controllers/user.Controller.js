@@ -8,7 +8,7 @@ const secret = process.env.SECRET
 var cloudinary = require('cloudinary');
 const { Buffer } = require('buffer');
 const axios = require('axios');
-const { welcomeTem } = require('../Exact/user.template')
+const { welcomeTem, verifyEmailTemplate } = require('../Exact/user.template')
 
 
 
@@ -44,6 +44,8 @@ const registerUser = (req, res) => {
         return randomText;
     }
 
+    let emailVerifyToken = testCode()
+
     let user = new userModel({
         firstName,
         lastName,
@@ -55,7 +57,7 @@ const registerUser = (req, res) => {
         },
         emailInfo: {
             email,
-            emailVerificationCode: testCode()
+            emailVerificationCode: emailVerifyToken
         },
         password: hashPassword
     })
@@ -64,7 +66,7 @@ const registerUser = (req, res) => {
             console.log("Save succesfully" + data);
             res.status(201).json({ status: "Register sucessfully", data: data })
             sendEmails(email, "Welcome to Tender Pay", welcomeTem(firstName))
-            verifyEmail(email)
+            sendEmails(email, "Email verification", verifyEmailTemplate(firstName, emailVerifyToken))
         })
         .catch(err => {
             if (err) {
@@ -72,7 +74,6 @@ const registerUser = (req, res) => {
             }
         })
 }
-
 
 
 // Verify Email
@@ -85,47 +86,6 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-
-const verifyEmail = (email) => {
-    return new Promise((resolve, reject) => {
-        try {
-            userModel.findOne({ 'emailInfo.email': email })
-                .then(user => {
-                    if (user) {
-                        console.log("we found the user", user);
-                        let verificationToken = user.emailInfo.emailVerificationCode;
-                        let toEmail = user.emailInfo.email;
-
-                        console.log(verificationToken);
-                        transporter.sendMail({
-                            from: process.env.NODEMAILER_USER,
-                            to: toEmail,
-                            subject: 'Email Verification',
-                            text: `Click the following link to verify your email: http://localhost:5000/verify?token=${verificationToken}`
-                        }, (err, info) => {
-                            if (err) {
-                                console.error('Error sending email:', err);
-                                reject({ msg: 'An error', status: false, err });
-                            } else {
-                                console.log('Email sent:', info);
-                                resolve({ msg: 'Email sent successful', status: true, info });
-                            }
-                        });
-                    } else {
-                        console.log("User does not exist");
-                        reject(new Error('User not found'));
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
-        } catch (error) {
-            console.log(error);
-            reject(error);
-        }
-    });
-};
 
 // Send Emails
 
@@ -291,7 +251,7 @@ const resendVerificationLink = async (req, res) => {
     try {
         let theUser = await userModel.findById(userid)
         const email = theUser.emailInfo.email
-        verifyEmail(email)
+        sendEmails(email, "Email verification", verifyEmailTemplate(firstName, emailVerifyToken))
             .then(data => {
                 console.log(data);
                 res.status(200).json({ status: "Email sent successfully", data: data })
@@ -825,4 +785,4 @@ const buyData = async (req, res) => {
 
 
 
-module.exports = { registerUser, verifyEmail, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, test, creditUser, debitUser, getUserTransactions, getDataPlan, getAdminSetting };
+module.exports = { registerUser, getTokenAndVerify, loginUser, resendVerificationLink, pageAuth, upLoadProfile, createReservedAccount, checkMonnifyTransaction, resetPassword, changePassword, fetchReserved, intraTransfer, transactionValidator, receiverValidator, initFlutterPayment, verifyFlutterTransaction, test, creditUser, debitUser, getUserTransactions, getDataPlan, getAdminSetting };

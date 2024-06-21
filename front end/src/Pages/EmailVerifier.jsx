@@ -15,8 +15,7 @@ const EmailVerifier = () => {
         if (!token) {
             navigate('/user/login')
         }
-        let url = `https://bank-app-vtu-system.vercel.app/user/verify?token=${token}`
-        setTimeout(() => {
+        let url = `https://bank-app-vtu-system.onrender.com/user/verify?token=${token}`
             axios.get(url)
             .then((res) => {
                 console.log(res);
@@ -24,9 +23,6 @@ const EmailVerifier = () => {
                     document.getElementById('success').style.display = "block"
                     document.getElementById('error').style.display = "none"
                 }
-                setTimeout(() => {
-                    navigate('/user/login')
-                }, 2000);
             })
             .catch((err) => {
                 console.log(err);
@@ -34,7 +30,6 @@ const EmailVerifier = () => {
                     document.getElementById('success').style.display = "none"
             })
 
-        }, 10000);
     }, [])
 
 

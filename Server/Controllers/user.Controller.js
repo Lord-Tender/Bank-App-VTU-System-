@@ -8,7 +8,7 @@ const secret = process.env.SECRET
 var cloudinary = require('cloudinary');
 const { Buffer } = require('buffer');
 const axios = require('axios');
-const { welcomeTem, verifyEmailTemplate } = require('../Exact/user.template')
+const { welcomeTem, verifyEmailTemplate, passwordResetEmailTemplate } = require('../Exact/user.template')
 
 
 
@@ -100,9 +100,11 @@ const sendEmails = (email, subject, html) => {
 
         transporter.sendMail(emailBody, (err, info) => {
             if (err) {
+                console.log("error")
                 reject({ msg: 'An error', status: false, err });
             } else {
                 resolve({ msg: 'Email sent successful', status: true, info });
+                console.log("Sent")
             }
         });
     })
@@ -124,8 +126,7 @@ const resetPassword = (req, res) => {
                     user.password = hashNewPassword
                     user.save()
                         .then((newData) => {
-                            const html = `<h2 color="blue"> your new password is: ${newPassword} </h2>`
-                            sendEmails(email, "Password Reset", html)
+                            sendEmails(email, "Password Reset", passwordResetEmailTemplate(user.firstName, newPassword))
                                 .then((mail) => {
                                     res.status(200).json({ msg: "Sent successfully", mail })
                                 })
@@ -181,6 +182,7 @@ const generateNewPassword = () => {
 
 const getTokenAndVerify = async (req, res) => {
     const token = req.query.token
+    console.log(token);
     let user = await userModel.findOne({ 'emailInfo.emailVerificationCode': token })
     if (user) {
         console.log(user);
@@ -247,11 +249,13 @@ const pageAuth = async (req, res) => {
 }
 
 const resendVerificationLink = async (req, res) => {
+    console.log(req.body)
     let userid = req.body.userId
     try {
         let theUser = await userModel.findById(userid)
         const email = theUser.emailInfo.email
-        sendEmails(email, "Email verification", verifyEmailTemplate(firstName, emailVerifyToken))
+        console.log(email);
+        sendEmails(email, "Email verification", verifyEmailTemplate(theUser.firstName, theUser.emailInfo.emailVerificationCode))
             .then(data => {
                 console.log(data);
                 res.status(200).json({ status: "Email sent successfully", data: data })

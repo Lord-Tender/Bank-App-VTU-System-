@@ -565,7 +565,6 @@ const transactionValidator = async (req, res) => {
     const { sender, amount } = req.body
     let user = await userModel.findOne({ 'emailInfo.email': sender })
     let transacFee = await useAdminSetting('intra')
-    console.log(transacFee);
     if (user) {
         let userBalance = Number(user.accountBal)
         let sendAmount = Number(amount)
@@ -698,7 +697,6 @@ const useAdminSetting = async (toReturn) => {
     let setting = await adminSetting.find({})
     return new Promise((resolve, reject)=> {
         if (setting) {
-            console.log(setting);
             if (toReturn === "airtime") {
                 resolve(setting[0].airtimePrice)
             }

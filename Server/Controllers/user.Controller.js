@@ -63,7 +63,6 @@ const registerUser = (req, res) => {
     })
     user.save()
         .then(data => {
-            console.log("Save succesfully" + data);
             res.status(201).json({ status: "Register sucessfully", data: data })
             sendEmails(email, "Welcome to Tender Pay", welcomeTem(firstName))
             sendEmails(email, "Email verification", verifyEmailTemplate(firstName, emailVerifyToken))
@@ -100,11 +99,9 @@ const sendEmails = (email, subject, html) => {
 
         transporter.sendMail(emailBody, (err, info) => {
             if (err) {
-                console.log("error")
                 reject({ msg: 'An error', status: false, err });
             } else {
                 resolve({ msg: 'Email sent successful', status: true, info });
-                console.log("Sent")
             }
         });
     })
@@ -114,14 +111,11 @@ const sendEmails = (email, subject, html) => {
 
 const resetPassword = (req, res) => {
     const { email } = req.body
-    console.log(email);
     try {
         userModel.findOne({ 'emailInfo.email': email })
             .then((user) => {
                 if (user) {
-                    console.log(user);
                     let newPassword = generateNewPassword()
-                    console.log(newPassword);
                     let hashNewPassword = bcrypt.hashSync(newPassword, 10);
                     user.password = hashNewPassword
                     user.save()
@@ -141,12 +135,10 @@ const resetPassword = (req, res) => {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 res.status(500).json({ mgs: "User not found", err })
             })
     }
     catch (error) {
-        console.log(error);
     }
 }
 
@@ -182,15 +174,12 @@ const generateNewPassword = () => {
 
 const getTokenAndVerify = async (req, res) => {
     const token = req.query.token
-    console.log(token);
     let user = await userModel.findOne({ 'emailInfo.emailVerificationCode': token })
     if (user) {
-        console.log(user);
         user.emailInfo.emailVerified = true;
         user.save()
             .then(result => {
                 res.status(200).json({ Message: 'Email verified successfully', result: result });
-                console.log("SUCCUSSFUL");
             })
             .catch(err => {
                 res.status(500).send('Error verifying email');
@@ -225,7 +214,6 @@ const loginUser = async (req, res) => {
         }
     }
     catch (err) {
-        console.log(err);
     }
 }
 
@@ -249,20 +237,16 @@ const pageAuth = async (req, res) => {
 }
 
 const resendVerificationLink = async (req, res) => {
-    console.log(req.body)
     let userid = req.body.userId
     try {
         let theUser = await userModel.findById(userid)
         const email = theUser.emailInfo.email
-        console.log(email);
         sendEmails(email, "Email verification", verifyEmailTemplate(theUser.firstName, theUser.emailInfo.emailVerificationCode))
             .then(data => {
-                console.log(data);
                 res.status(200).json({ status: "Email sent successfully", data: data })
             })
             .catch(err => {
                 res.status(400).json({ status: "Email sent unsucessfully", error: err })
-                console.log(err);
             })
     }
     catch (err) {
@@ -274,14 +258,12 @@ const resendVerificationLink = async (req, res) => {
 const upLoadProfile = async (req, res) => {
     const { file, userId } = req.body
     let fileUrl = await saveFile(file)
-    console.log(fileUrl, userId);
     userModel.findByIdAndUpdate(
         userId,
         { $set: { photoUrl: `${fileUrl}` } },
         { new: true, useFindAndModify: false, }
     )
         .then(updatedItem => {
-            console.log('Item updated:', updatedItem);
             res.status(200).json({ msg: "Uploaded", updatedItem })
         })
         .catch(error => {
@@ -317,14 +299,12 @@ const changePassword = (req, res) => {
                         res.status(200).json({ mgs: "Changed successfully", status: true })
                     })
                     .catch((error) => {
-                        console.log(error);
                     })
             } else {
                 res.status(400).json({ mgs: "Incorrect password", status: false })
             }
         })
         .catch((err) => {
-            // console.log(err); 
             res.status(400).json({ mgs: "can not find user", status: false })
         })
 
@@ -380,15 +360,12 @@ const createReservedAccount = async (req, res) => {
 }
 
 const checkMonnifyTransaction = (req, res) => {
-    console.log(req.body);
     const customerEmail = req.body.eventData.customer.email
     const amountPaid = req.body.eventData.amountPaid
     const paymentStatus = req.body.eventData.paymentStatus
     const eventType = req.body.eventType
     if (eventType === "SUCCESSFUL_TRANSACTION" && paymentStatus === "PAID") {
-        console.log(customerEmail, eventType, amountPaid, paymentStatus);
         const amountToCredit = Number(amountPaid) - 50
-        console.log(amountToCredit);
         creditUser(customerEmail, amountToCredit, "Reserved Account", "Fund wallet")
     }
 }
@@ -506,10 +483,8 @@ const saveDebitTransac = (email, receiver, tansType, amountDebited) => {
     })
     transac.save()
         .then((res) => {
-            console.log(res);
         })
         .catch((error) => {
-            console.log(error);
         })
 }
 
@@ -536,15 +511,12 @@ const saveCreditTransac = (email, from, tansType, amountCredited) => {
     })
     transac.save()
         .then((res) => {
-            console.log(res);
         })
         .catch((error) => {
-            console.log(error);
         })
 }
 
 const test = (req, res) => {
-    console.log(req.body);
 
     saveCreditTransac(req.body.sender, "OLa Tender", "Intra_transfer", 2000)
 }
@@ -565,7 +537,6 @@ const creditUser = async (userEmail, theAmount, from, tansType) => {
                     resolve({ mgs: "Credited" })
                 })
                 .catch((err) => {
-                    console.log("Error saving  " + err);
                 })
         } else {
             reject({ mgs: "No user found" })
@@ -589,7 +560,6 @@ const debitUser = async (userEmail, theAmount, tansType, receiver) => {
                     resolve({ mgs: "Debited" })
                 })
                 .catch((err) => {
-                    console.log("Error saving  " + err);
                 })
         } else {
             reject(new Error({ mgs: "No user found" }))
@@ -613,7 +583,6 @@ const intraTransfer = async (req, res) => {
         } else {
             debitUser(user.emailInfo.email, amountToDebit, "Intra_Transfer", receiver)
                 .then((response) => {
-                    console.log(response);
                     if (response) {
                         creditUser(receiver, amount, `${user.firstName} ${user.lastName}`, "Intra_Transfer")
                             .then((credit) => {
@@ -626,7 +595,6 @@ const intraTransfer = async (req, res) => {
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
                     res.status(400).json({ mgs: "Transaction unSuccessful", err })
                 })
         }
@@ -657,10 +625,8 @@ const transactionValidator = async (req, res) => {
 
 const receiverValidator = async (req, res) => {
     const { accountNo } = req.body
-    console.log(accountNo);
     let user = await userModel.findOne({ accountNo: accountNo })
     if (user) {
-        console.log(user);
         res.status(200).json({ mgs: "User found", name: `${user.firstName} ${user.lastName}`, userEmail: user.emailInfo.email })
     } else {
         res.status(400).json({ mgs: "No user found!" })
@@ -714,7 +680,6 @@ const initFlutterPayment = (req, res) => {
         }
     })
         .then((response) => {
-            console.log(response)
             const date = new Date()
             let transaction = new flutterTransaction({
                 tx_ref,
@@ -724,7 +689,6 @@ const initFlutterPayment = (req, res) => {
             })
             transaction.save()
                 .then((data) => {
-                    console.log(data);
                     res.status(200).json({ status: true, mgs: "Payment initialitiation successfully", paymentLink: response.data.data.link })
                 })
                 .catch((error) => {
@@ -732,7 +696,6 @@ const initFlutterPayment = (req, res) => {
                 })
         })
         .catch((err) => {
-            console.log(err);
             res.status(400).json({ status: false, mgs: "unsuccessfully", error: err })
         })
 }
@@ -749,8 +712,6 @@ const verifyFlutterTransaction = async (req, res) => {
     //         Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`
     //     }
     // })
-    console.log(transactionDetails);
-    console.log(response.data);
 }
 
 // Get data plan 

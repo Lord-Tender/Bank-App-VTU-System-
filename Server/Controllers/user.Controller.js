@@ -359,13 +359,14 @@ const createReservedAccount = async (req, res) => {
     }
 }
 
-const checkMonnifyTransaction = (req, res) => {
+const checkMonnifyTransaction = async (req, res) => {
+    let adminSetFee = await useAdminSetting('monnify')
     const customerEmail = req.body.eventData.customer.email
     const amountPaid = req.body.eventData.amountPaid
     const paymentStatus = req.body.eventData.paymentStatus
     const eventType = req.body.eventType
     if (eventType === "SUCCESSFUL_TRANSACTION" && paymentStatus === "PAID") {
-        const amountToCredit = Number(amountPaid) - 50
+        const amountToCredit = Number(amountPaid) - Number(adminSetFee)
         creditUser(customerEmail, amountToCredit, "Reserved Account", "Fund wallet")
     }
 }
@@ -411,50 +412,6 @@ const fetchReserved = async (req, res) => {
     } else {
         res.status(400).json({ status: false, mgs: "No reserved account" })
     }
-}
-
-// Credit user 
-
-const creditHtml = (amount) => {
-    let html = `<body style="font-family: sans-serif;">
-    <div style="color: white; 
-    background-color: rgb(68, 68, 245); 
-    height: 5rem; 
-    font-weight: bold; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    ">
-        New Transaction alert
-    </div>
-    <div style="display: flex; 
-    justify-content: center;
-    flex-direction: column; 
-    align-items: center;
-    background-color: whitesmoke;
-    height: 60vh;
-    font-size: 1.8rem;">
-        <div>
-            <p style="text-align: center;">${amount}</p>
-            <p style="text-align: center;">Credited</p>
-        </div>
-    </div>
-
-    <div style="color: white; 
-    background-color: rgb(68, 68, 245); 
-    height: 5rem; 
-    font-weight: bold; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    ">
-        © Tender Pay
-    </div>
-</body>`
-
-    return html
 }
 
 // Save debit transaction!!!
@@ -570,10 +527,10 @@ const debitUser = async (userEmail, theAmount, tansType, receiver) => {
 const intraTransfer = async (req, res) => {
     const { sender, receiver, amount } = req.body
     let user = await userModel.findOne({ 'emailInfo.email': sender })
+    let transacFee = await useAdminSetting('intra')
     if (user) {
         let userBalance = Number(user.accountBal)
         let sendAmount = Number(amount)
-        let transacFee = 20
         let amountToDebit = transacFee + sendAmount
 
         if (sender === receiver) {
@@ -607,11 +564,12 @@ const intraTransfer = async (req, res) => {
 const transactionValidator = async (req, res) => {
     const { sender, amount } = req.body
     let user = await userModel.findOne({ 'emailInfo.email': sender })
+    let transacFee = await useAdminSetting('intra')
+    console.log(transacFee);
     if (user) {
         let userBalance = Number(user.accountBal)
         let sendAmount = Number(amount)
-        let transacFee = 20
-        let amountToDebit = transacFee + sendAmount
+        let amountToDebit =  Number(sendAmount) + Number(transacFee)
 
         if (amountToDebit > userBalance) {
             res.status(400).json({ mgs: "Insuficent fund" })
@@ -734,6 +692,26 @@ const getAdminSetting = async (req, res) => {
     } else {
         res.status(500).json({ status: false, msg: "An error occured" })
     }
+}
+
+const useAdminSetting = async (toReturn) => {
+    let setting = await adminSetting.find({})
+    return new Promise((resolve, reject)=> {
+        if (setting) {
+            console.log(setting);
+            if (toReturn === "airtime") {
+                resolve(setting[0].airtimePrice)
+            }
+            if (toReturn === "monnify") {
+                resolve(setting[0].monnifyTransactionFee)
+            }
+            if (toReturn === "intra") {
+                resolve(setting[0].monnifyTransactionFee)
+            }
+        } else {
+            res.status(500).json({ status: false, msg: "An error occured" })
+        }
+    })
 }
 
 // Buy Data 

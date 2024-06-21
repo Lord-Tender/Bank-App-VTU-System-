@@ -81,14 +81,14 @@ const Dashboard = () => {
   return (
     <>
       <section className='flex'>
-          <Siderbar />
+        <Siderbar />
 
         {/* Main body */}
         <div className='bg-gray-100 static md:fixed lg:fixed left-[20%] h-screen w-[100%] lg:w-[60%] px-4 md:px-12 lg:px-14 z-10 '>
           <div className='header flex pt-3 justify-between items-center  '>
             <div>
-              <h1 className='text-xl font-bold '>Welcome,</h1>
-              <h2 className='text-3xl text-blue-800'><span> <span id='loading'>Loading...</span>{user.firstName}</span>.</h2>
+              <h1 className='text-xl sm:text-lg font-bold '>Welcome,</h1>
+              <h2 className='text-3xl sm:text-2xl text-blue-800'><span> <span id='loading'>Loading...</span>{user.firstName}</span>.</h2>
             </div>
             <div>
               <div className='relative'>
@@ -116,18 +116,25 @@ const Dashboard = () => {
           </div>
 
           <div className='w-full h-[10rem] bg-blue-900 rounded-lg mt-3 px-5 md:px-10 lg:px-10 relative'>
-            <h1 className='text-gray-200 text-[1.2rem] pt-4 '>Your balance:</h1>
-            <div className="yourBalance">
-              <h1 id='realBalance' className='text-white text-[1.7rem] mt-[-7px]'>₦<span className='text-[2.5rem] ms-1 '>{userBal}</span></h1>
+            <div className='flex justify-between'>
+              <div>
+                <h1 className='text-gray-200 text-[1.2rem] sm:text-[1rem] pt-4 '>Your balance:</h1>
+                <div className="yourBalance">
+                  <h1 id='realBalance' className='text-white text-[1.7rem] sm:text-[1.4rem] mt-[-7px]'>₦<span className='text-[2.5rem] sm:text-[2rem] ms-1 '>{userBal}</span></h1>
+                </div>
+              </div>
+
+              <NavLink to='/user/dashboard/fund_wallet' className='flex items-center justify-center gap-1 bg- mt-4 w-[50%] md:w-[25%] lg:w-[30%] rounded text-white bg-black h-9 '>
+                <p>Add money</p>
+                <IoMdAdd />
+              </NavLink>
+
             </div>
             <NavLink className='flex items-center justify-center gap-1 bg-white mt-4 w-[50%] md:w-[25%] lg:w-[25%] rounded ms-[50%] md:ms-[75%] lg:ms-[75%] a '>
               <p>View History</p>
               <FaLongArrowAltRight />
             </NavLink>
-            <NavLink to='/user/dashboard/fund_wallet' className='flex items-center justify-center gap-1 bg- mt-4 w-[50%] md:w-[25%] lg:w-[23%] rounded absolute top-2 right-9 text-white bg-black '>
-              <p>Add money</p>
-              <IoMdAdd />
-            </NavLink>
+
           </div>
 
           <div className="mainBody mt-14 p-1 md:px-5 lg:px-5 flex justify-between relative" style={{ fontFamily: '"Josefin Sans", sans-serif' }}>
@@ -139,7 +146,7 @@ const Dashboard = () => {
               <p className=' text-[0.9rem] md:text-xl lg:text-xl text-center mt-2 '>Airtime</p>
             </Link>
 
-            <Link className='w-[22%] md:w-[20%] lg:w-[20%]'to='/user/dashboard/data' >
+            <Link className='w-[22%] md:w-[20%] lg:w-[20%]' to='/user/dashboard/data' >
               <div className='bg-blue-100 w-full h-[5rem] flex justify-center items-center rounded-lg text-[1.7rem] md:text-[2.5rem] lg:text-[2.5rem] text-blue-900 '><MdSpeakerPhone /></div>
               <p className=' text-[0.9rem] md:text-xl lg:text-xl text-center mt-2 '>Data</p>
             </Link>

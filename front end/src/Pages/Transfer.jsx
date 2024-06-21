@@ -100,7 +100,7 @@ const Transfer = () => {
 
     const sendMoney = () => {
         document.getElementById('loader').style.display = 'flex'
-        const url = 'https://bank-app-vtu-system.onrender.com/user/intra_transfer'
+        const url = 'http://localhost:5000/user/intra_transfer'
         axios.post(url, { sender: user.emailInfo.email, receiver, amount })
             .then((res) => {
                 document.getElementById('loader').style.display = 'none'

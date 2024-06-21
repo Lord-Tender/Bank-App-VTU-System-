@@ -110,8 +110,79 @@ const passwordResetEmailTemplate = (firstName, Password) => {
     `
 }
 
+const creditEmailTemplate = (amount, date, des) => {
+    return `
+        <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* No CSS here, will use inline styles */
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0;">
+    <div style="width: 80%; margin: auto; padding: 20px; border: 1px solid #dddddd; border-radius: 5px; background-color: #f9f9f9;">
+        <div style="text-align: center; font-size: 8px; background-color: #4CAF50; color: white; padding: 10px 0; border-radius: 5px 5px 0 0;">
+            <h1>Credit Transaction Alert</h1>
+        </div>
+        <div style="margin: 20px 0;">
+            <p>Good day,</p>
+            <p>We wanted to let you know that a credit transaction has been made to your account:</p>
+            <p style="font-size: 18px; color: #4CAF50;"><strong>Amount: ${amount}</strong></p>
+            <p>Transaction Date: ${date}</p>
+            <p>Description: ${des}</p>
+            <p>If you have any questions or concerns about this transaction, please contact our support team at emmanuelola961@gmail.com</p>
+            <p>Thank you,<br>The Tender Pay Team</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #777777;">
+            <p>&copy; 2024 (Tender). All rights reserved.</p>
+            <p>Ogbomoso, Oyo state.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+    `
+}
+
+const debitEmailTemplate = (amount, date, des) => {
+    return `
+        <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* No CSS here, will use inline styles */
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0;">
+    <div style="width: 80%; margin: auto; padding: 20px; border: 1px solid #dddddd; border-radius: 5px; background-color: #f9f9f9;">
+        <div style="text-align: center; font-size: 8px; background-color: #FF5733; color: white; padding: 10px 0; border-radius: 5px 5px 0 0;">
+            <h1>Debit Transaction Alert</h1>
+        </div>
+        <div style="margin: 20px 0;">
+            <p>Good day,</p>
+            <p>We wanted to let you know that a debit transaction has been made from your account:</p>
+            <p style="font-size: 18px; color: #FF5733;"><strong>Amount: ${amount}</strong></p>
+            <p>Transaction Date: ${date}</p>
+            <p>Description: ${des}</p>
+            <p>If you have any questions or concerns about this transaction, please contact our support team at emmanuelola961@gmail.com</p>
+            <p>Thank you,<br>The Tender Pay Team</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #777777;">
+            <p>&copy; 2024 (Tender Pay). All rights reserved.</p>
+            <p>Ogbomoso, oyo state.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+    `
+}
+
+
 module.exports = {
     welcomeTem,
     verifyEmailTemplate,
-    passwordResetEmailTemplate
+    passwordResetEmailTemplate,
+    creditEmailTemplate,
+    debitEmailTemplate
 }

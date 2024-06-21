@@ -8,7 +8,7 @@ const secret = process.env.SECRET
 var cloudinary = require('cloudinary');
 const { Buffer } = require('buffer');
 const axios = require('axios');
-const { welcomeTem, verifyEmailTemplate, passwordResetEmailTemplate } = require('../Exact/user.template')
+const { welcomeTem, verifyEmailTemplate, passwordResetEmailTemplate, creditEmailTemplate, debitEmailTemplate } = require('../Exact/user.template')
 
 
 
@@ -483,6 +483,7 @@ const saveDebitTransac = (email, receiver, tansType, amountDebited) => {
     })
     transac.save()
         .then((res) => {
+            sendEmails(email, "New Transaction", debitEmailTemplate(amountDebited,  `${date.toDateString()}`, tansType ))
         })
         .catch((error) => {
         })
@@ -511,6 +512,7 @@ const saveCreditTransac = (email, from, tansType, amountCredited) => {
     })
     transac.save()
         .then((res) => {
+            sendEmails(email, "New Transaction", creditEmailTemplate(amountCredited, `${date.toDateString()}`, tansType))
         })
         .catch((error) => {
         })
@@ -532,7 +534,6 @@ const creditUser = async (userEmail, theAmount, from, tansType) => {
             user.save()
                 .then((saved) => {
                     const html = `<h1>Your account as been credited with ${theAmount}.</h1>`
-                    sendEmails(userEmail, "New Transaction", creditHtml(theAmount))
                     saveCreditTransac(userEmail, from, tansType, theAmount)
                     resolve({ mgs: "Credited" })
                 })
@@ -555,7 +556,6 @@ const debitUser = async (userEmail, theAmount, tansType, receiver) => {
             user.save()
                 .then((saved) => {
                     const html = `<h1>${theAmount} has been debited from your account.</h1>`
-                    sendEmails(userEmail, "New Transaction", html)
                     saveDebitTransac(userEmail, receiver, tansType, theAmount)
                     resolve({ mgs: "Debited" })
                 })

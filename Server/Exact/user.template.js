@@ -127,7 +127,7 @@ const creditEmailTemplate = (amount, date, des) => {
         <div style="margin: 20px 0;">
             <p>Good day,</p>
             <p>We wanted to let you know that a credit transaction has been made to your account:</p>
-            <p style="font-size: 18px; color: #4CAF50;"><strong>Amount: ${amount}</strong></p>
+            <p style="font-size: 18px; color: #4CAF50;"><strong>Amount: ${Number(amount).toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</strong></p>
             <p>Transaction Date: ${date}</p>
             <p>Description: ${des}</p>
             <p>If you have any questions or concerns about this transaction, please contact our support team at emmanuelola961@gmail.com</p>
@@ -161,7 +161,7 @@ const debitEmailTemplate = (amount, date, des) => {
         <div style="margin: 20px 0;">
             <p>Good day,</p>
             <p>We wanted to let you know that a debit transaction has been made from your account:</p>
-            <p style="font-size: 18px; color: #FF5733;"><strong>Amount: ${amount}</strong></p>
+            <p style="font-size: 18px; color: #FF5733;"><strong>Amount: ${Number(amount).toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</strong></p>
             <p>Transaction Date: ${date}</p>
             <p>Description: ${des}</p>
             <p>If you have any questions or concerns about this transaction, please contact our support team at emmanuelola961@gmail.com</p>
